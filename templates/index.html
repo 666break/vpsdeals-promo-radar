@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL}}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{OG_URL}}">
+  <meta property="og:title" content="{{TITLE}}">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{TITLE}}">
+  <meta name="twitter:description" content="{{DESCRIPTION}}">
+  <link rel="alternate" hreflang="en-us" href="{{CANONICAL}}">
+  <link rel="alternate" hreflang="x-default" href="{{CANONICAL}}">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.6;font-size:17px}
+    a{color:#58a6ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    header{border-bottom:1px solid #30363d;padding:16px 0;margin-bottom:24px}
+    header h1{font-size:24px;color:#f0f6fc}
+    header h1 a{color:#f0f6fc}
+    nav a{margin-right:16px;font-size:15px}
+    h2{font-size:20px;margin:24px 0 16px;color:#f0f6fc}
+    .subtitle{color:#8b949e;margin-bottom:24px}
+    .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+    .filter-link{padding:6px 14px;border:1px solid #30363d;border-radius:20px;font-size:14px;color:#8b949e}
+    .filter-link:hover{border-color:#58a6ff;color:#58a6ff;text-decoration:none}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+    .card{display:block;padding:16px;border:1px solid #30363d;border-radius:8px;background:#161b22;color:#c9d1d9;transition:border-color .2s}
+    .card:hover{border-color:#58a6ff;text-decoration:none}
+    .card-provider{font-size:13px;color:#8b949e;text-transform:uppercase;letter-spacing:.5px}
+    .card-title{font-size:16px;margin:4px 0 8px;color:#f0f6fc}
+    .card-price{font-size:22px;font-weight:600;color:#3fb950}
+    .per{font-size:14px;color:#8b949e;font-weight:400}
+    .empty{color:#8b949e;font-style:italic;padding:24px 0}
+    footer{border-top:1px solid #30363d;margin-top:40px;padding:16px 0;font-size:13px;color:#6e7681}
+    footer a{color:#8b949e}
+    .stat{display:inline-block;margin-right:24px}
+    .stat-num{font-size:28px;font-weight:700;color:#f0f6fc}
+    .stat-label{font-size:13px;color:#8b949e}
+    @media(max-width:600px){body{font-size:16px}.grid{grid-template-columns:1fr}.container{padding:12px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><a href="/">{{BRAND}}</a></h1>
+      <nav>
+        <a href="/">Deals</a>
+        <a href="/compare.html">Compare</a>
+      </nav>
+    </header>
+
+    <h2>{{NICHE}} Deals — {{MONTH}}</h2>
+    <p class="subtitle">Real prices scraped from provider websites. Updated automatically every 6 hours. No fabricated data.</p>
+
+    <div class="stats" style="margin-bottom:24px">
+      <div class="stat"><div class="stat-num">{{DEAL_COUNT}}</div><div class="stat-label">live deals</div></div>
+      <div class="stat"><div class="stat-num">{{PROVIDER_COUNT}}</div><div class="stat-label">providers</div></div>
+    </div>
+
+    <div class="filters">{{PROVIDER_FILTERS}}</div>
+
+    <div class="grid">{{DEALS}}</div>
+
+    <footer>
+      <p>{{BRAND}} — automated VPS deal tracking. Prices are scraped from public provider pages and may change at any time. Always verify on the provider's site before purchasing.</p>
+      <p style="margin-top:8px">Site rules defined in I-Lang protocol. See <code>.ilang/site.ilang</code>. Protocol: <a href="https://ilang.ai">ilang.ai</a></p>
+    </footer>
+  </div>
+  <script type="application/ld+json">{{JSONLD}}</script>
+</body>
+</html>

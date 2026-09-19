@@ -1,0 +1,17 @@
+::ILANG
+::STATE{@SITE, brand:vpsdeals, niche:vps hosting, domain:vpsdeals-promo-radar.pages.dev}[TYPE:config][PROJECT:coupon-niche-autojourney][LANG:en]
+
+::MODULE{PROVIDERS|title:抓哪几家 这里改了站就变}
+  DigitalOcean | https://www.digitalocean.com | https://www.digitalocean.com/pricing |
+  Hetzner | https://www.hetzner.com | https://www.hetzner.com/cloud |
+  Contabo | https://contabo.com | https://contabo.com/en/vps |
+  Vultr | https://www.vultr.com | https://www.vultr.com/pricing |
+  Hostinger | https://www.hostinger.com | https://www.hostinger.com/vps-hosting |
+  ScalaHosting | https://www.scalahosting.com | https://www.scalahosting.com/vps-hosting |
+
+::MODULE{FIELDS|title:每条优惠提取什么}
+  title price currency offer_url valid_until source_url fetched_at
+
+::RULE{抓不到 price⇒这条不写 price 字段 也不写进结构化数据 不许拿估的填}
+::RULE{valid_until 已过⇒标记过期或下架 不许留着冒充有效}
+::BOUNDARY{never:编优惠 编价格 编佣金|scope:permanent}

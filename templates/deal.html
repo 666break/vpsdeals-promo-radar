@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}}</title>
+  <meta name="description" content="{{DESCRIPTION}}">
+  <link rel="canonical" href="{{CANONICAL}}">
+  <meta property="og:type" content="product">
+  <meta property="og:url" content="{{OG_URL}}">
+  <meta property="og:title" content="{{TITLE}}">
+  <meta property="og:description" content="{{DESCRIPTION}}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{TITLE}}">
+  <meta name="twitter:description" content="{{DESCRIPTION}}">
+  <link rel="alternate" hreflang="en-us" href="{{CANONICAL}}">
+  <link rel="alternate" hreflang="x-default" href="{{CANONICAL}}">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.6;font-size:17px}
+    a{color:#58a6ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    header{border-bottom:1px solid #30363d;padding:16px 0;margin-bottom:24px}
+    header h1{font-size:24px;color:#f0f6fc}
+    header h1 a{color:#f0f6fc}
+    nav a{margin-right:16px;font-size:15px}
+    .breadcrumb{font-size:14px;color:#8b949e;margin-bottom:16px}
+    .breadcrumb a{color:#8b949e}
+    .deal-box{border:1px solid #30363d;border-radius:12px;padding:32px;background:#161b22;margin:24px 0}
+    .deal-provider{font-size:14px;color:#8b949e;text-transform:uppercase;letter-spacing:.5px}
+    .deal-title{font-size:24px;font-weight:700;color:#f0f6fc;margin:8px 0 16px}
+    .deal-price{font-size:36px;font-weight:700;color:#3fb950}
+    .deal-price .per{font-size:16px;color:#8b949e;font-weight:400}
+    .deal-meta{margin-top:24px;font-size:14px;color:#8b949e}
+    .deal-meta dt{color:#6e7681;margin-top:12px}
+    .deal-meta dd{color:#c9d1d9}
+    .cta{display:inline-block;margin-top:24px;padding:12px 28px;background:#238636;color:#fff;border-radius:6px;font-size:16px;font-weight:600}
+    .cta:hover{background:#2ea043;text-decoration:none}
+    footer{border-top:1px solid #30363d;margin-top:40px;padding:16px 0;font-size:13px;color:#6e7681}
+    footer a{color:#8b949e}
+    @media(max-width:600px){body{font-size:16px}.container{padding:12px}.deal-box{padding:20px}.deal-price{font-size:28px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><a href="/">{{BRAND}}</a></h1>
+      <nav>
+        <a href="/">Deals</a>
+        <a href="/compare.html">Compare</a>
+      </nav>
+    </header>
+
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/provider/{{PROVIDER_SLUG}}.html">{{PROVIDER_NAME}}</a> / {{DEAL_TITLE}}
+    </div>
+
+    <div class="deal-box">
+      <div class="deal-provider">{{PROVIDER_NAME}}</div>
+      <div class="deal-title">{{DEAL_TITLE}}</div>
+      <div class="deal-price">{{PRICE}}<span class="per">/month</span></div>
+
+      <dl class="deal-meta">
+        <dt>Currency</dt>
+        <dd>{{CURRENCY}}</dd>
+        <dt>Source</dt>
+        <dd><a href="{{SOURCE_URL}}" target="_blank" rel="nofollow noopener">{{SOURCE_URL}}</a></dd>
+        <dt>Last fetched</dt>
+        <dd>{{FETCHED_AT}}</dd>
+      </dl>
+
+      <a href="{{OFFER_URL}}" class="cta" target="_blank" rel="nofollow noopener">View on {{PROVIDER_NAME}} →</a>
+    </div>
+
+    <footer>
+      <p>This price was scraped from {{PROVIDER_NAME}}'s public pricing page on {{FETCHED_AT}}. Prices may change at any time — always verify on the provider's site.</p>
+      <p style="margin-top:8px">Site rules defined in I-Lang protocol. See <code>.ilang/site.ilang</code>. Protocol: <a href="https://ilang.ai">ilang.ai</a></p>
+    </footer>
+  </div>
+  <script type="application/ld+json">{{JSONLD}}</script>
+</body>
+</html>

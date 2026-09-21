@@ -361,6 +361,52 @@ def gen_compare_page(brand, niche, domain, offers, providers):
     })
 
 
+def gen_about(brand, domain):
+    """About page: who made the site, what it does, where data comes from."""
+    title = f'About — {brand}'
+    desc = f'Learn about {brand}, an automated VPS price tracking site that aggregates real deals from public provider pricing pages.'
+    tpl = load_template('about.html')
+    return render(tpl, {
+        'BRAND': esc(brand),
+        'DOMAIN': domain,
+        'TITLE': esc(title),
+        'DESCRIPTION': esc(desc),
+        'CANONICAL': f'https://{domain}/about.html',
+        'OG_URL': f'https://{domain}/about.html',
+    })
+
+
+def gen_privacy(brand, domain):
+    """Privacy page: real situation, no template language. Mentions affiliate links and third-party ads."""
+    title = f'Privacy Policy — {brand}'
+    desc = f'Privacy policy for {brand}. No registration required. Affiliate links and third-party cookies explained.'
+    tpl = load_template('privacy.html')
+    return render(tpl, {
+        'BRAND': esc(brand),
+        'DOMAIN': domain,
+        'TITLE': esc(title),
+        'DESCRIPTION': esc(desc),
+        'CANONICAL': f'https://{domain}/privacy.html',
+        'OG_URL': f'https://{domain}/privacy.html',
+    })
+
+
+def gen_contact(brand, domain, contact_email):
+    """Contact page with a real email. Email must be provided by the site owner."""
+    title = f'Contact — {brand}'
+    desc = f'Contact {brand} for questions about deals, pricing, or partnerships.'
+    tpl = load_template('contact.html')
+    return render(tpl, {
+        'BRAND': esc(brand),
+        'DOMAIN': domain,
+        'TITLE': esc(title),
+        'DESCRIPTION': esc(desc),
+        'CANONICAL': f'https://{domain}/contact.html',
+        'OG_URL': f'https://{domain}/contact.html',
+        'CONTACT_EMAIL': esc(contact_email) if contact_email else '[Contact email being configured]',
+    })
+
+
 def gen_sitemap(domain, pages):
     """Generate sitemap.xml with real lastmod."""
     urls = []
@@ -398,9 +444,9 @@ def main():
         sys.exit(1)
 
     config = parse_ilang(str(ilang_path))
-    brand = config.get('brand', 'vpsdeals')
+    brand = config.get('brand', 'ServerBudget')
     niche = config.get('niche', 'vps hosting')
-    domain = config.get('domain', 'vpsdeals-promo-radar.pages.dev')
+    domain = config.get('domain', 'serverbudget.com')
     providers = config.get('providers', [])
 
     print(f'Brand:   {brand}')
@@ -460,15 +506,49 @@ def main():
     (site_dir / 'compare.html').write_text(html_out, encoding='utf-8')
     sitemap_pages.append((f'https://{domain}/compare.html', ts))
 
-    # 5. sitemap.xml
+    # 5. About page
+    print('Generating about.html ...')
+    html_out = gen_about(brand, domain)
+    (site_dir / 'about.html').write_text(html_out, encoding='utf-8')
+    sitemap_pages.append((f'https://{domain}/about.html', ts))
+
+    # 6. Privacy page
+    print('Generating privacy.html ...')
+    html_out = gen_privacy(brand, domain)
+    (site_dir / 'privacy.html').write_text(html_out, encoding='utf-8')
+    sitemap_pages.append((f'https://{domain}/privacy.html', ts))
+
+    # 7. Contact page
+    contact_email = os.environ.get('CONTACT_EMAIL', '')
+    print(f'Generating contact.html ... (email: {"set" if contact_email else "NOT SET"})')
+    html_out = gen_contact(brand, domain, contact_email)
+    (site_dir / 'contact.html').write_text(html_out, encoding='utf-8')
+    sitemap_pages.append((f'https://{domain}/contact.html', ts))
+
+    # 8. sitemap.xml
     print('Generating sitemap.xml ...')
     sitemap = gen_sitemap(domain, sitemap_pages)
     (site_dir / 'sitemap.xml').write_text(sitemap, encoding='utf-8')
 
-    # 6. robots.txt
+    # 9. robots.txt
     print('Generating robots.txt ...')
     robots = gen_robots(domain)
     (site_dir / 'robots.txt').write_text(robots, encoding='utf-8')
+
+    # 10. Copy live-site/ files (manually crafted pages, articles, 404, sitemap)
+    #     These override the build-generated versions with production-curated content.
+    print('Copying live-site/ files to site/ ...')
+    import shutil
+    live_dir = script_dir / 'live-site'
+    if live_dir.exists():
+        copied = 0
+        for item in live_dir.iterdir():
+            if item.is_file():
+                dest = site_dir / item.name
+                shutil.copy2(str(item), str(dest))
+                print(f'  Copied {item.name}')
+                copied += 1
+        print(f'  Total: {copied} files copied from live-site/')
 
     print(f'\n{"="*60}')
     print(f'Site generated in: {site_dir}')

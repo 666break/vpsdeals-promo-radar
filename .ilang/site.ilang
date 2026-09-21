@@ -1,5 +1,5 @@
 ::ILANG
-::STATE{@SITE, brand:vpsdeals, niche:vps hosting, domain:serverbudget.com}[TYPE:config][PROJECT:coupon-niche-autojourney][LANG:en]
+::STATE{@SITE, brand:ServerBudget, niche:vps hosting, domain:serverbudget.com}[TYPE:config][PROJECT:coupon-niche-autojourney][LANG:en]
 
 ::MODULE{PROVIDERS|title:抓哪几家 这里改了站就变}
   DigitalOcean | https://www.digitalocean.com | https://www.digitalocean.com/pricing |

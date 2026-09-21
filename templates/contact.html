@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="{{CANONICAL}}">
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{OG_URL}}">
+    <meta name="twitter:card" content="summary">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f1117; color: #e4e4e7; line-height: 1.6; }
+        .container { max-width: 800px; margin: 0 auto; padding: 1.5rem; }
+        header { border-bottom: 1px solid #2a2d35; padding-bottom: 1rem; margin-bottom: 2rem; }
+        header h1 { font-size: 1.6rem; color: #f4f4f5; }
+        header p { color: #a1a1aa; font-size: 0.9rem; margin-top: 0.25rem; }
+        .nav { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+        .nav a { color: #818cf8; text-decoration: none; font-size: 0.85rem; }
+        .nav a:hover { text-decoration: underline; }
+        h2 { font-size: 1.2rem; color: #f4f4f5; margin: 2rem 0 0.75rem; }
+        p { margin-bottom: 1rem; }
+        a { color: #818cf8; }
+        .contact-box { background: #1a1b23; border: 1px solid #2a2d35; border-radius: 0.75rem; padding: 1.5rem; margin: 1.5rem 0; }
+        .contact-email { font-size: 1.1rem; color: #818cf8; font-weight: 600; }
+        .disclosure { background: #1a1b23; border: 1px solid #2a2d35; border-radius: 0.75rem; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: 0.85rem; color: #a1a1aa; }
+        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a2d35; color: #71717a; font-size: 0.8rem; }
+        footer a { color: #818cf8; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>{{BRAND}}</h1>
+        <p>Contact</p>
+        <div class="nav">
+            <a href="index.html">Home</a>
+            <a href="compare.html">Compare</a>
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </header>
+
+    <h2>Get in touch</h2>
+    <p>Questions about a deal, a price discrepancy, or anything else? Send an email and we'll get back to you.</p>
+
+    <div class="contact-box">
+        <p style="margin-bottom:0.5rem;color:#a1a1aa;font-size:0.85rem">Email</p>
+        <p class="contact-email">{{CONTACT_EMAIL}}</p>
+    </div>
+
+    <h2>Response time</h2>
+    <p>This site is run by a small team. We typically respond within 48 hours. For urgent pricing errors, please include the provider name and the URL of the deal page in your email.</p>
+
+    <div class="disclosure">
+        This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.
+    </div>
+
+    <footer>
+        <p>{{BRAND}} &mdash; automated VPS deal tracking. Prices are scraped from public provider pages and may change at any time. Always verify on the provider's site before purchasing.</p>
+        <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
+        <p style="margin-top:0.5rem">Site rules defined in I-Lang protocol. See <a href="https://ilang.ai">ilang.ai</a>. Data sourced from official provider pricing pages.</p>
+    </footer>
+</div>
+</body>
+</html>

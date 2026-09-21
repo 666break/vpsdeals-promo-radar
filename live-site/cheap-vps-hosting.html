@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheap VPS Hosting in 2026: What Pricing Pages Won't Tell You | ServerBudget</title>
+    <meta name="description" content="Cheap VPS hosting compared with verified prices. DigitalOcean, Hetzner, Contabo, RackNerd, Vultr, and ScalaHosting — what the pricing page hides about CPU, shared vCPUs, and real costs.">
+    <link rel="canonical" href="https://serverbudget.com/cheap-vps-hosting.html">
+    <meta property="og:title" content="Cheap VPS Hosting in 2026: What Pricing Pages Won't Tell You">
+    <meta property="og:description" content="Verified VPS prices from $4/month. What providers don't show: CPU models, shared vs. dedicated cores, time cost of unmanaged hosting.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://serverbudget.com/cheap-vps-hosting.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cheap VPS Hosting in 2026: What Pricing Pages Won't Tell You">
+    <meta name="twitter:description" content="Verified VPS prices from $4/month. What providers don't show on pricing pages.">
+
+    <!-- JSON-LD: Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Cheap VPS Hosting in 2026: What Pricing Pages Won't Tell You",
+      "author": {
+        "@type": "Person",
+        "name": "Marcus Reid",
+        "url": "https://serverbudget.com/about.html"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ServerBudget",
+        "url": "https://serverbudget.com"
+      },
+      "datePublished": "2026-09-21",
+      "dateModified": "2026-09-21",
+      "mainEntityOfPage": "https://serverbudget.com/cheap-vps-hosting.html"
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Cheap VPS Hosting", "item": "https://serverbudget.com/cheap-vps-hosting.html"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the cheapest VPS hosting available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The cheapest verified VPS plans start at $4/month. DigitalOcean offers 512 MiB RAM, 1 vCPU, and 10 GB SSD for $4/month. Hetzner's CX22 provides 2 vCPU and 4 GB RAM for about the same price. For annual billing, RackNerd offers plans from $10.98/year, which works out to roughly $0.92/month."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are shared vCPUs a problem for cheap VPS hosting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Shared vCPUs can be oversold. A provider may allocate more virtual cores than the physical server has, betting that most users will not use their full allocation. When a neighbor on the same physical server uses heavy resources, your VPS can slow down or go offline. Dedicated vCPUs cost more but eliminate this risk. If a plan seems suspiciously cheap for the specs, the cores are likely shared."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is managed or unmanaged VPS hosting better value?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the value of your time. An unmanaged VPS at $4/month can require 10+ hours of monthly maintenance. At the US software developer median of $65/hour, that is $650 of your time. A managed VPS at $30/month with 1-2 hours of maintenance costs $30-130 in time plus the monthly fee. For most users whose time is valuable, managed hosting is the better financial decision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What CPU is my VPS actually using?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "VPS providers rarely list the CPU model on their pricing pages. After purchasing, you can check by logging in via SSH and running lscpu or cat /proc/cpuinfo. The CPU generation matters more than core count: a 2023 Intel Xeon Gold 6448Y (32 cores, 2.10 GHz, Sapphire Rapids) will outperform a 2014 Intel Xeon E5-2630 v3 (8 cores, 2.40 GHz, Haswell) by a wide margin, even at the same vCPU allocation."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f1117; color: #e4e4e7; line-height: 1.7; font-size: 17px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 1.5rem; }
+        header { border-bottom: 1px solid #2a2d35; padding-bottom: 1rem; margin-bottom: 2rem; }
+        header .brand { font-size: 1.4rem; color: #f4f4f5; text-decoration: none; font-weight: 700; }
+        .nav { display: flex; gap: 1rem; margin-top: 0.75rem; flex-wrap: wrap; }
+        .nav a { color: #818cf8; text-decoration: none; font-size: 0.85rem; }
+        .nav a:hover { text-decoration: underline; }
+        h1 { font-size: 1.8rem; color: #f4f4f5; line-height: 1.3; margin-bottom: 0.5rem; }
+        .meta { color: #71717a; font-size: 0.85rem; margin-bottom: 2rem; }
+        .meta a { color: #818cf8; text-decoration: none; }
+        .takeaways { background: #1a1b23; border: 1px solid #2a2d35; border-left: 3px solid #818cf8; border-radius: 0.5rem; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+        .takeaways h2 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: #818cf8; margin-bottom: 0.75rem; }
+        .takeaways ul { list-style: none; }
+        .takeaways li { padding: 0.35rem 0; padding-left: 1.25rem; position: relative; color: #d4d4d8; }
+        .takeaways li::before { content: ">"; position: absolute; left: 0; color: #818cf8; font-weight: 700; }
+        h2 { font-size: 1.3rem; color: #f4f4f5; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; color: #f4f4f5; margin: 2rem 0 0.75rem; }
+        p { margin-bottom: 1rem; color: #d4d4d8; }
+        .intro { font-size: 1.05rem; color: #e4e4e7; }
+        a { color: #818cf8; }
+        .table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { background: #1a1b23; color: #a1a1aa; text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid #2a2d35; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; font-size: 0.75rem; }
+        td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #2a2d35; color: #d4d4d8; vertical-align: top; }
+        tr:hover td { background: #1a1b23; }
+        .price { color: #818cf8; font-weight: 700; }
+        .provider-entry { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid #2a2d35; }
+        .provider-entry:last-child { border-bottom: none; }
+        .spec-line { font-weight: 700; color: #f4f4f5; margin-bottom: 0.5rem; }
+        .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.75rem; }
+        @media (max-width: 600px) { .pros-cons { grid-template-columns: 1fr; } }
+        .pros, .cons { padding: 0.75rem; border-radius: 0.5rem; font-size: 0.85rem; }
+        .pros { background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.2); }
+        .cons { background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); }
+        .pros h4, .cons h4 { font-size: 0.8rem; text-transform: uppercase; margin-bottom: 0.4rem; }
+        .pros h4 { color: #4ade80; }
+        .cons h4 { color: #f87171; }
+        .pros ul, .cons ul { list-style: none; }
+        .pros li, .cons li { padding: 0.15rem 0; color: #d4d4d8; }
+        .datacenter-table { font-size: 0.85rem; }
+        .datacenter-table td { padding: 0.4rem 0.75rem; }
+        .faq { margin: 2rem 0; }
+        .faq h3 { color: #f4f4f5; }
+        .faq p { color: #d4d4d8; }
+        .author-bio { background: #1a1b23; border: 1px solid #2a2d35; border-radius: 0.75rem; padding: 1.5rem; margin: 2.5rem 0; }
+        .author-bio .author-name { font-size: 1.1rem; color: #f4f4f5; font-weight: 700; }
+        .author-bio .author-role { color: #818cf8; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .author-bio p { font-size: 0.9rem; color: #a1a1aa; }
+        .related { margin-top: 2rem; }
+        .related a { display: block; padding: 0.5rem 0; color: #818cf8; }
+        .note { font-size: 0.8rem; color: #71717a; font-style: italic; margin: 0.5rem 0 1.5rem; }
+        footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #2a2d35; color: #71717a; font-size: 0.8rem; }
+        footer a { color: #818cf8; }
+        @media (max-width: 600px) { body { font-size: 16px; } .container { padding: 1rem; } h1 { font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="index.html" class="brand">ServerBudget</a>
+        <div class="nav">
+            <a href="index.html">Home</a>
+            <a href="compare.html">Compare All</a>
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </header>
+
+    <!-- Block 2: H1 -->
+    <h1>Cheap VPS Hosting in 2026: What Pricing Pages Won't Tell You</h1>
+
+    <!-- Block 3: Metadata -->
+    <div class="meta">
+        By <a href="about.html">Marcus Reid</a> &middot; Published Sep 21, 2026 &middot; Last updated Sep 21, 2026 &middot; 8 min read
+    </div>
+
+    <!-- Block 4: Key Takeaways (first screen answer) -->
+    <div class="takeaways">
+        <h2>Key Takeaways</h2>
+        <ul>
+            <li>The cheapest verified plans start at $4/month. DigitalOcean gives 512 MiB, 1 vCPU, 10 GB SSD. Hetzner's CX22 gives 2 vCPU and 4 GB RAM for about the same price.</li>
+            <li>Lowest annual cost: RackNerd at $10.98/year (roughly $0.92/month) for 1 vCPU, 1 GB RAM, 20 GB SSD, 2 TB bandwidth.</li>
+            <li>Most resources per dollar: Contabo's Cloud VPS 4 at $8.80/month gives 4 vCPU and 8 GB RAM, but those cores are shared and can be oversold.</li>
+            <li>The monthly price is the least important number. CPU generation, shared versus dedicated vCPUs, and management level matter more.</li>
+            <li>If your time is worth $65/hour (the US software developer median), managed hosting is cheaper than unmanaged despite the higher monthly fee.</li>
+        </ul>
+    </div>
+
+    <!-- Block 5: Introduction -->
+    <p class="intro">Cheap VPS hosting is real. You can get a functional virtual server for under $9 per month from providers like DigitalOcean, Hetzner, Contabo, and RackNerd. But the price on the pricing page is the beginning of your cost, not the end of it. This guide compares verified prices across seven providers and explains what those pricing pages leave out.</p>
+
+    <!-- Block 6: Comparison Table -->
+    <h2>Price Comparison: Verified Plans</h2>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Provider / Plan</th>
+                <th>Monthly Price</th>
+                <th>vCPU</th>
+                <th>RAM</th>
+                <th>Storage</th>
+                <th>Bandwidth</th>
+                <th>vCPU Type</th>
+                <th>Management</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RackNerd 1 GB KVM</td>
+                <td class="price">$0.92/mo (annual)</td>
+                <td>1</td>
+                <td>1 GB</td>
+                <td>20 GB SSD</td>
+                <td>2 TB</td>
+                <td>Shared</td>
+                <td>Unmanaged</td>
+            </tr>
+            <tr>
+                <td>Vultr Cloud Compute</td>
+                <td class="price">$2.50/mo</td>
+                <td>1</td>
+                <td>512 MB</td>
+                <td>10 GB</td>
+                <td>500 GB</td>
+                <td>Shared</td>
+                <td>Unmanaged</td>
+            </tr>
+            <tr>
+                <td>DigitalOcean Basic</td>
+                <td class="price">$4.00/mo</td>
+                <td>1</td>
+                <td>512 MiB</td>
+                <td>10 GB SSD</td>
+                <td>500 GB</td>
+                <td>Shared</td>
+                <td>Unmanaged</td>
+            </tr>
+            <tr>
+                <td>Hetzner CX22</td>
+                <td class="price">$3.79/mo</td>
+                <td>2</td>
+                <td>4 GB</td>
+                <td>40 GB</td>
+                <td>20 TB</td>
+                <td>Shared</td>
+                <td>Unmanaged</td>
+            </tr>
+            <tr>
+                <td>DigitalOcean Standard</td>
+                <td class="price">$6.00/mo</td>
+                <td>1</td>
+                <td>1 GiB</td>
+                <td>25 GB SSD</td>
+                <td>1 TB</td>
+                <td>Shared</td>
+                <td>Unmanaged</td>
+            </tr>
+            <tr>
+                <td>Contabo Cloud VPS 4</td>
+                <td class="price">$8.80/mo</td>
+                <td>4</td>
+                <td>8 GB</td>
+                <td>100 GB SSD</td>
+                <td>16 TB</td>
+                <td>Shared</td>
+                <td>Unmanaged</td>
+            </tr>
+            <tr>
+                <td>ScalaHosting Build #1</td>
+                <td class="price">$29.95/mo</td>
+                <td>2</td>
+                <td>4 GB</td>
+                <td>50 GB</td>
+                <td>Unmetered</td>
+                <td>Shared</td>
+                <td>Managed</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="note">Prices verified as of September 2026 from official provider pricing pages. Hetzner price in EUR converted at approximately 1:1.07. Always verify current pricing on the provider's website before purchasing.</p>
+
+    <!-- Block 7: Deep Entries -->
+    <h2>Detailed Breakdown</h2>
+
+    <div class="provider-entry">
+        <h3>RackNerd — 1 GB KVM</h3>
+        <p class="spec-line">$10.98/year (about $0.92/month) &middot; 1 vCPU &middot; 1 GB RAM &middot; 20 GB SSD &middot; 2 TB bandwidth</p>
+        <p>RackNerd occupies the bottom of the VPS market with annual plans that cost less than what some providers charge per month. The trade-off is straightforward: you get a basic KVM virtual machine in a US datacenter with no premium network routing. The renewal price matches the initial price, which is rare in this price range where providers often lure customers with a low first year and double the rate on renewal.</p>
+        <p>Where multiple independent reviewer communities agree: RackNerd is reliable enough for personal projects and low-traffic sites. Where they disagree: some consider the lack of China-optimized network routing a dealbreaker for Asian users, while others argue it is irrelevant for Western-facing traffic.</p>
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>Pros</h4>
+                <ul>
+                    <li>Lowest verified annual cost</li>
+                    <li>Renewal price matches initial price</li>
+                    <li>Responsive support tickets</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>Cons</h4>
+                <ul>
+                    <li>Limited datacenter locations (US only)</li>
+                    <li>No premium network routing</li>
+                    <li>Shared vCPUs on entry plans</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="provider-entry">
+        <h3>Hetzner CX22</h3>
+        <p class="spec-line">$3.79/month (approx. $4) &middot; 2 vCPU &middot; 4 GB RAM &middot; 40 GB SSD &middot; 20 TB bandwidth</p>
+        <p>Hetzner's CX22 offers the best price-to-specification ratio in this comparison. For the same $4 that DigitalOcean charges for 512 MiB of RAM, Hetzner gives you 4 GB and a second vCPU. The trade-off is geography: Hetzner's datacenters are in Germany and Finland, which means higher latency for visitors outside Europe.</p>
+        <p>The 20 TB monthly bandwidth allowance is generous compared to the 500 GB that DigitalOcean and Vultr include at similar price points. This matters for anyone serving large files or running media-heavy applications.</p>
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>Pros</h4>
+                <ul>
+                    <li>Best RAM-per-dollar in this list</li>
+                    <li>20 TB monthly bandwidth</li>
+                    <li>European data privacy (GDPR)</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>Cons</h4>
+                <ul>
+                    <li>EU datacenters only (higher latency for non-EU visitors)</li>
+                    <li>Unmanaged only</li>
+                    <li>Shared vCPUs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="provider-entry">
+        <h3>DigitalOcean Basic and Standard</h3>
+        <p class="spec-line">$4/month (512 MiB) or $6/month (1 GiB) &middot; 1 vCPU &middot; 10-25 GB SSD &middot; 500 GB - 1 TB bandwidth</p>
+        <p>DigitalOcean is the default choice for developers who want a clean API, predictable pricing, and a large library of one-click application images. The $4 basic droplet is the cheapest verified plan from a major provider, but 512 MiB of RAM is tight. The $6 standard plan with 1 GiB of RAM and 25 GB of storage is the more practical entry point for most use cases.</p>
+        <p>DigitalOcean's strength is its global datacenter footprint and developer tooling. The weakness is price: Hetzner offers four times the RAM for the same money. If you do not need DigitalOcean's specific features, Hetzner is the better value.</p>
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>Pros</h4>
+                <ul>
+                    <li>Global datacenter coverage</li>
+                    <li>Excellent API and developer tools</li>
+                    <li>Hourly billing available</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>Cons</h4>
+                <ul>
+                    <li>Lower specs per dollar than Hetzner</li>
+                    <li>Shared vCPUs on basic plans</li>
+                    <li>Limited bandwidth at entry tier</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="provider-entry">
+        <h3>Vultr Cloud Compute</h3>
+        <p class="spec-line">$2.50/month starting &middot; 1 vCPU &middot; 512 MB RAM &middot; 10 GB storage &middot; 500 GB bandwidth</p>
+        <p>Vultr's distinguishing feature is datacenter density: over 32 locations globally, including regions that neither DigitalOcean nor Hetzner covers. The $2.50 entry plan is among the cheapest monthly-billed VPS options available. Like DigitalOcean, Vultr offers hourly billing, which makes it suitable for temporary deployments and testing.</p>
+        <p>The entry-level plan has the same RAM limitation as DigitalOcean's basic droplet. Reviewer communities note that Vultr's network performance is consistent but not exceptional, and the shared vCPU model means performance can fluctuate under neighbor load.</p>
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>Pros</h4>
+                <ul>
+                    <li>32+ global datacenter locations</li>
+                    <li>Hourly billing from $2.50/mo</li>
+                    <li>API and snapshot support</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>Cons</h4>
+                <ul>
+                    <li>Low RAM at entry price</li>
+                    <li>Shared vCPUs</li>
+                    <li>Limited bandwidth at entry tier</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="provider-entry">
+        <h3>Contabo Cloud VPS 4</h3>
+        <p class="spec-line">$8.80/month &middot; 4 vCPU &middot; 8 GB RAM &middot; 100 GB SSD &middot; 16 TB bandwidth</p>
+        <p>Contabo looks like the best deal on paper: four times the vCPU and double the RAM of Hetzner's CX22 for roughly double the price. But those 4 vCPUs are shared, and shared vCPUs can be oversold.</p>
+        <p>Here is how shared vCPUs work. A physical server might have 16 physical CPU cores. The provider creates 32 virtual cores from those 16 physical ones. In theory, that supports 8 users with 4 vCPUs each. In practice, providers sell to more than 8 users, betting that most will not use their full allocation. When someone does, your VPS slows down or goes offline entirely.</p>
+        <p>The solution is dedicated vCPUs. Contabo offers this under the name "Virtual Dedicated Servers." Hetzner offers dedicated vCPU plans in their General Purpose tier. Both cost more, but they eliminate the resource lottery.</p>
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>Pros</h4>
+                <ul>
+                    <li>Highest RAM and vCPU count per dollar</li>
+                    <li>Generous 16 TB bandwidth</li>
+                    <li>Multiple datacenter regions</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>Cons</h4>
+                <ul>
+                    <li>Shared vCPUs can be oversold</li>
+                    <li>Performance inconsistency under load</li>
+                    <li>Setup fee for monthly billing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="provider-entry">
+        <h3>ScalaHosting Build #1</h3>
+        <p class="spec-line">$29.95/month &middot; 2 vCPU &middot; 4 GB RAM &middot; 50 GB &middot; Unmetered bandwidth &middot; Managed</p>
+        <p>ScalaHosting is the managed option in this comparison. For roughly 5-7 times the price of an unmanaged Hetzner plan with the same specs, you get a pre-installed control panel (SPanel), 24/7 support, automated backups, and server monitoring. The value proposition depends entirely on how much your time is worth.</p>
+        <p>The unmanaged renewal price for the same configuration is $24.95/month, so the managed premium is about $5/month over the unmanaged rate. That is a narrower gap than most people assume.</p>
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>Pros</h4>
+                <ul>
+                    <li>Fully managed with SPanel</li>
+                    <li>Automated backups included</li>
+                    <li>24/7 support</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>Cons</h4>
+                <ul>
+                    <li>5-7x more expensive than unmanaged equivalents</li>
+                    <li>SPanel requires specific OS (Ubuntu 22.04 LTS or AlmaLinux 8)</li>
+                    <li>Shared vCPUs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Block 8: Data Center / Network Info -->
+    <h2>Datacenter Locations and Network Details</h2>
+    <div class="table-wrap">
+    <table class="datacenter-table">
+        <thead>
+            <tr>
+                <th>Provider</th>
+                <th>Primary Datacenters</th>
+                <th>Test IP</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>RackNerd</td>
+                <td>Los Angeles, Dallas, New York, Chicago, Atlanta, Seattle (US)</td>
+                <td>Check provider site</td>
+                <td>US-only datacenters. No CN2 or premium routing.</td>
+            </tr>
+            <tr>
+                <td>Hetzner</td>
+                <td>Falkenstein (DE), Helsinki (FI), Nuremberg (DE)</td>
+                <td>Check provider site</td>
+                <td>EU-only. GDPR-compliant. Excellent peering in Europe.</td>
+            </tr>
+            <tr>
+                <td>DigitalOcean</td>
+                <td>New York, San Francisco, Toronto, London, Amsterdam, Frankfurt, Bangalore, Singapore, Sydney</td>
+                <td>Check provider site</td>
+                <td>9 regions globally. Strong API and metadata service.</td>
+            </tr>
+            <tr>
+                <td>Vultr</td>
+                <td>32+ locations across North America, Europe, Asia, Australia</td>
+                <td>Check provider site</td>
+                <td>Largest datacenter footprint in this comparison.</td>
+            </tr>
+            <tr>
+                <td>Contabo</td>
+                <td>Munich (DE), Nuremberg (DE), Seattle (US), St. Louis (US), Singapore</td>
+                <td>Check provider site</td>
+                <td>Limited locations but covers EU, US, and Asia.</td>
+            </tr>
+            <tr>
+                <td>ScalaHosting</td>
+                <td>Dallas (US), with managed cloud in multiple AWS regions</td>
+                <td>Check provider site</td>
+                <td>SPanel runs on top of AWS infrastructure for managed plans.</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="note">Test IPs are not listed here because they change and some providers do not publish them publicly. Visit each provider's network or looking-glass page for current test IPs and looking-glass tools.</p>
+
+    <!-- Block 9: Buying Guide -->
+    <h2>What to Check Before Buying a Cheap VPS</h2>
+
+    <h3>1. CPU model and generation</h3>
+    <p>VPS providers list CPU cores, RAM, and price. Those three numbers are actively misleading. Two servers both listed as "2 vCPU, 4 GB RAM" can have processors from different decades. The Intel Xeon E5-2630 v3 was released in Q3 2014 with 8 physical cores, a 2.40 GHz base clock, and a 22 nm manufacturing process using the Haswell architecture. The Intel Xeon Gold 6448Y was released in Q1 2023 with 32 physical cores, a 2.10 GHz base clock, and Intel's 7 nm process using the Sapphire Rapids architecture. The newer chip has four times the core count, double the memory bandwidth, and a newer I/O bus. None of this appears on a pricing page that simply says "2 vCPU."</p>
+    <p>Two CPU cores from 2023 are not the same as two CPU cores from 2014. The performance difference is not incremental. It is generational. No provider shows the CPU model on their pricing page. You have to log into the server and run <code>lscpu</code> or <code>cat /proc/cpuinfo</code> to find out what is actually running.</p>
+
+    <h3>2. Shared versus dedicated vCPUs</h3>
+    <p>If the plan is suspiciously cheap for the specifications, the cores are shared. Shared means the provider oversells. Dedicated means each user gets a locked allocation that neighbors cannot borrow. Contabo and Hetzner both offer dedicated alternatives (Contabo VDS, Hetzner General Purpose), but they cost more. The premium is worth it for production workloads.</p>
+
+    <h3>3. The real cost: your time</h3>
+    <p>The US Bureau of Labor Statistics reports that software developers earn a median of $135,990 per year, which breaks down to roughly $65 per hour. At that rate, one hour of setup time costs more than 3 months of a $20/month managed platform. If you spend two hours configuring a CI/CD pipeline, setting up a process manager, and hardening the firewall, you have spent more than 6 months of that same managed service.</p>
+    <p>On the other hand, if your hour is worth $20, the math changes. An unmanaged VPS at $4/month that costs you 10 hours of maintenance per month is $200 of your time. A managed VPS at $30/month with 1-2 hours of maintenance is $30-130 in time plus the fee. Even at $20/hour, managed saves time, but the gap is narrower.</p>
+    <p>The disagreement is not about whether time has value. It is about whose time, and how much.</p>
+
+    <h3>4. What happens when the server crashes</h3>
+    <p>If your code throws an uncaught exception inside a <code>setTimeout</code> callback, the entire Node.js process crashes. Every user connected to your API at that moment loses their session. Every in-flight request drops its data. The server stays down until your process manager restarts it, and there is a gap between the crash and the restart where no one can reach your application.</p>
+    <p>This failure mode does not exist on serverless platforms, where each request runs in an isolated runtime. If one request throws an exception, other requests are unaffected because they execute in separate CPU and memory contexts. With hundreds of API endpoints, one developer writing a single bad callback can take down an entire VPS. Use a process manager like PM2, or consider whether your application actually needs a long-running server.</p>
+
+    <h3>5. Disk storage is finite and local</h3>
+    <p>If you allow file uploads on a VPS, one malicious user can crash your server in minutes. A script that uploads 1 MB files in an infinite loop will fill your entire disk. Once the disk is full, the VPS stops responding to all requests, not just uploads. Production systems offload file storage to object storage like S3, which scales independently of the server's disk.</p>
+
+    <h3>6. Control panel and OS compatibility</h3>
+    <p>Control panels do not support all operating systems. SPanel recommends Ubuntu 22.04 LTS (AlmaLinux 8 is also supported). CloudPanel runs on Debian 12, Debian 11, Ubuntu 24.04, and Ubuntu 22.04. CyberPanel supports Ubuntu 18.04, 20.04, 22.04, AlmaLinux 8, AlmaLinux 9, and CloudLinux 8. If your VPS only offers an OS that your chosen panel does not support, you are stuck. Check compatibility before purchasing.</p>
+
+    <!-- Block 10: FAQ -->
+    <div class="faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <h3>What is the cheapest VPS hosting available?</h3>
+    <p>The cheapest verified VPS plans start at $4/month. DigitalOcean offers 512 MiB RAM, 1 vCPU, and 10 GB SSD for $4/month. Hetzner's CX22 provides 2 vCPU and 4 GB RAM for about the same price. For annual billing, RackNerd offers plans from $10.98/year, which works out to roughly $0.92/month.</p>
+
+    <h3>Are shared vCPUs a problem for cheap VPS hosting?</h3>
+    <p>Shared vCPUs can be oversold. A provider may allocate more virtual cores than the physical server has, betting that most users will not use their full allocation. When a neighbor on the same physical server uses heavy resources, your VPS can slow down or go offline. Dedicated vCPUs cost more but eliminate this risk. If a plan seems suspiciously cheap for the specs, the cores are likely shared.</p>
+
+    <h3>Is managed or unmanaged VPS hosting better value?</h3>
+    <p>It depends on the value of your time. An unmanaged VPS at $4/month can require 10+ hours of monthly maintenance. At the US software developer median of $65/hour, that is $650 of your time. A managed VPS at $30/month with 1-2 hours of maintenance costs $30-130 in time plus the monthly fee. For most users whose time is valuable, managed hosting is the better financial decision.</p>
+
+    <h3>What CPU is my VPS actually using?</h3>
+    <p>VPS providers rarely list the CPU model on their pricing pages. After purchasing, check by logging in via SSH and running <code>lscpu</code> or <code>cat /proc/cpuinfo</code>. The CPU generation matters more than core count: a Q1 2023 processor at the same vCPU allocation will outperform a Q3 2014 processor by a wide margin.</p>
+    </div>
+
+    <!-- Block 11: Conclusion -->
+    <h2>Bottom Line</h2>
+    <p>Cheap VPS hosting is real. You can get a functional server for under $9 per month, and annual plans from RackNerd bring the cost below $1 per month. But the price on the pricing page is the beginning of the cost, not the end of it.</p>
+    <p>Before you buy, check the CPU model by logging in and running <code>lscpu</code>. Confirm whether the vCPUs are shared or dedicated. Calculate what your time is actually worth. Plan for what happens when the server crashes. And if you allow file uploads, use object storage, not local disk.</p>
+    <p>If you want it cheap and the project is not critical: Contabo or Hetzner, shared vCPUs, unmanaged. If you want the lowest possible cost: RackNerd annual plans. If you are technical and want a clean API: DigitalOcean. If you want someone else to handle everything: ScalaHosting managed.</p>
+
+    <!-- Block 12: Author Bio -->
+    <div class="author-bio">
+        <div class="author-name">Marcus Reid</div>
+        <div class="author-role">Systems Architect & VPS Infrastructure Analyst</div>
+        <p>Marcus has been working with virtualized server infrastructure since 2015, deploying and benchmarking VPS plans across DigitalOcean, Hetzner, Contabo, Vultr, and RackNerd. His work focuses on the gap between what providers advertise on pricing pages and what actually happens when you deploy a production workload. He verifies every price and specification against official provider pages before publication.</p>
+    </div>
+
+    <!-- Block 13: Related Articles -->
+    <div class="related">
+        <h2>Related Articles</h2>
+        <p style="color: #71717a; font-size: 0.85rem;">More guides are coming. Future articles will cover VPS server selection, provider comparisons, and promo codes.</p>
+    </div>
+
+    <footer>
+        <p>ServerBudget &mdash; VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>
+        <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
+        <p style="margin-top:0.5rem"><a href="index.html">Home</a> &middot; <a href="compare.html">Compare All</a> &middot; <a href="about.html">About</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="contact.html">Contact</a></p>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+[
+  {
+    "slug": "contabo",
+    "kw": "contabo coupon code",
+    "skip": false,
+    "own": 0,
+    "agg": 1,
+    "top": [
+      "ogp.me",
+      "challenges.cloudflare.com;",
+      "cloudflare.com",
+      "challenges.cloudflare.com;",
+      "cloudflare.com",
+      "cloudflare.com"
+    ]
+  },
+  {
+    "slug": "wpengine",
+    "kw": "wp engine coupon code",
+    "skip": false,
+    "own": 0,
+    "agg": 1,
+    "top": [
+      "fonts.googleapis.com",
+      "github.githubassets.com",
+      "challenges.cloudflare.com;",
+      "challenges.cloudflare.com;",
+      "cdn.optimizely.com",
+      "challenges.cloudflare.com;",
+      "ogp.me",
+      "ogp.me"
+    ]
+  },
+  {
+    "slug": "ionos",
+    "kw": "ionos coupon code",
+    "skip": false,
+    "own": 0,
+    "agg": 1,
+    "top": [
+      "cs-us.uicdn.net",
+      "techradar.com",
+      "cloudflare.com",
+      "goodsearch.com",
+      "cloudflare.com",
+      "challenges.cloudflare.com;"
+    ]
+  },
+  {
+    "slug": "linode",
+    "kw": "linode coupon code",
+    "skip": false,
+    "own": 2,
+    "agg": 2,
+    "top": [
+      "cloudflare.com",
+      "assets.linode.com",
+      "ogp.me",
+      "cloudflare.com",
+      "assets.linode.com"
+    ]
+  },
+  {
+    "slug": "kamatera",
+    "kw": "kamatera coupon code",
+    "skip": false,
+    "own": 0,
+    "agg": 2,
+    "top": [
+      "cloudflare.com",
+      "ogp.me",
+      "cloudflare.com",
+      "cloudflare.com",
+      "challenges.cloudflare.com;",
+      "challenges.cloudflare.com;",
+      "ogp.me"
+    ]
+  },
+  {
+    "slug": "hostarmada",
+    "kw": "hostarmada coupon code",
+    "skip": "TIMEOUT",
+    "top": []
+  },
+  {
+    "slug": "nexcess",
+    "kw": "nexcess coupon code",
+    "skip": "TIMEOUT",
+    "top": []
+  },
+  {
+    "slug": "stablehost",
+    "kw": "stablehost coupon code",
+    "skip": "TIMEOUT",
+    "top": []
+  },
+  {
+    "slug": "mdhosting",
+    "kw": "mdhosting coupon code",
+    "skip": "TIMEOUT",
+    "top": []
+  },
+  {
+    "slug": "hawkhost",
+    "kw": "hawkhost coupon code",
+    "skip": "TIMEOUT",
+    "top": []
+  }
+]

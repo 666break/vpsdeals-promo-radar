@@ -2,7 +2,7 @@
 
 Automated VPS hosting deal tracker. Scrapes real pricing from provider websites every 6 hours, builds a static site, and deploys to Cloudflare Pages — all free, all automated, no server.
 
-**Live site:** `https://vpsdeals-promo-radar.pages.dev`
+**Live site:** `https://serverbudget.com`
 
 ## What It Does
 

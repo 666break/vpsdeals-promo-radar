@@ -1,0 +1,24 @@
+{
+  "name": "vpsdeals-promo-radar",
+  "version": "1.0.0",
+  "description": "Automated VPS hosting deal tracker. Scrapes real pricing from provider websites every 6 hours, builds a static site, and deploys to Cloudflare Pages — all free, all automated, no server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/666break/vpsdeals-promo-radar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/666break/vpsdeals-promo-radar/issues"
+  },
+  "homepage": "https://github.com/666break/vpsdeals-promo-radar#readme",
+  "dependencies": {
+    "wrangler": "^4.135.0"
+  }
+}

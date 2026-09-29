@@ -540,6 +540,17 @@ def main():
     print('Copying live-site/ files to site/ ...')
     import shutil
     live_dir = script_dir / 'live-site'
+
+    # 10a. GA4 coverage HOOK — runs on every generation, never a manual step.
+    #      Scope is "all .html found", so newly added pages are covered automatically.
+    #      live-site/ is the deploy source, so it must carry GA4 BEFORE the copy.
+    print('Ensuring GA4 snippet on every page (live-site/) ...')
+    if str(script_dir) not in sys.path:
+        sys.path.insert(0, str(script_dir))
+    from inject_ga4 import inject_ga4_into_dir
+    if live_dir.exists():
+        inject_ga4_into_dir(live_dir)
+
     if live_dir.exists():
         copied = 0
         for item in live_dir.iterdir():
@@ -549,6 +560,10 @@ def main():
                 print(f'  Copied {item.name}')
                 copied += 1
         print(f'  Total: {copied} files copied from live-site/')
+
+    # 10b. Second pass over site/ so template-generated pages are covered too.
+    print('Ensuring GA4 snippet on every page (site/) ...')
+    inject_ga4_into_dir(site_dir)
 
     print(f'\n{"="*60}')
     print(f'Site generated in: {site_dir}')

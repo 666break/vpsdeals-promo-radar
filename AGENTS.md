@@ -6,7 +6,7 @@
 
 A zero-server, zero-cost, self-updating VPS hosting coupon/deal vertical site. Deployed on Cloudflare Pages. Scrapes provider pricing pages every 6 hours via GitHub Actions, builds static HTML, and auto-commits updates.
 
-The site is live at `https://vpsdeals-promo-radar.pages.dev` (or a custom domain once registered).
+The site is live at `https://serverbudget.com`.
 
 ## Single Source of Truth
 

@@ -2,3 +2,51 @@ site/
 __pycache__/
 *.pyc
 .workbuddy-ai/
+
+# === Credentials / secrets — never commit (I-Lang STEP 10 sync_repo_with_live) ===
+# node_modules is a vendored dependency dir, not source
+node_modules/
+
+# The following scripts hardcode live Cloudflare tokens / Global API keys in plain text.
+# They stay on disk (still usable locally) but must not enter version control.
+deploy_wrangler.sh
+add_dns.py
+check_after_zone_delete.py
+check_all_state.py
+check_cf_state.py
+check_deployments.py
+check_dns.py
+check_full_state.py
+check_registrar.py
+create_deploy_token.py
+create_registrar_token.py
+create_token.py
+cutover_act.py
+cutover_check.py
+cutover_clean.py
+cutover_dns.py
+cutover_prod.py
+cutover_repair.py
+dns_only_approach.py
+final_attempt.py
+fix_custom_domain.py
+fix_dns_cname.py
+fix_nameservers.py
+fix_zone_cache.py
+list_accounts.py
+purge_cache.py
+recreate_zone.py
+restore_proxied.py
+retry_custom_domain.py
+token_check.py
+try_other_account.py
+update_nameservers.py
+verify_article.py
+verify_production.py
+wait_and_verify.py
+zone_activation.py
+
+# Account-specific operational artifacts (zone id / email-route rules) — keep out of repo
+.zone_id.txt
+catch_all_rule.json
+contact_rule.json

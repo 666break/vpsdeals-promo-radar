@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VPS Deals & Hosting Promos — Updated Daily | ServerBudget</title>
-    <meta name="description" content="Compare VPS hosting deals and promotions from DigitalOcean, Vultr, Linode, Hetzner, OVHcloud, Contabo and Hostinger. Real prices, updated automatically.">
-    <link rel="canonical" href="https://serverbudget.com/index.html">
+    <meta name="description" content="Compare VPS hosting deals and promotions from DigitalOcean, Vultr, Linode, Hetzner, OVHcloud, Contabo and Hostinger. Real prices, verified against official pricing pages.">
+    <link rel="canonical" href="https://serverbudget.com/">
     <meta name="partnerwhiz-verify" content="pw_6fdb2036a3422859e4da04aaad7115121294b11880fc0322" />
     
     <!-- Open Graph -->
     <meta property="og:title" content="VPS Deals & Hosting Promos | ServerBudget">
-    <meta property="og:description" content="Compare VPS hosting deals from top providers. Real prices, updated automatically every 6 hours.">
+    <meta property="og:description" content="Compare VPS hosting deals from top providers. Real prices, verified against official pricing pages.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://serverbudget.com/">
     <meta name="twitter:card" content="summary_large_image">
@@ -161,6 +161,11 @@ footer a{color:var(--primary)}
   .stats{gap:10px}
   .stat{flex:1 1 100%}
   h2{font-size:1.3rem}
+  /* 2026-10-11 polish: keep the 17-item nav on ONE swipeable row instead of
+     wrapping to ~9 rows and pushing the deals below the fold. All links stay
+     in the DOM, so internal linking and crawlability are unchanged. */
+  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;margin-top:14px;scrollbar-width:thin}
+  .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
 }
 @media(min-width:761px) and (max-width:1024px){
   .grid{grid-template-columns:repeat(2,1fr)}
@@ -179,7 +184,7 @@ footer a{color:var(--primary)}
 <div class="container">
     <header>
         <h1>VPS Deals & Hosting Promos</h1>
-        <p>Real prices from top VPS providers — updated every 6 hours automatically.</p>
+        <p>Real prices from top VPS providers — last verified <span class="vdate">VERIFIED_DATE</span>.</p>
         <div class="nav">
             <a href="index.html">Home</a>
             <a href="compare.html">Compare All</a>
@@ -211,8 +216,8 @@ footer a{color:var(--primary)}
             <div class="stat-label">Providers</div>
         </div>
         <div class="stat">
-            <div class="stat-num">6h</div>
-            <div class="stat-label">Update Cycle</div>
+            <div class="stat-num"><span class="vdate">VERIFIED_DATE</span></div>
+            <div class="stat-label">Verified</div>
         </div>
     </div>
     
@@ -249,7 +254,7 @@ footer a{color:var(--primary)}
 </a>
     </div>
     
-    <div class="generated">Last updated: 2026-09-20T00:23:04Z</div>
+    <div class="generated">Last updated: 2026-10-12T03:00:06Z</div>
     
     <footer>
         <p>ServerBudget — VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>

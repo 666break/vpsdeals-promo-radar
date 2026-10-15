@@ -373,7 +373,7 @@ footer a{color:var(--primary)}
     <div class="provider-entry">
         <h3>Vultr — flexible and scalable, but read the two line items</h3>
         <p class="spec-line">Cloud Compute from $5.00/mo (1 vCPU, 1 GB, 25 GB) &middot; Windows license billed separately (hourly/monthly)</p>
-        <p>Vultr's model is maximum flexibility: you pick any instance — from the $5.00/mo Regular Performance 1 vCPU/1 GB box up to large dedicated-CPU machines — and add a Windows Server license on top, billed hourly or monthly. If you run a mix of Linux and Windows boxes, Vultr's à-la-carte approach is the most honest accounting, and hourly billing means you pay only for runtime. Scale CPU, RAM, and bandwidth independently.</p>
+        <p>Vultr's à-la-carte Windows model — any instance, plus a Windows Server license billed separately — is explained in full, with the pros and cons of that approach, in our <a href="windows-vps.html">Windows VPS guide</a>.</p>
         <p>The disadvantage is that the headline price lies by omission. A "$5 Vultr VPS" becomes a meaningful monthly bill once the Windows license is added, and the license rate is published separately rather than folded into the plan. For a like-for-like 4 vCPU/8 GB Windows server, the Vultr instance alone is $40.00/month before the Windows license — so despite the tempting $5 entry, a real Windows workload here is rarely the cheapest option. Use Vultr when you want precise control and are comfortable reading two line items instead of one. Check Vultr's pricing/licensing page for the current Windows Server rate.</p>
         <div class="pros-cons">
             <div class="pros">
@@ -423,7 +423,7 @@ footer a{color:var(--primary)}
     <!-- Block 8: Content Gap / What others get wrong -->
     <h2>The Gap Most "Cheap Windows VPS" Articles Miss</h2>
     <p>The typical "cheap Windows VPS hosting" listicle is a table sorted by the smallest number, with affiliate links and a one-line spec per row. It almost never tells you the three things that determine whether you actually saved money: <strong>(1)</strong> whether the shown price includes the Windows Server license or is a Linux-base price with Windows added on top (the difference between a $2 server and a $20 server), <strong>(2)</strong> whether bring-your-own-license is allowed — Contabo forbids it on its Windows range, while others vary, and <strong>(3)</strong> like-for-like total cost of ownership, because a 4 vCPU/8 GB Windows box on Contabo ($14.88/mo all-in) is cheaper than the same specs on Vultr ($40/mo + license) or RackNerd ($24.59/mo + license). Most pages also ignore traffic terms: unlimited (Contabo, OVHcloud) versus metered (Vultr) changes the math the moment you get real users.</p>
-    <p>We deliberately exclude vendor-owned promotional pages (microsoft.com, the hosts' own marketing) and app-store listings from our comparison set — they show who occupies the search head, not what content gap exists. Our <strong>benchmark-three list is pending owner input</strong>; once the owner supplies the three third-party sites they want us to measure against, we will re-run the gap analysis specifically against those. Until then, the gap above is based on the general SERP for "cheap windows vps hosting," "cheap windows vps," and "low cost windows vps."</p>
+    <p>How we choose the third-party sites we benchmark against — and why vendor-owned pages are excluded — is explained in our <a href="best-vps.html">best VPS comparison</a>.</p>
 
     <!-- Block 9: Who should pick which -->
     <h2>Who Should Pick Which Cheap Windows VPS</h2>
@@ -435,7 +435,7 @@ footer a{color:var(--primary)}
     <p>Pick <strong>OVHcloud VPS-1</strong> at $4.54/month or <strong>RackNerd KVM</strong> from $2.24/month. Confirm the Windows add-on cost at checkout (OVHcloud) or apply your own license where permitted (RackNerd), keep the workload light, and you have the lowest entry into a Windows vps server.</p>
 
     <h3>You run a mix of Linux and Windows and want precise control</h3>
-    <p>Pick <strong>Vultr</strong>. Scale CPU, RAM, and bandwidth independently, pay hourly, and only license the instances that need Windows. Read the two line items (instance + Windows license) instead of one, and you get the most honest accounting — just don't expect the $5 entry to stay cheap for a production Windows workload.</p>
+    <p>For the pay-as-you-go Windows option — scale CPU, RAM, and bandwidth independently, pay hourly, and license only the instances that need Windows — see the two-line-item breakdown in our <a href="windows-vps.html">Windows VPS guide</a>.</p>
 
     <h3>You only need to test Windows occasionally</h3>
     <p>Pick <strong>RackNerd's $2.24/mo promo</strong> for a throwaway lab box. It is too small for real use, but it is the cheapest way to boot Windows on KVM and poke around before you commit to a larger plan.</p>

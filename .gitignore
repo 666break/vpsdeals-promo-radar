@@ -50,3 +50,8 @@ zone_activation.py
 .zone_id.txt
 catch_all_rule.json
 contact_rule.json
+
+# Temporary page-copy artifacts used for on-page verification (never real pages,
+# never in sitemap). Keep them out of the repo so the 6-hourly CI deploy can
+# never publish a duplicate of a live page.
+live-site/_verify_*.html

@@ -395,7 +395,7 @@ footer a{color:var(--primary)}
         <h3>DigitalOcean Basic and Standard</h3>
         <p class="spec-line">$4/month (512 MiB) or $6/month (1 GiB) &middot; 1 vCPU &middot; 10-25 GB SSD &middot; 500 GB - 1 TB bandwidth</p>
         <p>DigitalOcean is the default choice for developers who want a clean API, predictable pricing, and a large library of one-click application images. The $4 basic droplet is the cheapest verified plan from a major provider, but 512 MiB of RAM is tight. The $6 standard plan with 1 GiB of RAM and 25 GB of storage is the more practical entry point for most use cases.</p>
-        <p>DigitalOcean's strength is its global datacenter footprint and developer tooling. The weakness is specs: Hetzner's CX23 includes 4 GB of RAM, where DigitalOcean's entry plan gives 512 MiB. If you do not need DigitalOcean's specific features, Hetzner is the better value.</p>
+        <p>DigitalOcean's strength is its global datacenter footprint and developer tooling. The weakness is specs: Hetzner's CX23 includes 4 GB of RAM, where DigitalOcean's entry plan gives 512 MiB.</p>
         <div class="pros-cons">
             <div class="pros">
                 <h4>Pros</h4>
@@ -551,7 +551,7 @@ footer a{color:var(--primary)}
     <h2>What to Check Before Buying a Cheap VPS</h2>
 
     <h3>1. CPU model and generation</h3>
-    <p>VPS providers list CPU cores, RAM, and price. Those three numbers are actively misleading. Two servers both listed as "2 vCPU, 4 GB RAM" can have processors from different decades. The Intel Xeon E5-2630 v3 was released in Q3 2014 with 8 physical cores, a 2.40 GHz base clock, and a 22 nm manufacturing process using the Haswell architecture. The Intel Xeon Gold 6448Y was released in Q1 2023 with 32 physical cores, a 2.10 GHz base clock, and Intel's 7 nm process using the Sapphire Rapids architecture. The newer chip has four times the core count, double the memory bandwidth, and a newer I/O bus. None of this appears on a pricing page that simply says "2 vCPU."</p>
+    <p>VPS providers list CPU cores, RAM, and price. Those three numbers are actively misleading. Two servers both listed as "2 vCPU, 4 GB RAM" can have processors from different decades. The Intel Xeon E5-2630 v3 was released in Q3 2014 with 8 physical cores, a 2.40 GHz base clock, and a 22 nm manufacturing process using the Haswell architecture. The Intel Xeon Gold 6448Y was released in Q1 2023 with 32 physical cores, a 2.10 GHz base clock, and Intel's 7 nm process using the Sapphire Rapids architecture. The newer chip has 32 physical cores against the older chip's 8, and a newer I/O bus. None of this appears on a pricing page that simply says "2 vCPU."</p>
     <p>Two CPU cores from 2023 are not the same as two CPU cores from 2014. The performance difference is not incremental. It is generational. No provider shows the CPU model on their pricing page. You have to log into the server and run <code>lscpu</code> or <code>cat /proc/cpuinfo</code> to find out what is actually running.</p>
 
     <h3>2. Shared versus dedicated vCPUs</h3>

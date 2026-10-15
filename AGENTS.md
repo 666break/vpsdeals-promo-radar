@@ -35,6 +35,8 @@ The site is live at `https://serverbudget.com`.
 - Never leave expired offers pretending to be valid
 - Never buy followers, inflate traffic, or post fake deals
 - Never brand-bid, cookie-inject, or do anything that circumvents platform rules
+- 正文与列表里不出现自己算出来的倍数 times double twice per dollar Nx 这类 只把读到的数并列
+- 读不到的价不当依据 也不许在旁边挂 verified
 
 ## Tech Stack
 

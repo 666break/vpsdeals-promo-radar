@@ -444,7 +444,8 @@ footer a{color:var(--primary)}
     <div class="provider-entry">
         <h3>Contabo Cloud VPS 4</h3>
         <p class="spec-line">$5.28/month for the first 24 months ($6.60/month regular) &middot; 4 vCPU &middot; 8 GB RAM &middot; 100 GB SSD &middot; 16 TB bandwidth</p>
-        <p>Contabo looks like the best deal on paper: four times the vCPU and double the RAM of Hetzner's CX22 for roughly double the price. But those 4 vCPUs are shared, and shared vCPUs can be oversold.</p>
+        <p>Contabo looks like the best deal on paper: four times the vCPU and double the RAM of Hetzner's CX22. But those 4 vCPUs are shared, and shared vCPUs can be oversold.</p>
+        <p class="note">Hetzner comparison re-checked against Hetzner's official cloud pricing page on 2026-10-16.</p>
         <p>Here is how shared vCPUs work. A physical server might have 16 physical CPU cores. The provider creates 32 virtual cores from those 16 physical ones. In theory, that supports 8 users with 4 vCPUs each. In practice, providers sell to more than 8 users, betting that most will not use their full allocation. When someone does, your VPS slows down or goes offline entirely.</p>
         <p>The solution is dedicated vCPUs. Contabo offers this under the name "Virtual Dedicated Servers." Hetzner offers dedicated vCPU plans in their General Purpose tier. Both cost more, but they eliminate the resource lottery.</p>
         <div class="pros-cons">

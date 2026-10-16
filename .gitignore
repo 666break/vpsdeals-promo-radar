@@ -55,3 +55,13 @@ contact_rule.json
 # never in sitemap). Keep them out of the repo so the 6-hourly CI deploy can
 # never publish a duplicate of a live page.
 live-site/_verify_*.html
+
+# Root-level ad-hoc debug scripts and verification screenshots. The public repo
+# root must not carry debug tooling or verification captures — they are not part
+# of the site and are never deployed.
+/_serp_debug.mjs
+/_serp_gate4.mjs
+/_serp_gate4.json
+/_verify_desktop.png
+/_verify_mobile.png
+/close_old.js

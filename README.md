@@ -14,7 +14,7 @@ Automated VPS hosting deal tracker. Scrapes real pricing from provider websites 
 
 ## Brand Positioning
 
-**vpsdeals** — a no-nonsense VPS price comparison and deal tracking site. Real prices, real data, updated automatically. The value is in timeliness: whoever posts new pricing first wins.
+**ServerBudget** — a no-nonsense VPS price comparison and deal tracking site. Real prices, real data, updated automatically. The value is in timeliness: whoever posts new pricing first wins.
 
 ## Tech Stack
 

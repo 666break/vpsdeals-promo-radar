@@ -7,7 +7,7 @@
     "offer_url": "https://www.digitalocean.com/pricing",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing",
-    "fetched_at": "2026-10-16T18:21:00.717512+00:00"
+    "fetched_at": "2026-10-17T00:20:25.652257+00:00"
   },
   {
     "provider": "DigitalOcean",
@@ -17,7 +17,7 @@
     "offer_url": "https://www.digitalocean.com/pricing",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing",
-    "fetched_at": "2026-10-16T18:21:00.717600+00:00"
+    "fetched_at": "2026-10-17T00:20:25.652339+00:00"
   },
   {
     "provider": "Hostinger",
@@ -27,7 +27,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-16T18:21:02.556875+00:00"
+    "fetched_at": "2026-10-17T00:20:27.400256+00:00"
   },
   {
     "provider": "Hostinger",
@@ -37,7 +37,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-16T18:21:02.556912+00:00"
+    "fetched_at": "2026-10-17T00:20:27.400293+00:00"
   },
   {
     "provider": "Hostinger",
@@ -47,7 +47,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-16T18:21:02.556933+00:00"
+    "fetched_at": "2026-10-17T00:20:27.400315+00:00"
   },
   {
     "provider": "Hostinger",
@@ -57,6 +57,6 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-16T18:21:02.556954+00:00"
+    "fetched_at": "2026-10-17T00:20:27.400334+00:00"
   }
 ]

@@ -7,7 +7,7 @@
     "offer_url": "https://www.digitalocean.com/pricing",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing",
-    "fetched_at": "2026-10-18T12:16:53.704218+00:00"
+    "fetched_at": "2026-10-18T18:15:04.911063+00:00"
   },
   {
     "provider": "DigitalOcean",
@@ -17,7 +17,7 @@
     "offer_url": "https://www.digitalocean.com/pricing",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing",
-    "fetched_at": "2026-10-18T12:16:53.704328+00:00"
+    "fetched_at": "2026-10-18T18:15:04.911101+00:00"
   },
   {
     "provider": "Hostinger",
@@ -27,7 +27,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-18T12:16:55.405896+00:00"
+    "fetched_at": "2026-10-18T18:15:06.551397+00:00"
   },
   {
     "provider": "Hostinger",
@@ -37,7 +37,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-18T12:16:55.405932+00:00"
+    "fetched_at": "2026-10-18T18:15:06.551424+00:00"
   },
   {
     "provider": "Hostinger",
@@ -47,7 +47,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-18T12:16:55.405953+00:00"
+    "fetched_at": "2026-10-18T18:15:06.551433+00:00"
   },
   {
     "provider": "Hostinger",
@@ -57,6 +57,46 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-18T12:16:55.405974+00:00"
+    "fetched_at": "2026-10-18T18:15:06.551441+00:00"
+  },
+  {
+    "provider": "ScalaHosting",
+    "title": "5-Star Managed Cloud Hosting Built for Your Business",
+    "price": 29.95,
+    "currency": "USD",
+    "offer_url": "https://www.scalahosting.com/vps-hosting",
+    "valid_until": null,
+    "source_url": "https://www.scalahosting.com/vps-hosting",
+    "fetched_at": "2026-10-18T18:15:06.993789+00:00"
+  },
+  {
+    "provider": "ScalaHosting",
+    "title": "Build #2",
+    "price": 44.95,
+    "currency": "USD",
+    "offer_url": "https://www.scalahosting.com/vps-hosting",
+    "valid_until": null,
+    "source_url": "https://www.scalahosting.com/vps-hosting",
+    "fetched_at": "2026-10-18T18:15:06.994157+00:00"
+  },
+  {
+    "provider": "ScalaHosting",
+    "title": "Build #3",
+    "price": 69.95,
+    "currency": "USD",
+    "offer_url": "https://www.scalahosting.com/vps-hosting",
+    "valid_until": null,
+    "source_url": "https://www.scalahosting.com/vps-hosting",
+    "fetched_at": "2026-10-18T18:15:06.994399+00:00"
+  },
+  {
+    "provider": "ScalaHosting",
+    "title": "Build #4",
+    "price": 94.95,
+    "currency": "USD",
+    "offer_url": "https://www.scalahosting.com/vps-hosting",
+    "valid_until": null,
+    "source_url": "https://www.scalahosting.com/vps-hosting",
+    "fetched_at": "2026-10-18T18:15:06.994651+00:00"
   }
 ]

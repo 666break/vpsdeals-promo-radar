@@ -1,0 +1,76 @@
+{
+  "next_index": 11,
+  "gaps": [
+    {
+      "slug": "a2-hosting-coupon-vps-dedicated.html",
+      "gap": "Product-line eligibility: does a single A2 Hosting / hosting.com coupon code cover all product lines (shared web hosting, VPS/cloud server, dedicated hardware, Managed WordPress) or only shared web hosting? hosting.com separates hosting into distinct lines each with its own pricing and promo; DealDrop/HotDeals/TrulyCodes list one flat 'A2 Hosting coupon' with a headline % off and rarely state which product line the code targets, so VPS/dedicated/WordPress buyers wrongly assume the headline rate applies to them.",
+      "done": true,
+      "published": "2026-10-21"
+    },
+    {
+      "slug": "a2-hosting-renewal-price-truth.html",
+      "gap": "Renewal price truth: A2 Hosting (hosting.com) promo price applies to the first billing term only; at renewal it reverts to the standard rate, which is often several times higher. DealDrop/HotDeals/TrulyCodes list the headline '% off' and active codes but almost never show the renewal rate side-by-side, so the real multi-year cost is hidden.",
+      "done": true,
+      "published": "2026-10-13"
+    },
+    {
+      "slug": "a2-hosting-coupon-after-rebrand.html",
+      "gap": "After the A2 Hosting -> hosting.com rebrand, do legacy 'A2 Hosting coupon codes' still work? Where the real discount lives now, and why old codes from coupon sites often fail at checkout.",
+      "done": true,
+      "published": "2026-10-13"
+    },
+    {
+      "slug": "a2-hosting-black-friday-vs-everyday.html",
+      "gap": "Is Black Friday / Cyber Monday actually cheaper than the always-on A2 Hosting promo? A like-for-like comparison of promo timing so readers don't wait for a 'better' deal that may not exist.",
+      "done": true,
+      "published": "2026-10-15"
+    },
+    {
+      "slug": "a2-hosting-turbo-discount-worth-it.html",
+      "gap": "Turbo plan discount and whether the speed uplift (Turbo) justifies the higher renewal price versus the standard shared plan — a buying-decision angle coupon aggregators skip.",
+      "done": true,
+      "published": "2026-10-16"
+    },
+    {
+      "slug": "a2-hosting-money-back-real.html",
+      "gap": "The 30-day money-back reality: is it full or prorated, what is actually refundable (domain? add-ons?), and how it protects you from a renewal-price shock.",
+      "done": true,
+      "published": "2026-10-17"
+    },
+    {
+      "slug": "a2-hosting-coupon-existing-customer.html",
+      "gap": "Existing customers / renewal discount: do A2 Hosting (hosting.com) coupon codes lower an existing customer's renewal, is there a loyalty/retention discount, and what actually works versus third-party code lists that don't validate at renewal.",
+      "done": true,
+      "published": "2026-10-18"
+    },
+    {
+      "slug": "a2-hosting-coupon-stacking.html",
+      "gap": "Coupon stacking: can two A2 Hosting / hosting.com coupon codes be combined, and does a code stack on top of the plan-page promotional rate? The discount is computed by the cart, not added up — coupon sites list codes but never clarify whether they combine or beat the already-discounted plan price.",
+      "done": true,
+      "published": "2026-10-19"
+    },
+    {
+      "slug": "a2-hosting-coupon-monthly-vs-annual.html",
+      "gap": "Monthly vs annual promo eligibility: does the A2 Hosting / hosting.com coupon / headline discount apply to month-to-month billing or only to a prepaid annual/multi-year term? hosting.com's renewal page ties savings to paying 'a year or two or three in advance' and states monthly renews at regular pricing; DealDrop/HotDeals/TrulyCodes list codes with a flat % off but rarely state the billing term, so monthly shoppers assume the headline rate applies when it may be term-locked.",
+      "done": true,
+      "published": "2026-10-20"
+    },
+    {
+      "slug": "a2-hosting-coupon-vs-competitor.html",
+      "gap": "Cross-provider value: is the A2 Hosting / hosting.com coupon actually cheaper than a competitor's coupon? A headline '% off' is measured against each provider's own regular rate (different anchors), so the only honest comparison is the absolute recurring $ at checkout and the renewal rate, not the percentages. DealDrop/HotDeals/TrulyCodes each run a single-store page and never put two providers' real checkout $ side by side or show renewal, so a reader cannot answer 'is A2 cheaper than a rival' from those pages.",
+      "done": true,
+      "published": "2026-10-25"
+    },
+    {
+      "slug": "a2-hosting-coupon-expiration.html",
+      "gap": "Coupon expiration & rate lock: does an A2 Hosting / hosting.com coupon expire, and does the discounted rate stay locked for the full prepaid term? hosting.com's discount is a plan-page promo (not a separate expiring code); you lock the rate for the term you buy and renewal is the regular rate. DealDrop/HotDeals/TrulyCodes show codes with headline % and sometimes an 'expires on' stamp but rarely state that the rate is locked only for the prepaid term and that renewal is the regular rate, so a reader cannot tell how long the cheap price actually lasts.",
+      "done": true,
+      "published": "2026-10-26"
+    },
+    {
+      "slug": "a2-hosting-free-domain.html",
+      "gap": "Free-domain reality: hosting.com lists 'Free Domain Name Registration' as a Starter-plan inclusion, but domains are also sold as a separate product with prices labelled 'for the 1st year' (.com $11.99) and an explicit promise that 'you always see the renewal price before you buy'. DealDrop/HotDeals/TrulyCodes list 'free domain' as a feature bullet and never state whether it is a first-year registration only, whose name it is registered in, what the domain renews at, whether the 30-day money-back guarantee covers the domain fee, or whether WHOIS privacy is free on that extension ('free on eligible extensions, charged on others'). A reader cannot decide between 'hosting + free domain' and 'hosting + separate domain' from those pages.",
+      "done": false
+    }
+  ]
+}

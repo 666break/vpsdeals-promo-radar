@@ -23,7 +23,7 @@
       "author": {
         "@type": "Person",
         "name": "Marcus Reid",
-        "url": "https://serverbudget.com/about.html"
+        "url": "https://serverbudget.com/about"
       },
       "publisher": {
         "@type": "Organization",
@@ -32,7 +32,7 @@
       },
       "datePublished": "2026-10-13",
       "dateModified": "2026-10-13",
-      "mainEntityOfPage": "https://serverbudget.com/cheap-vps-for-beginners.html"
+      "mainEntityOfPage": "https://serverbudget.com/cheap-vps-for-beginners"
     }
     </script>
 
@@ -43,8 +43,8 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
-        {"@type": "ListItem", "position": 2, "name": "Cheap VPS Hosting", "item": "https://serverbudget.com/cheap-vps-hosting.html"},
-        {"@type": "ListItem", "position": 3, "name": "For Beginners", "item": "https://serverbudget.com/cheap-vps-for-beginners.html"}
+        {"@type": "ListItem", "position": 2, "name": "Cheap VPS Hosting", "item": "https://serverbudget.com/cheap-vps-hosting"},
+        {"@type": "ListItem", "position": 3, "name": "For Beginners", "item": "https://serverbudget.com/cheap-vps-for-beginners"}
       ]
     }
     </script>
@@ -199,32 +199,32 @@ footer a{color:var(--primary)}
 <body>
 <div class="container">
     <header>
-        <a href="index.html" class="brand">ServerBudget</a>
+        <a href="/" class="brand">ServerBudget</a>
         <div class="nav">
-            <a href="index.html">Home</a>
-            <a href="compare.html">Compare All</a>
-            <a href="cheap-vps-hosting.html">Cheap VPS</a>
-            <a href="cheap-vps-for-beginners.html">VPS for Beginners</a>
-            <a href="best-vps.html">Best VPS</a>
-            <a href="virtual-private-server.html">Virtual Private Server</a>
-            <a href="free-vps.html">Free VPS</a>
-            <a href="about.html">About</a>
-            <a href="privacy.html">Privacy</a>
-            <a href="contact.html">Contact</a>
+            <a href="/">Home</a>
+            <a href="/compare">Compare All</a>
+            <a href="/cheap-vps-hosting">Cheap VPS</a>
+            <a href="/cheap-vps-for-beginners">VPS for Beginners</a>
+            <a href="/best-vps">Best VPS</a>
+            <a href="/virtual-private-server">Virtual Private Server</a>
+            <a href="/free-vps">Free VPS</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
         </div>
     </header>
 
     <h1>Cheap VPS Hosting for Beginners: Deploy Your First Server in Under an Hour</h1>
 
     <div class="meta">
-        By <a href="about.html">Marcus Reid</a> &middot; Published Oct 13, 2026 &middot; Last updated Oct 13, 2026 &middot; 11 min read
+        By <a href="/about">Marcus Reid</a> &middot; Published Oct 13, 2026 &middot; Last updated Oct 13, 2026 &middot; 11 min read
     </div>
 
     <!-- First screen = the answer -->
     <div class="takeaways">
         <h2>Key Takeaways</h2>
         <ul>
-            <li>You can run a real, internet-facing server for <strong>$4&ndash;10/month</strong>. Verified entry prices on our <a href="cheap-vps-hosting.html">cheap VPS pricing page</a> (last verified Sep 2026): Hetzner CX23 (price not displayed on Hetzner official page as of 2026-10-16), DigitalOcean Basic at $4.00/month, RackNerd annual from $10.98/year (about $0.92/month).</li>
+            <li>You can run a real, internet-facing server for <strong>$4&ndash;10/month</strong>. Verified entry prices on our <a href="/cheap-vps-hosting">cheap VPS pricing page</a> (last verified Sep 2026): Hetzner CX23 (price not displayed on Hetzner official page as of 2026-10-16), DigitalOcean Basic at $4.00/month, RackNerd annual from $10.98/year (about $0.92/month).</li>
             <li>A first deploy takes <strong>roughly 45&ndash;60 minutes</strong> (estimate &mdash; see the breakdown below). Most of it is waiting: email verification and, if you add a domain, DNS propagation.</li>
             <li>Six steps: pick a provider &rarr; choose an OS image &rarr; create the server &rarr; log in over SSH &rarr; harden it &rarr; deploy something.</li>
             <li>The #1 beginner mistake is leaving <strong>password login on</strong>. An SSH key takes two minutes to set up and removes the single biggest attack vector on an open port 22.</li>
@@ -284,7 +284,7 @@ footer a{color:var(--primary)}
     </div>
 
     <h2>Step 1 &mdash; Pick a provider and sign up</h2>
-    <p>If you have not chosen yet, start from our <a href="cheap-vps-hosting.html">verified price comparison</a>. For a first server the practical shortlist is narrow: a provider with a clean dashboard, hourly or monthly billing, and a region close to you. The three verified entry prices above (Hetzner, DigitalOcean, RackNerd) are all fine places to learn. Pick one, create the account, and finish the email verification &mdash; this is usually where the clock starts.</p>
+    <p>If you have not chosen yet, start from our <a href="/cheap-vps-hosting">verified price comparison</a>. For a first server the practical shortlist is narrow: a provider with a clean dashboard, hourly or monthly billing, and a region close to you. The three verified entry prices above (Hetzner, DigitalOcean, RackNerd) are all fine places to learn. Pick one, create the account, and finish the email verification &mdash; this is usually where the clock starts.</p>
     <div class="note">Signup identity checks vary by provider. Most ask for a card or PayPal; a few accept other methods. Confirm you can actually complete checkout before you plan around a specific plan, because a price you cannot pay is not a price you can use.</div>
 
     <h2>Step 2 &mdash; Choose an OS image</h2>
@@ -293,7 +293,7 @@ footer a{color:var(--primary)}
     <h2>Step 3 &mdash; Create the server</h2>
     <p>For learning, the smallest plan is enough: <strong>1 vCPU and 1 GB RAM</strong> runs a static site, a small API, a bot, or a personal VPN. You can resize later. Two choices matter more than specs:</p>
     <ul>
-        <li><strong>Region:</strong> pick a datacenter physically close to where you (or your users) are. Latency is mostly distance plus speed-of-light; no setting fixes a bad region choice. Our <a href="cheap-vps-hosting.html">datacenter table</a> lists where each provider sits.</li>
+        <li><strong>Region:</strong> pick a datacenter physically close to where you (or your users) are. Latency is mostly distance plus speed-of-light; no setting fixes a bad region choice. Our <a href="/cheap-vps-hosting">datacenter table</a> lists where each provider sits.</li>
         <li><strong>SSH key:</strong> almost every provider lets you paste a public key at creation time. Do it here &mdash; it is easier than adding it after the server exists.</li>
     </ul>
 
@@ -359,7 +359,7 @@ apt update &amp;&amp; apt upgrade -y</code></pre>
     <pre><code>apt install -y nginx
 # put your index.html at /var/www/html/index.html
 systemctl enable nginx</code></pre>
-    <p>Visit your server's IP in a browser. If you see your page, you have deployed a real server to the internet. From there the path is the same for everything else: a Python API, a Node app behind a process manager, a bot &mdash; they all ultimately listen on a port and serve traffic. Our <a href="virtual-private-server.html">VPS explainer</a> covers what the box actually is; this guide is the "now what" that follows it.</p>
+    <p>Visit your server's IP in a browser. If you see your page, you have deployed a real server to the internet. From there the path is the same for everything else: a Python API, a Node app behind a process manager, a bot &mdash; they all ultimately listen on a port and serve traffic. Our <a href="/virtual-private-server">VPS explainer</a> covers what the box actually is; this guide is the "now what" that follows it.</p>
 
     <h2>The mistakes that waste your evening</h2>
     <div class="pros-cons">
@@ -385,7 +385,7 @@ systemctl enable nginx</code></pre>
         </div>
     </div>
 
-    <div class="disclosure">Cost reality check: the monthly price is the least important number. A $4/month server that costs you ten hours of lost evening because it got compromised or you locked yourself out is not cheap. The prices cited above are verified against official provider pages on our <a href="cheap-vps-hosting.html">cheap VPS pricing page</a> (last verified Sep 2026), except where noted. The "45&ndash;60 minute" first-deploy estimate is our own, built from typical signup, provisioning, SSH, and deploy times &mdash; your experience will vary with provider speed and whether you add a domain.</div>
+    <div class="disclosure">Cost reality check: the monthly price is the least important number. A $4/month server that costs you ten hours of lost evening because it got compromised or you locked yourself out is not cheap. The prices cited above are verified against official provider pages on our <a href="/cheap-vps-hosting">cheap VPS pricing page</a> (last verified Sep 2026), except where noted. The "45&ndash;60 minute" first-deploy estimate is our own, built from typical signup, provisioning, SSH, and deploy times &mdash; your experience will vary with provider speed and whether you add a domain.</div>
 
     <h2>Frequently Asked Questions</h2>
     <h3>Do I need a credit card to buy a cheap VPS?</h3>
@@ -412,16 +412,16 @@ systemctl enable nginx</code></pre>
     <div class="related">
         <h2>Related Articles</h2>
         <ul>
-            <li><a href="cheap-vps-hosting.html">Cheap VPS Hosting: What Pricing Pages Won't Tell You</a> &mdash; verified prices and the shared-vCPU trap.</li>
-            <li><a href="virtual-private-server.html">What Is a Virtual Private Server?</a> &mdash; how the box actually works.</li>
-            <li><a href="best-vps.html">Best VPS Hosting</a> &mdash; our ranked shortlist.</li>
+            <li><a href="/cheap-vps-hosting">Cheap VPS Hosting: What Pricing Pages Won't Tell You</a> &mdash; verified prices and the shared-vCPU trap.</li>
+            <li><a href="/virtual-private-server">What Is a Virtual Private Server?</a> &mdash; how the box actually works.</li>
+            <li><a href="/best-vps">Best VPS Hosting</a> &mdash; our ranked shortlist.</li>
         </ul>
     </div>
 
     <footer>
         <p>ServerBudget &mdash; VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>
         <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
-        <p style="margin-top:0.5rem"><a href="index.html">Home</a> &middot; <a href="cheap-vps-hosting.html">Cheap VPS</a> &middot; <a href="virtual-private-server.html">Virtual Private Server</a> &middot; <a href="best-vps.html">Best VPS</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="contact.html">Contact</a></p>
+        <p style="margin-top:0.5rem"><a href="/">Home</a> &middot; <a href="/cheap-vps-hosting">Cheap VPS</a> &middot; <a href="/virtual-private-server">Virtual Private Server</a> &middot; <a href="/best-vps">Best VPS</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></p>
     </footer>
 </div>
 </body>

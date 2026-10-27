@@ -1,5 +1,5 @@
 {
-  "next_index": 11,
+  "next_index": 12,
   "gaps": [
     {
       "slug": "a2-hosting-coupon-vps-dedicated.html",
@@ -70,7 +70,19 @@
     {
       "slug": "a2-hosting-free-domain.html",
       "gap": "Free-domain reality: hosting.com lists 'Free Domain Name Registration' as a Starter-plan inclusion, but domains are also sold as a separate product with prices labelled 'for the 1st year' (.com $11.99) and an explicit promise that 'you always see the renewal price before you buy'. DealDrop/HotDeals/TrulyCodes list 'free domain' as a feature bullet and never state whether it is a first-year registration only, whose name it is registered in, what the domain renews at, whether the 30-day money-back guarantee covers the domain fee, or whether WHOIS privacy is free on that extension ('free on eligible extensions, charged on others'). A reader cannot decide between 'hosting + free domain' and 'hosting + separate domain' from those pages.",
-      "done": false
+      "done": true,
+      "published_at": "2026-10-27T12:21:45Z",
+      "live_url": "https://serverbudget.com/a2-hosting-free-domain",
+      "commit": "d632e55",
+      "deployment": "357b7391",
+      "verify": {
+        "http": 200,
+        "title": "A2 Hosting Free Domain: What \"Free Domain Registration\" Actually Covers",
+        "h1": "A2 Hosting Free Domain",
+        "sitemap_hit": true,
+        "x_robots_tag": "none",
+        "html_301": true
+      }
     }
   ]
 }

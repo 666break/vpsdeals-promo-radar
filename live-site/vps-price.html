@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VPS Price Explained: Hourly Rates, Monthly Caps, Cost per GB</title>
-    <meta name="description" content="VPS price decoded from official price lists: the 672-hour monthly cap, the $6-per-GiB ladder, and why the same 4 GB box can cost 5.3x more.">
+    <meta name="description" content="VPS price decoded from official price lists: the 672-hour Bundled Plan monthly cap, the $6-per-GiB ladder, and why the same 4 GB box can cost 5.3x more.">
     <link rel="canonical" href="https://serverbudget.com/vps-price">
     <meta property="og:title" content="VPS Price Explained: Hourly Rates, Monthly Caps, Cost per GB">
-    <meta property="og:description" content="Three official price lists, read on 2026-10-28: the 672-hour monthly cap, the $6-per-GiB ladder and the 5.3x gap on identical specs.">
+    <meta property="og:description" content="Three official price lists, read on 2026-10-28: the 672-hour Bundled Plan cap, the $6-per-GiB ladder and the 5.3x gap on identical specs.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://serverbudget.com/vps-price">
     <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +229,7 @@ footer a{color:var(--primary)}
         <h2>Key Takeaways / The Verdict</h2>
         <ul>
             <li><strong>A VPS price is four numbers stacked, not one.</strong> The billing clock, the RAM ladder, the CPU isolation tier and the tax line decide the figure &mdash; and three of the four are on the provider's own page if you know where to look.</li>
-            <li><strong>The monthly price is a cap of about 672 hours, not 730.</strong> On every row of DigitalOcean's Basic Droplet table, the monthly figure divided by the hourly rate lands between 671.9 and 672.3 hours &mdash; 28 days. Multiply the hourly rate by 730 and you overstate the month by roughly 8%.</li>
+            <li><strong>The monthly price is a cap of about 672 hours, not 730</strong> &mdash; a Bundled Plan rule, not a Droplet-wide one. On every row of DigitalOcean's Basic Droplet table, the monthly figure divided by the hourly rate lands between 671.9 and 672.3 hours &mdash; 28 days. Multiply the hourly rate by 730 and you overstate the month by roughly 8%.</li>
             <li><strong>DigitalOcean's Basic ladder is $6.00 per GiB of RAM and $12.00 per vCPU</strong>, held flat from 1 GiB to 16 GiB. The $4.00 plan is the exception at $8.00 per GiB, and the $18.00 plan is the other exception at $9.00 per GiB because you are buying a second vCPU.</li>
             <li><strong>OVHcloud prices per GB, not per core.</strong> Price per GB of RAM falls from $1.135 (VPS-1) to $0.974 (VPS-4); price per vCore jumps from $2.05 to $2.92 at the top plan because that plan is the only one at 3 GB of RAM per core instead of 2.</li>
             <li><strong>Identical specs, 5.3x apart.</strong> 4 GB RAM and 2 vCPUs is $4.54/month at OVHcloud (VPS-1) and $24.00/month at DigitalOcean (Basic). Nothing in either price list says why.</li>
@@ -263,7 +263,8 @@ footer a{color:var(--primary)}
     </div>
     <p class="srcnote">Sources: ovhcloud.com/en/vps/, digitalocean.com/pricing/droplets and hetzner.com/cloud/, each fetched once on 2026-10-28. Vultr, Contabo, RackNerd and Linode returned bot-walls (HTTP 403) to our fetch on the same day, so they are absent from this table; we did not fill their rows from memory or from older articles. Where a cell says the page states the starting price only, the page did not publish per-plan specs in the markup we could read, and we did not substitute numbers from a third-party review.</p>
 
-    <h2>The Monthly Price Is a 672-Hour Cap, Not 730 Hours</h2>
+    <h2>The Monthly Price Is a 672-Hour Cap, Not 730 Hours &mdash; on Bundled Plans</h2>
+    <p>This cap is a Bundled Plan rule, not a Droplet-wide one: DigitalOcean's pricing FAQ states that &ldquo;Bundled Plans have a monthly cap&rdquo; while &ldquo;v5 Droplets are billed on actual hours used each month and are not capped at 672 hours,&rdquo; and it names Basic, CPU-Optimized and Memory-Optimized as the Bundled Plans &mdash; the tier every row in the table below belongs to.</p>
     <p>DigitalOcean publishes both an hourly rate and a monthly price for every Droplet row, which makes it possible to find the point where the two meet. Divide the monthly price by the hourly rate:</p>
     <div class="table-wrap">
     <table>
@@ -397,7 +398,7 @@ footer a{color:var(--primary)}
     <ol>
         <li><strong>Convert everything to a per-GB and per-vCPU rate.</strong> Divide the monthly price by RAM and by cores. If the provider's rate is far below its own ladder ($4.00 per vCPU against a $12.00 ladder), you are looking at an entry plan with an entry plan's limits.</li>
         <li><strong>Decide whether you need dedicated cores.</strong> If yes, multiply your candidate price by 1.75x to 7.26x before you compare it to anything.</li>
-        <li><strong>Estimate your runtime hours, not your months.</strong> Under about 672 hours a month, hourly billing beats the monthly cap; over it, the cap wins and the effective rate is lower than published.</li>
+        <li><strong>Estimate your runtime hours, not your months.</strong> Under about 672 hours a month on a Bundled Plan, hourly billing beats the monthly cap; over it, the cap wins and the effective rate is lower than published &mdash; and on a v5 configuration, which has no cap, the hourly rate is the bill.</li>
         <li><strong>Add the optional services you actually need</strong> from the provider's own option list, and put the total on one currency with tax included.</li>
         <li><strong>Multiply by 12.</strong> A $4.54 plan is $54.48 a year; the same shape at $24.00 is $288.00. Both are &ldquo;a VPS&rdquo;.</li>
     </ol>
@@ -415,7 +416,7 @@ footer a{color:var(--primary)}
     <p>It varies, and the pages do not always use the same convention. Hetzner states its cloud prices per month excluding VAT and applies the rate of the country you select. OVHcloud and DigitalOcean quote US-dollar figures on the pages we read without a VAT line in the plan cards. A pre-tax euro figure and a dollar figure cannot be ranked against each other until both are put on the same currency and the same tax treatment.</p>
 
     <h2>Bottom Line</h2>
-    <p>A VPS price is a composition, and the four parts are all published: the billing clock (a cap of about 672 hours, not 730), the RAM and core ladder ($6.00 per GiB and $12.00 per vCPU at DigitalOcean, roughly $1 per GB of RAM at OVHcloud), the CPU isolation multiplier (1.75x inside DigitalOcean, 7.26x across Hetzner's tiers) and the tax line. Read the ladder before the number and the number stops being a surprise. Read only the &ldquo;from&rdquo; price and you will compare a $4.54 plan with a $24.00 plan and conclude, wrongly, that one of them is a mistake.</p>
+    <p>A VPS price is a composition, and the four parts are all published: the billing clock (a cap of about 672 hours on Bundled Plans, not 730), the RAM and core ladder ($6.00 per GiB and $12.00 per vCPU at DigitalOcean, roughly $1 per GB of RAM at OVHcloud), the CPU isolation multiplier (1.75x inside DigitalOcean, 7.26x across Hetzner's tiers) and the tax line. Read the ladder before the number and the number stops being a surprise. Read only the &ldquo;from&rdquo; price and you will compare a $4.54 plan with a $24.00 plan and conclude, wrongly, that one of them is a mistake.</p>
 
     <div class="author-bio">
         <div class="author-name">Marcus Reid</div>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Price Explained: Hourly Rates, Monthly Caps, Cost per GB</title>
+    <meta name="description" content="VPS price decoded from official price lists: the 672-hour monthly cap, the $6-per-GiB ladder, and why the same 4 GB box can cost 5.3x more.">
+    <link rel="canonical" href="https://serverbudget.com/vps-price">
+    <meta property="og:title" content="VPS Price Explained: Hourly Rates, Monthly Caps, Cost per GB">
+    <meta property="og:description" content="Three official price lists, read on 2026-10-28: the 672-hour monthly cap, the $6-per-GiB ladder and the 5.3x gap on identical specs.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://serverbudget.com/vps-price">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VPS Price Explained: Hourly Rates, Monthly Caps, Cost per GB">
+    <meta name="twitter:description" content="How a VPS price is actually assembled: billing clock, RAM ladder, CPU isolation, tax.">
+
+    <!-- JSON-LD: Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "VPS Price Explained: Hourly Rates, Monthly Caps, Cost per GB",
+      "author": {
+        "@type": "Person",
+        "name": "Marcus Reid",
+        "url": "https://serverbudget.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ServerBudget",
+        "url": "https://serverbudget.com"
+      },
+      "datePublished": "2026-10-28",
+      "dateModified": "2026-10-28",
+      "mainEntityOfPage": "https://serverbudget.com/vps-price"
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-price"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the average VPS price per month?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The entry prices on the three official price lists we read on 2026-10-28 were $4.00/month for a DigitalOcean Basic Droplet (512 MiB RAM, 1 vCPU, 10 GiB SSD), $4.54/month for OVHcloud VPS-1 (2 vCores, 4 GB RAM, 40 GB NVMe, unlimited traffic) and EUR 5.99/month excluding VAT for Hetzner's Cost-Optimized cloud plan. Those are the cheapest rows, not a typical bill: every provider's range extends far above them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does the hourly rate times 730 hours not equal the monthly price?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because the monthly figure is a cap, not an extrapolation. On DigitalOcean's Basic Droplet table every row hits its monthly cap at roughly 672 hours of runtime, which is 28 days. A droplet that runs continuously for a full 30-day month is billed the capped monthly price; a droplet that runs fewer than 28 days is billed hourly. Multiplying the hourly rate by 730 therefore overstates the monthly price by about 8 percent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does a VPS server price per GB of RAM look like?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends entirely on the provider's ladder. On OVHcloud's VPS range the price per GB of RAM falls from $1.135 (VPS-1, $4.54 for 4 GB) to $0.974 (VPS-4, $23.37 for 24 GB). On DigitalOcean's Basic range the same figure is flat at $6.00 per GiB for every plan from 1 GiB to 16 GiB, and $8.00 per GiB on the 512 MiB entry plan. The same 4 GB of RAM is therefore $4.54 at OVHcloud and $24.00 at DigitalOcean, a 5.3x difference."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much extra does a dedicated-vCPU VPS cost compared with a shared one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At DigitalOcean the premium is 1.75x on identical specs: a Basic Droplet with 4 GiB RAM and 2 shared vCPUs is listed at $24.00/month, while a CPU-Optimized Droplet with 4 GiB RAM and 2 dedicated vCPUs is listed at $42.00/month. At Hetzner the gap is wider because it spans separate product tiers rather than a variant: EUR 5.99/month for Cost-Optimized against EUR 43.49/month for General Purpose with dedicated vCPUs, both excluding VAT."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are VPS prices quoted with or without tax?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It varies, and the pages do not always use the same convention. Hetzner states its cloud prices per month excluding VAT and applies the rate of the country you select. OVHcloud and DigitalOcean quote US-dollar figures on the pages we read without a VAT line in the plan cards. A pre-tax euro figure and a dollar figure cannot be ranked against each other until both are put on the same currency and the same tax treatment."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+:root{
+  --bg:#eef1f6;
+  --surface:#ffffff;
+  --surface-2:#f6f8fc;
+  --border:#e3e8ef;
+  --text:#16202c;
+  --muted:#5b6675;
+  --muted-2:#8a94a3;
+  --primary:#2563eb;
+  --primary-d:#1d4ed8;
+  --accent:#0ca678;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow:0 12px 34px rgba(16,24,40,.10);
+  --radius:14px;
+  --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--primary);text-decoration:none;transition:color .15s}
+a:hover{text-decoration:underline;color:var(--primary-d)}
+img{max-width:100%;height:auto;display:block}
+.container{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+/* Header */
+header{border-bottom:1px solid var(--border);padding:24px 0 20px;margin-bottom:34px}
+header h1{font-size:2.05rem;line-height:1.18;letter-spacing:-.015em;color:var(--text);font-weight:800}
+header h1 a{color:var(--text)}
+header p{color:var(--muted);font-size:1.02rem;margin-top:8px;max-width:62ch}
+.brand{display:inline-block;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--text);margin-bottom:10px}
+.brand:hover{text-decoration:none;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.nav a{display:inline-block;padding:7px 14px;border:1px solid var(--border);border-radius:999px;font-size:.9rem;color:var(--muted);background:var(--surface);transition:all .15s}
+.nav a:hover{border-color:var(--primary);color:var(--primary);text-decoration:none;background:#eef3ff}
+
+/* Prose */
+h1{font-size:2.05rem;line-height:1.2;letter-spacing:-.015em;font-weight:800;margin-bottom:12px}
+h2{font-size:1.5rem;margin:34px 0 14px;color:var(--text);font-weight:750;letter-spacing:-.01em;line-height:1.3}
+h3{font-size:1.18rem;margin:26px 0 10px;color:var(--text);font-weight:700}
+p{margin-bottom:16px;color:#28323d}
+ul,ol{margin:0 0 18px 1.4rem}
+li{margin-bottom:8px}
+strong{font-weight:700;color:var(--text)}
+blockquote{border-left:3px solid var(--primary);padding:8px 0 8px 18px;margin:0 0 18px;color:var(--muted);background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+
+/* Meta line */
+.meta{color:var(--muted);font-size:.9rem;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.meta a{color:var(--primary);font-weight:600}
+
+/* First-screen answer box */
+.takeaways{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:22px 26px 8px;margin:0 0 28px;box-shadow:var(--shadow-sm)}
+.takeaways h2{margin:0 0 14px;font-size:1.22rem;color:var(--text)}
+.takeaways ul{margin:0 0 14px 1.15rem}
+.takeaways li{margin-bottom:11px;font-size:.98rem;color:#28323d}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);margin:22px 0}
+table{width:100%;border-collapse:collapse;min-width:540px}
+th{text-align:left;padding:13px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+.price{font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.88rem}
+.srcnote{color:#5b6675;font-size:.88rem;line-height:1.6}
+
+/* Callout */
+.callout{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:22px 0;font-size:.94rem;color:var(--muted)}
+.callout strong{color:var(--text)}
+
+/* Author + related */
+.author-bio{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:40px 0 0;box-shadow:var(--shadow-sm)}
+.author-name{font-weight:800;font-size:1.02rem;color:var(--text)}
+.author-role{color:var(--accent);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:4px 0 12px}
+.author-bio p{font-size:.94rem;color:var(--muted);margin-bottom:0}
+.related{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow-sm)}
+.related h2{margin:0 0 14px;font-size:1.2rem}
+.related a{display:block;padding:9px 0;border-bottom:1px solid var(--border);font-weight:600;font-size:.96rem}
+.related a:last-of-type{border-bottom:none}
+.related p{font-size:.88rem;color:var(--muted);margin:12px 0 0}
+
+/* Footer */
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+footer p{color:var(--muted);margin-bottom:10px}
+footer a{color:var(--primary)}
+
+/* Responsive */
+@media(max-width:760px){
+  body{font-size:16px}
+  h1,header h1{font-size:1.6rem}
+  .container{padding:0 14px 56px}
+  h2{font-size:1.3rem}
+  .takeaways{padding:18px 18px 4px}
+}
+</style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H2F4PWVG2P');
+  </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="/" class="brand">ServerBudget</a>
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/compare">Compare All</a>
+            <a href="/best-vps">Best VPS</a>
+            <a href="/cheap-vps-hosting">Cheap VPS</a>
+            <a href="/free-vps">Free VPS</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </header>
+
+    <h1>VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</h1>
+
+    <div class="meta">
+        By <a href="/about">Marcus Reid</a> &middot; Published Oct 28, 2026 &middot; Last updated Oct 28, 2026 &middot; 8 min read
+    </div>
+
+    <div class="takeaways">
+        <h2>Key Takeaways / The Verdict</h2>
+        <ul>
+            <li><strong>A VPS price is four numbers stacked, not one.</strong> The billing clock, the RAM ladder, the CPU isolation tier and the tax line decide the figure &mdash; and three of the four are on the provider's own page if you know where to look.</li>
+            <li><strong>The monthly price is a cap of about 672 hours, not 730.</strong> On every row of DigitalOcean's Basic Droplet table, the monthly figure divided by the hourly rate lands between 671.9 and 672.3 hours &mdash; 28 days. Multiply the hourly rate by 730 and you overstate the month by roughly 8%.</li>
+            <li><strong>DigitalOcean's Basic ladder is $6.00 per GiB of RAM and $12.00 per vCPU</strong>, held flat from 1 GiB to 16 GiB. The $4.00 plan is the exception at $8.00 per GiB, and the $18.00 plan is the other exception at $9.00 per GiB because you are buying a second vCPU.</li>
+            <li><strong>OVHcloud prices per GB, not per core.</strong> Price per GB of RAM falls from $1.135 (VPS-1) to $0.974 (VPS-4); price per vCore jumps from $2.05 to $2.92 at the top plan because that plan is the only one at 3 GB of RAM per core instead of 2.</li>
+            <li><strong>Identical specs, 5.3x apart.</strong> 4 GB RAM and 2 vCPUs is $4.54/month at OVHcloud (VPS-1) and $24.00/month at DigitalOcean (Basic). Nothing in either price list says why.</li>
+            <li><strong>CPU isolation is the biggest single multiplier.</strong> DigitalOcean charges 1.75x for dedicated instead of shared vCPUs on the same 4 GiB / 2 vCPU shape ($42.00 vs $24.00). Hetzner's dedicated tier is 7.26x its cost-optimized tier (EUR 43.49 vs EUR 5.99, both excl. VAT).</li>
+        </ul>
+    </div>
+
+    <p>Most VPS price pages give you the &ldquo;from&rdquo; number and stop. That number is not wrong, it is just unfinished: it is the cheapest row of a ladder whose rungs are set by billing granularity, RAM ratio and CPU isolation. This page takes the three official price lists we could open and read on <strong>2026-10-28</strong> &mdash; OVHcloud, DigitalOcean and Hetzner &mdash; and does the arithmetic the pages leave to you. Every price below is copied from the provider's own page on that date. Every ratio and per-unit figure is our own calculation from those prices, and the formula is shown so you can redo it.</p>
+
+    <h2>The Three Price Lists, as Published on 2026-10-28</h2>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider / plan</th><th>Stated price</th><th>vCPU</th><th>RAM</th><th>Storage</th><th>Notes on the page</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>OVHcloud &mdash; VPS-1</td><td class="price">From $4.54/mo</td><td>2 vCores</td><td>4 GB</td><td>40 GB NVMe</td><td>Daily backup, unlimited traffic, 500 Mbps</td></tr>
+            <tr><td>OVHcloud &mdash; VPS-2</td><td class="price">From $8.50/mo</td><td>4 vCores</td><td>8 GB</td><td>75 GB NVMe</td><td>Daily backup, unlimited traffic, 1 Gbps</td></tr>
+            <tr><td>OVHcloud &mdash; VPS-3</td><td class="price">From $12.32/mo</td><td>6 vCores</td><td>12 GB</td><td>100 GB NVMe</td><td>Daily backup, unlimited traffic, 2 Gbps</td></tr>
+            <tr><td>OVHcloud &mdash; VPS-4</td><td class="price">From $23.37/mo</td><td>8 vCores</td><td>24 GB</td><td>200 GB NVMe</td><td>Daily backup, unlimited traffic, 3 Gbps</td></tr>
+            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$4.00/mo &middot; $0.00595/hr</td><td>1</td><td>512 MiB</td><td>10 GiB SSD</td><td>500 GiB transfer</td></tr>
+            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$6.00/mo &middot; $0.00893/hr</td><td>1</td><td>1 GiB</td><td>25 GiB SSD</td><td>1,000 GiB transfer</td></tr>
+            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$12.00/mo &middot; $0.01786/hr</td><td>1</td><td>2 GiB</td><td>50 GiB SSD</td><td>2,000 GiB transfer</td></tr>
+            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$24.00/mo &middot; $0.03571/hr</td><td>2</td><td>4 GiB</td><td>80 GiB SSD</td><td>4,000 GiB transfer</td></tr>
+            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$48.00/mo &middot; $0.07143/hr</td><td>4</td><td>8 GiB</td><td>160 GiB SSD</td><td>5,000 GiB transfer</td></tr>
+            <tr><td>Hetzner &mdash; Cost-Optimized</td><td class="price">&euro;5.99/mo excl. VAT</td><td colspan="3" class="note">Page states the starting price only &mdash; per-plan specs are not in the markup we could read</td><td>Shared CPU</td></tr>
+            <tr><td>Hetzner &mdash; Regular Performance</td><td class="price">&euro;6.49/mo excl. VAT</td><td colspan="3" class="note">Page states the starting price only</td><td>Shared CPU</td></tr>
+            <tr><td>Hetzner &mdash; General Purpose</td><td class="price">&euro;43.49/mo excl. VAT</td><td colspan="3" class="note">Page states the starting price only</td><td>Dedicated vCPUs</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Sources: ovhcloud.com/en/vps/, digitalocean.com/pricing/droplets and hetzner.com/cloud/, each fetched once on 2026-10-28. Vultr, Contabo, RackNerd and Linode returned bot-walls (HTTP 403) to our fetch on the same day, so they are absent from this table; we did not fill their rows from memory or from older articles. Where a cell says the page states the starting price only, the page did not publish per-plan specs in the markup we could read, and we did not substitute numbers from a third-party review.</p>
+
+    <h2>The Monthly Price Is a 672-Hour Cap, Not 730 Hours</h2>
+    <p>DigitalOcean publishes both an hourly rate and a monthly price for every Droplet row, which makes it possible to find the point where the two meet. Divide the monthly price by the hourly rate:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Plan</th><th>Hourly</th><th>Monthly</th><th>Hourly &times; 730</th><th>Monthly &divide; hourly</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>512 MiB / 1 vCPU</td><td>$0.00595</td><td class="price">$4.00</td><td>$4.34</td><td>672.3 h</td></tr>
+            <tr><td>1 GiB / 1 vCPU</td><td>$0.00893</td><td class="price">$6.00</td><td>$6.52</td><td>671.9 h</td></tr>
+            <tr><td>2 GiB / 1 vCPU</td><td>$0.01786</td><td class="price">$12.00</td><td>$13.04</td><td>671.9 h</td></tr>
+            <tr><td>4 GiB / 2 vCPU</td><td>$0.03571</td><td class="price">$24.00</td><td>$26.07</td><td>672.1 h</td></tr>
+            <tr><td>8 GiB / 4 vCPU</td><td>$0.07143</td><td class="price">$48.00</td><td>$52.14</td><td>672.0 h</td></tr>
+            <tr><td>16 GiB / 8 vCPU</td><td>$0.14286</td><td class="price">$96.00</td><td>$104.29</td><td>672.0 h</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>Every row lands within a rounding error of <strong>672 hours, which is 28 days</strong>. That is not a coincidence and it is not 730 &mdash; the number you get if you multiply a 365-day year by 24 and divide by 12. The consequence is practical:</p>
+    <ul>
+        <li><strong>Run a server continuously and you pay the monthly cap.</strong> A 30-day month is 720 hours, past the break-even, so the cap applies and the effective hourly rate drops below the published one.</li>
+        <li><strong>Run it fewer than 28 days and you pay strictly hourly.</strong> A three-week staging box on the $24 plan costs 504 &times; $0.03571 = $18.00, not $24.00.</li>
+        <li><strong>Never quote &ldquo;hourly &times; 730&rdquo; as the monthly price.</strong> It overstates every row in the table by 7.9&ndash;8.6%. The published monthly figure is already the cheaper of the two.</li>
+    </ul>
+    <p>The same page states that Droplets are billed per second with a minimum charge of 60 seconds or $0.01, whichever is higher, effective January 1, 2026. So the floor on any single droplet is one cent, not one hour &mdash; which matters if you automate provisioning.</p>
+
+    <h2>Two Ladders: $6.00 per GiB and $12.00 per vCPU</h2>
+    <p>Divide each DigitalOcean Basic price by its RAM and by its vCPU count and the ladder becomes visible:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Plan</th><th>Monthly</th><th>Per GiB RAM</th><th>Per vCPU</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>512 MiB / 1 vCPU</td><td>$4.00</td><td class="price">$8.00</td><td class="price">$4.00</td></tr>
+            <tr><td>1 GiB / 1 vCPU</td><td>$6.00</td><td>$6.00</td><td>$6.00</td></tr>
+            <tr><td>2 GiB / 1 vCPU</td><td>$12.00</td><td>$6.00</td><td>$12.00</td></tr>
+            <tr><td>2 GiB / 2 vCPU</td><td>$18.00</td><td>$9.00</td><td>$9.00</td></tr>
+            <tr><td>4 GiB / 2 vCPU</td><td>$24.00</td><td>$6.00</td><td>$12.00</td></tr>
+            <tr><td>8 GiB / 4 vCPU</td><td>$48.00</td><td>$6.00</td><td>$12.00</td></tr>
+            <tr><td>16 GiB / 8 vCPU</td><td>$96.00</td><td>$6.00</td><td>$12.00</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>From 1 GiB upward the steady state is exactly <strong>$6.00 per GiB of RAM and $12.00 per vCPU</strong>. Two rows break the pattern, and both breaks are informative rather than random:</p>
+    <ul>
+        <li><strong>The $4 plan is an entry price, not a ladder rung.</strong> At 512 MiB it is $8.00 per GiB and $4.00 per vCPU &mdash; half the per-vCPU rate of every plan above it. That is what a loss-leader looks like in a price list: it exists to get a card on file, and it is the only row where you are not paying the standard per-core rate.</li>
+        <li><strong>The $18 plan is a blend, not a tier.</strong> You get 2 GiB but a second vCPU, so the RAM rate reads $9.00 and the core rate reads $9.00. Neither number is the ladder rate because the shape changed: 1 GiB per core instead of 2.</li>
+    </ul>
+    <p>This is why comparing VPS prices by RAM alone goes wrong. A 2 GiB plan can be $12 or $18 at the same provider on the same day, and the difference is not margin &mdash; it is a second core.</p>
+
+    <h2>OVHcloud Prices per GB, and That Changes the Ladder</h2>
+    <p>OVHcloud publishes only monthly prices, but the four plans share a shape that makes per-unit arithmetic clean:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Plan</th><th>Monthly</th><th>Per GB RAM</th><th>Per vCore</th><th>GB RAM per core</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>VPS-1 &mdash; 2 vCores / 4 GB</td><td class="price">$4.54</td><td>$1.135</td><td>$2.27</td><td>2.0</td></tr>
+            <tr><td>VPS-2 &mdash; 4 vCores / 8 GB</td><td class="price">$8.50</td><td>$1.062</td><td>$2.13</td><td>2.0</td></tr>
+            <tr><td>VPS-3 &mdash; 6 vCores / 12 GB</td><td class="price">$12.32</td><td>$1.027</td><td>$2.05</td><td>2.0</td></tr>
+            <tr><td>VPS-4 &mdash; 8 vCores / 24 GB</td><td class="price">$23.37</td><td class="price">$0.974</td><td class="price">$2.92</td><td>3.0</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>Two things fall out of that table. First, <strong>price per GB of RAM barely moves</strong>: from $1.135 to $0.974 is a 14% improvement for six times the capacity. OVHcloud is not rewarding you for going bigger in the way that storage pricing usually does. Second, <strong>price per vCore goes up at the top plan</strong>, from $2.05 to $2.92 &mdash; a 42% jump. That looks like a mistake until you read the RAM column: VPS-1 through VPS-3 all sit at exactly 2 GB of RAM per core, and VPS-4 is the only plan at 3 GB per core. You are not paying more for the eighth core; you are paying for a different memory ratio. Anyone ranking these plans by core count alone will conclude the top plan is overpriced, and they will be measuring the wrong axis.</p>
+
+    <h2>Identical Specs, 5.3x Apart</h2>
+    <p>Put the two ladders side by side at the one shape they share &mdash; 4 GB of RAM and 2 vCPUs:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider / plan</th><th>Monthly</th><th>Per GB RAM</th><th>CPU type stated on the page</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>OVHcloud VPS-1 (2 vCores, 4 GB, 40 GB NVMe)</td><td class="price">$4.54</td><td>$1.135</td><td>vCores</td></tr>
+            <tr><td>DigitalOcean Basic (2 vCPUs, 4 GiB, 80 GiB SSD)</td><td class="price">$24.00</td><td>$6.00</td><td>Shared vCPUs</td></tr>
+            <tr><td>DigitalOcean CPU-Optimized (2 dedicated vCPUs, 4 GiB, 25 GiB SSD)</td><td class="price">$42.00</td><td>$10.50</td><td>Dedicated vCPUs</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>Same RAM, same core count, <strong>5.3x</strong> between the first row and the second, and <strong>9.3x</strong> between the first and the third. Both prices are real and both are published. The gap is not a pricing error, and it is not explained by the SSD either &mdash; DigitalOcean's row actually includes twice the disk. It is explained by what the page does not say in the table: the per-core rate on the ladder ($12.00 at DigitalOcean against $2.27 at OVHcloud), and the fact that OVHcloud's entry plan is the bottom rung of a range that starts cheap on purpose.</p>
+    <p>The honest reading is not &ldquo;OVHcloud is five times better&rdquo;. It is that a 4 GB / 2 core VPS has no single market price in 2026, and any page quoting one figure for &ldquo;the price of a VPS&rdquo; is quoting one rung of one ladder.</p>
+
+    <h2>What CPU Isolation Costs, Measured Inside One Provider</h2>
+    <p>The cleanest multiplier in VPS pricing is shared versus dedicated CPU, because you can hold everything else constant. DigitalOcean sells both on the same 4 GiB / 2 vCPU shape:</p>
+    <ul>
+        <li>Basic, shared vCPUs: <strong>$24.00/month</strong> ($0.03571/hr)</li>
+        <li>CPU-Optimized, dedicated vCPUs: <strong>$42.00/month</strong> ($0.06250/hr)</li>
+    </ul>
+    <p>That is a <strong>1.75x</strong> premium for CPU isolation alone, with RAM, core count and provider held fixed. The page describes the CPU-Optimized tier as &ldquo;fast (2.6GHz+), dedicated vCPUs&rdquo; and the Basic tier as suited to &ldquo;bursty applications that can handle variable levels of CPU&rdquo; &mdash; which is the provider telling you, in its own words, that the cheap tier shares cores.</p>
+    <p>Hetzner's range shows the same multiplier at a much steeper setting, though across product tiers rather than within one: Cost-Optimized at <strong>&euro;5.99</strong>, Regular Performance at <strong>&euro;6.49</strong>, and General Purpose with &ldquo;Dedicated vCPUs&rdquo; at <strong>&euro;43.49</strong>, all per month excluding VAT. The top tier is <strong>7.26x</strong> the entry tier. Hetzner's page explains the cheap tiers as &ldquo;inexpensive due to shared resources&rdquo;, so the two providers agree on the mechanism and disagree by a factor of four on the markup.</p>
+    <p>That spread is the single most useful thing to know when you read a VPS price list: if your workload needs predictable latency &mdash; a database under steady writes, real-time bidding, CI runners, game servers &mdash; you are not shopping in the tier the headline price comes from, and the multiplier you will actually pay is somewhere between 1.75x and 7.26x.</p>
+
+    <h2>What the &ldquo;From&rdquo; Price Leaves Out</h2>
+    <p>Three exclusions, all visible on the pages we read:</p>
+    <ol>
+        <li><strong>Tax and currency.</strong> Hetzner quotes &ldquo;per month, excl. VAT&rdquo; and applies the rate of whichever country you select. OVHcloud and DigitalOcean quote US dollars. A pre-tax euro figure cannot be ranked against a dollar figure without converting and adding tax first, and the gap between &euro;5.99 and $4.54 is smaller than it looks once VAT is added.</li>
+        <li><strong>Optional services that are not in the plan price.</strong> OVHcloud's page marks its &ldquo;Premium automatic backup&rdquo; with 7-day restore and external storage as <em>Optional</em>, and does not print a price on the plan cards &mdash; you have to open the option list. DigitalOcean's Droplet price covers the Droplet; storage volumes, load balancers and managed databases are separate products on the same pricing page. If you need any of them, the entry price is not your price.</li>
+        <li><strong>Consistency of the page itself.</strong> OVHcloud's VPS page states backup retention twice and not identically: the plan cards say &ldquo;Daily backup of the previous 24 hours&rdquo;, while the footnote below describes a backup &ldquo;scheduled daily (on a rolling 7-day basis)&rdquo;. Same page, same product, two different retention windows. Before you buy a plan because of its backup, confirm the retention window in the order flow rather than on the marketing page.</li>
+    </ol>
+
+    <h2>How to Price a VPS in Five Minutes</h2>
+    <ol>
+        <li><strong>Convert everything to a per-GB and per-vCPU rate.</strong> Divide the monthly price by RAM and by cores. If the provider's rate is far below its own ladder ($4.00 per vCPU against a $12.00 ladder), you are looking at an entry plan with an entry plan's limits.</li>
+        <li><strong>Decide whether you need dedicated cores.</strong> If yes, multiply your candidate price by 1.75x to 7.26x before you compare it to anything.</li>
+        <li><strong>Estimate your runtime hours, not your months.</strong> Under about 672 hours a month, hourly billing beats the monthly cap; over it, the cap wins and the effective rate is lower than published.</li>
+        <li><strong>Add the optional services you actually need</strong> from the provider's own option list, and put the total on one currency with tax included.</li>
+        <li><strong>Multiply by 12.</strong> A $4.54 plan is $54.48 a year; the same shape at $24.00 is $288.00. Both are &ldquo;a VPS&rdquo;.</li>
+    </ol>
+
+    <h2>Frequently Asked Questions</h2>
+    <h3>What is the average VPS price per month?</h3>
+    <p>The entry prices on the three official price lists we read on 2026-10-28 were $4.00/month for a DigitalOcean Basic Droplet (512 MiB RAM, 1 vCPU, 10 GiB SSD), $4.54/month for OVHcloud VPS-1 (2 vCores, 4 GB RAM, 40 GB NVMe, unlimited traffic) and &euro;5.99/month excluding VAT for Hetzner's Cost-Optimized cloud plan. Those are the cheapest rows, not a typical bill: every provider's range extends far above them.</p>
+    <h3>Why does the hourly rate times 730 hours not equal the monthly price?</h3>
+    <p>Because the monthly figure is a cap, not an extrapolation. On DigitalOcean's Basic Droplet table every row hits its monthly cap at roughly 672 hours of runtime, which is 28 days. A droplet that runs continuously for a full 30-day month is billed the capped monthly price; a droplet that runs fewer than 28 days is billed hourly. Multiplying the hourly rate by 730 therefore overstates the monthly price by about 8 percent.</p>
+    <h3>What does a VPS server price per GB of RAM look like?</h3>
+    <p>It depends entirely on the provider's ladder. On OVHcloud's VPS range the price per GB of RAM falls from $1.135 (VPS-1, $4.54 for 4 GB) to $0.974 (VPS-4, $23.37 for 24 GB). On DigitalOcean's Basic range the same figure is flat at $6.00 per GiB for every plan from 1 GiB to 16 GiB, and $8.00 per GiB on the 512 MiB entry plan. The same 4 GB of RAM is therefore $4.54 at OVHcloud and $24.00 at DigitalOcean, a 5.3x difference.</p>
+    <h3>How much extra does a dedicated-vCPU VPS cost compared with a shared one?</h3>
+    <p>At DigitalOcean the premium is 1.75x on identical specs: a Basic Droplet with 4 GiB RAM and 2 shared vCPUs is listed at $24.00/month, while a CPU-Optimized Droplet with 4 GiB RAM and 2 dedicated vCPUs is listed at $42.00/month. At Hetzner the gap is wider because it spans separate product tiers rather than a variant: &euro;5.99/month for Cost-Optimized against &euro;43.49/month for General Purpose with dedicated vCPUs, both excluding VAT.</p>
+    <h3>Are VPS prices quoted with or without tax?</h3>
+    <p>It varies, and the pages do not always use the same convention. Hetzner states its cloud prices per month excluding VAT and applies the rate of the country you select. OVHcloud and DigitalOcean quote US-dollar figures on the pages we read without a VAT line in the plan cards. A pre-tax euro figure and a dollar figure cannot be ranked against each other until both are put on the same currency and the same tax treatment.</p>
+
+    <h2>Bottom Line</h2>
+    <p>A VPS price is a composition, and the four parts are all published: the billing clock (a cap of about 672 hours, not 730), the RAM and core ladder ($6.00 per GiB and $12.00 per vCPU at DigitalOcean, roughly $1 per GB of RAM at OVHcloud), the CPU isolation multiplier (1.75x inside DigitalOcean, 7.26x across Hetzner's tiers) and the tax line. Read the ladder before the number and the number stops being a surprise. Read only the &ldquo;from&rdquo; price and you will compare a $4.54 plan with a $24.00 plan and conclude, wrongly, that one of them is a mistake.</p>
+
+    <div class="author-bio">
+        <div class="author-name">Marcus Reid</div>
+        <div class="author-role">Systems Architect &amp; VPS Infrastructure Analyst</div>
+        <p>Marcus has been working with virtualized server infrastructure since 2015, deploying and benchmarking VPS and cloud instances across DigitalOcean, Vultr, Hetzner, OVHcloud, Contabo, RackNerd, Hostinger, and the major hyperscalers. His work focuses on the gap between what providers advertise and what actually happens when you deploy a real workload. He verifies every price and specification against official provider pages before publication.</p>
+    </div>
+
+    <div class="related">
+        <h2>Related Articles</h2>
+        <a href="/vps-hosting-cost">VPS Hosting Cost: What &ldquo;From $4 a Month&rdquo; Actually Buys</a>
+        <a href="/best-vps">Best VPS Hosting in 2026: The Real Winners by Category</a>
+        <a href="/cheap-vps-hosting">Cheap VPS Hosting in 2026: What Pricing Pages Won&rsquo;t Tell You</a>
+        <a href="/hetzner-vs-digitalocean">Hetzner vs DigitalOcean: Which One Actually Costs Less</a>
+        <p>Also see our <a href="/free-vps">free VPS guide</a>, <a href="/windows-vps">Windows VPS guide</a>, <a href="/virtual-private-server">what a virtual private server is</a>, and <a href="/vps-black-friday">Black Friday VPS deals</a>.</p>
+    </div>
+
+    <footer>
+        <p>ServerBudget &mdash; VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>
+        <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
+        <p style="margin-top:0.5rem"><a href="/">Home</a> &middot; <a href="/compare">Compare All</a> &middot; <a href="/best-vps">Best VPS</a> &middot; <a href="/cheap-vps-hosting">Cheap VPS</a> &middot; <a href="/cheap-windows-vps-hosting">Cheap Windows VPS</a> &middot; <a href="/about">About</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></p>
+    </footer>
+</div>
+</body>
+</html>

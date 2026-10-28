@@ -160,13 +160,19 @@ footer a{color:var(--primary)}
   .container{padding:0 14px 56px}
   .grid{grid-template-columns:1fr;gap:14px}
   .card-title{min-height:0}
-  .stats{gap:10px}
-  .stat{flex:1 1 100%}
+  /* 2026-10-28 first-screen fix: the three stat cards were flex:1 1 100%, so
+     each took a full row and the first real deal sat below the fold on a
+     390x844 phone. They are now one compact 3-up strip. Content unchanged. */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 22px}
+  .stat{flex:none;padding:11px 10px;min-width:0}
+  .stat-num{font-size:1.18rem;letter-spacing:-.02em}
+  .stat-label{font-size:.6rem;letter-spacing:.03em;margin-top:5px}
   h2{font-size:1.3rem}
   /* 2026-10-11 polish: keep the 17-item nav on ONE swipeable row instead of
      wrapping to ~9 rows and pushing the deals below the fold. All links stay
      in the DOM, so internal linking and crawlability are unchanged. */
-  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;margin-top:14px;scrollbar-width:thin}
+  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;margin-top:14px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
   .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
 }
 @media(min-width:761px) and (max-width:1024px){
@@ -306,7 +312,7 @@ footer a{color:var(--primary)}
         <p style="margin-top:10px">Want the numbers rather than the code? <a href="/domain-promo-code">Domain promo code &mdash; what Porkbun and IONOS print for the first year versus the renewal, side by side</a> puts each registrar's own figures next to each other, with the official page and the date each was read.</p>
     </div>
     
-    <div class="generated">Last updated: 2026-10-28T02:04:04Z</div>
+    <div class="generated">Last updated: 2026-10-28T04:54:32Z</div>
     
     <footer>
         <p>ServerBudget — VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>

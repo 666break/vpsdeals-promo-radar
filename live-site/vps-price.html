@@ -344,6 +344,34 @@ footer a{color:var(--primary)}
         </tbody>
     </table>
     </div>
+    <figure style="margin:26px 0 8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px 22px 14px">
+        <svg viewBox="0 0 960 320" width="100%" height="auto" role="img" aria-labelledby="fig1t fig1d" style="display:block;max-width:100%">
+            <title id="fig1t">Monthly price of a 4 GB / 2 vCPU VPS on 2026-10-28</title>
+            <desc id="fig1d">OVHcloud VPS-1 at 4.54 dollars, DigitalOcean Basic shared at 24.00 dollars, DigitalOcean dedicated CPU at 42.00 dollars.</desc>
+            <text x="0" y="18" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="19" font-weight="700" fill="#111827">Same shape, three prices: 4 GB RAM / 2 vCPU, monthly</text>
+            <text x="0" y="42" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="14" fill="#64748b">Prices copied from each provider's own page on 2026-10-28. Bars are linear in dollars.</text>
+
+            <text x="0" y="102" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="15" fill="#1f2937">OVHcloud VPS-1</text>
+            <text x="0" y="122" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">shared vCores</text>
+            <rect x="230" y="82" width="67" height="42" rx="4" fill="#0ea5e9"></rect>
+            <text x="307" y="109" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="17" font-weight="700" fill="#0c4a6e">$4.54</text>
+
+            <text x="0" y="182" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="15" fill="#1f2937">DigitalOcean Basic</text>
+            <text x="0" y="202" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">shared vCPUs</text>
+            <rect x="230" y="162" width="354" height="42" rx="4" fill="#f97316"></rect>
+            <text x="594" y="189" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="17" font-weight="700" fill="#9a3412">$24.00</text>
+
+            <text x="0" y="262" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="15" fill="#1f2937">DigitalOcean CPU-Optimized</text>
+            <text x="0" y="282" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">dedicated vCPUs</text>
+            <rect x="230" y="242" width="620" height="42" rx="4" fill="#dc2626"></rect>
+            <text x="860" y="269" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="17" font-weight="700" fill="#7f1d1d">$42.00</text>
+
+            <line x1="230" y1="300" x2="850" y2="300" stroke="#cbd5e1" stroke-width="1"></line>
+            <text x="230" y="316" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">$0</text>
+            <text x="800" y="316" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">$42</text>
+        </svg>
+        <figcaption style="color:#5b6675;font-size:.86rem;line-height:1.6;margin-top:10px">Source: OVHcloud VPS page and DigitalOcean Droplet price table, both read on 2026-10-28. The three prices are the providers' own figures; the bar lengths are our own arithmetic on a fixed scale (620 px = $42.00, i.e. 14.76 px per dollar).</figcaption>
+    </figure>
     <p>Same RAM, same core count, <strong>5.3x</strong> between the first row and the second, and <strong>9.3x</strong> between the first and the third. Both prices are real and both are published. The gap is not a pricing error, and it is not explained by the SSD either &mdash; DigitalOcean's row actually includes twice the disk. It is explained by what the page does not say in the table: the per-core rate on the ladder ($12.00 at DigitalOcean against $2.27 at OVHcloud), and the fact that OVHcloud's entry plan is the bottom rung of a range that starts cheap on purpose.</p>
     <p>The honest reading is not &ldquo;OVHcloud is five times better&rdquo;. It is that a 4 GB / 2 core VPS has no single market price in 2026, and any page quoting one figure for &ldquo;the price of a VPS&rdquo; is quoting one rung of one ladder.</p>
 

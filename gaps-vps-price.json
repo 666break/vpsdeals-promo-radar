@@ -1,0 +1,265 @@
+{
+  "keyword": "vps price",
+  "top3": ["digitalocean.com", "us.ovhcloud.com", "vpspricetracker.com"],
+  "cycle_start": "2026-10-28",
+  "cycle_len_days": 28,
+  "next_index": 0,
+  "gaps": [
+    {
+      "slug": "vps-price-stopped-instance",
+      "gap": "Does a stopped VPS still cost money? Three states (powered off, suspended, destroyed) and what each one bills.",
+      "why_gap": "String 'stopped' appears in 0 of the 30 TOP3 pages; 'powered off' 0 of 30.",
+      "source": "DigitalOcean docs on Droplet billing + OVHcloud VPS billing FAQ; both official pages fetched on publish day.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-sales-tax",
+      "gap": "Is the advertised VPS price tax-inclusive in the US store? What gets added at checkout and when.",
+      "why_gap": "'VAT' 0/30, 'sales tax' 0/30 across all 30 pages.",
+      "source": "Official checkout/tax pages or terms of service from each provider; quote the exact clause.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-currency-and-fx",
+      "gap": "Which currency you are actually charged in, and how the card issuer's FX spread changes the same plan's real cost.",
+      "why_gap": "'EUR' 0/30, 'USD' 0/30, 'exchange rate' 0/30.",
+      "source": "Official price pages in each currency variant (e.g. /vps/ vs /en-gb/ vs /de/), captured side by side on one day.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-extra-ipv4",
+      "gap": "What an additional IPv4 address costs per month, and whether it is billed even when the server is off.",
+      "why_gap": "'IPv4' appears 14/30 but every hit is a feature flag, never a price.",
+      "source": "Official networking/add-on price lists.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-snapshot-billing",
+      "gap": "Snapshots are advertised as a feature everywhere; what does the storage actually cost per GB-month.",
+      "why_gap": "'snapshot' 11/30, zero of them price it.",
+      "source": "Official backup/snapshot pricing docs.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-bandwidth-overage",
+      "gap": "What happens on the invoice the month you exceed the included transfer allowance.",
+      "why_gap": "'bandwidth overage' 0/30; 'egress' only 5/30 and none quantifies the overage rate.",
+      "source": "Official bandwidth/transfer overage price pages.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-per-vcpu",
+      "gap": "Ranking VPS plans by price per vCPU instead of price per plan.",
+      "why_gap": "'per vCPU' 2/30, both inside DigitalOcean price tables; no cross-provider ranking exists.",
+      "source": "Official spec+price tables from at least 4 providers, captured same day; show the division.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-per-gb-ram",
+      "gap": "Ranking VPS plans by price per GB of RAM, and where the ladder stops being linear.",
+      "why_gap": "'per GB' 0/30.",
+      "source": "Official price tables; publish the arithmetic with every input sourced.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-dedicated-vs-shared-cpu",
+      "gap": "What CPU isolation actually adds to the monthly bill, measured within a single provider's own price list.",
+      "why_gap": "Providers list both tiers but never state the premium.",
+      "source": "One provider's shared and dedicated CPU price tables, same day, same region.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-annual-prepay",
+      "gap": "The real discount rate of paying annually vs hourly, expressed as an effective percentage.",
+      "why_gap": "'prepay' 2/30, 'annual' 10/30 but no page computes the discount rate.",
+      "source": "Official monthly and annual prices for the same plan; compute and show the formula.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-refund-window",
+      "gap": "Whether a VPS can be refunded, in what window, and whether the refund is full or prorated.",
+      "why_gap": "'refund' 2/30, 'prorat*' 0/30, 'money-back' 0/30.",
+      "source": "Official refund policy / terms pages; quote the clause verbatim.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-downgrade-credit",
+      "gap": "Downgrading mid-term: does the difference come back as credit, as cash, or not at all.",
+      "why_gap": "'downgrade' 1/30, and that hit does not explain the credit mechanics.",
+      "source": "Official billing FAQ / support docs.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-setup-fee",
+      "gap": "One-time setup or activation fees that appear on the first invoice but not in the headline price.",
+      "why_gap": "'setup fee' 1/30, and that single hit is a bare-metal page, not a VPS page.",
+      "source": "Official order/checkout terms and price lists.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-renewal-vs-first-term",
+      "gap": "First-term price vs renewal price for the same VPS, side by side.",
+      "why_gap": "'renewal' 1/30, and that hit is the bare-metal page.",
+      "source": "Official pricing pages that disclose renewal rates, or terms of service.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-promo-codes",
+      "gap": "Do promo codes exist for VPS plans at all, and where the discount actually lands in the cart.",
+      "why_gap": "'coupon' 0/30, 'promo' 3/30 and none explains where a code applies.",
+      "source": "Official promotions/terms pages; do not use coupon aggregator claims as fact.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-windows-license",
+      "gap": "How much of a Windows VPS price is the licence, measured against the same plan on Linux.",
+      "why_gap": "OVHcloud says the licence is included but never states its share; nobody else splits it out.",
+      "source": "Same provider, same region, same specs, Windows vs Linux price pages captured the same day.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-ipv6-only",
+      "gap": "IPv6-only plans and how much cheaper they are than the IPv4-included equivalent.",
+      "why_gap": "No TOP3 page prices an IPv6-only variant.",
+      "source": "Official plan lists that include an IPv6-only SKU.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-region-spread",
+      "gap": "The same plan in different regions: how wide the spread is and which region is cheapest.",
+      "why_gap": "Price pages list one region's table; no TOP3 page compares regions.",
+      "source": "Official regional price pages captured the same day.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-trial-credit-days",
+      "gap": "A trial credit converted into free days of a specific plan, with the arithmetic shown.",
+      "why_gap": "Credits are advertised; nobody converts them into days at a stated plan size.",
+      "source": "Official credit amount + official hourly price of a named plan.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-minimum-billing-unit",
+      "gap": "Seconds, hours or months: how the minimum billing unit changes the cost of a two-week project.",
+      "why_gap": "'hourly' 4/30, all DigitalOcean; the other two sites never mention a billing unit.",
+      "source": "Official billing docs stating the minimum increment and the monthly cap.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-egress-free-tier-end",
+      "gap": "The month the free transfer allowance runs out: what the next gigabyte costs.",
+      "why_gap": "'egress' 5/30, none states the post-allowance rate in the same sentence as the allowance.",
+      "source": "Official transfer pricing page; quote allowance and overage rate together.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-control-panel-licence",
+      "gap": "cPanel/Plesk licence cost inside a VPS plan versus bought separately.",
+      "why_gap": "DigitalOcean sells cPanel hosting but never splits the licence out.",
+      "source": "Official cPanel hosting price + official cPanel licence price list.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-checkout-addons",
+      "gap": "Every line item that can appear between the advertised price and the charged amount, in order.",
+      "why_gap": "'hidden' 2/30 and neither enumerates the line items.",
+      "source": "Official checkout terms / order summary docs / invoices described in help centre.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-three-year-tco",
+      "gap": "Three-year total cost of ownership for one fixed spec, including tax, overage and licence.",
+      "why_gap": "No TOP3 page computes a multi-year total.",
+      "source": "Official prices for the fixed spec + stated tax treatment + stated overage rate; show every input.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-vs-dedicated-breakeven",
+      "gap": "The spec point where a VPS becomes more expensive than a dedicated server.",
+      "why_gap": "Both catalogues exist, neither draws the crossing point.",
+      "source": "One provider's VPS ladder and dedicated ladder, same day.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-cpu-steal-cost",
+      "gap": "What a cheap plan's CPU contention costs in wall-clock terms, and how to price that in.",
+      "why_gap": "No TOP3 page connects price to measured contention.",
+      "source": "Provider-published CPU guarantees (fair share / burst) plus our own measurement; label measurement as ours.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-nvme-vs-ssd",
+      "gap": "The price delta between NVMe and SATA SSD at the same capacity.",
+      "why_gap": "Storage type is listed as a spec, never priced as a delta.",
+      "source": "Official plan tables that offer both storage types.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-burstable-credit",
+      "gap": "Burstable plans: what happens to the bill and the performance when the credit runs dry.",
+      "why_gap": "No TOP3 page explains credit-based CPU billing.",
+      "source": "Official docs on burst/credit mechanics.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-failover-ip",
+      "gap": "Failover / floating IP monthly fee, and whether it bills while unattached.",
+      "why_gap": "Networking add-ons are absent from all 30 pages.",
+      "source": "Official networking price list.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-suspension-data-retention",
+      "gap": "After non-payment: when billing stops, when the server is suspended, when the disk is wiped.",
+      "why_gap": "No TOP3 page describes the suspension timeline.",
+      "source": "Official terms of service / billing policy.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-provider-increase-history",
+      "gap": "Documented price increases at major VPS providers and what they did to existing customers' bills.",
+      "why_gap": "'price increase' 1/30.",
+      "source": "Official announcements / changelogs / archived price pages; cite each dated source.",
+      "done": false,
+      "published": null
+    },
+    {
+      "slug": "vps-price-cost-per-iops",
+      "gap": "Price per 1,000 random-read IOPS across plans that publish an IOPS figure.",
+      "why_gap": "'per GB' 0/30 and IOPS is never priced.",
+      "source": "Official plan specs that state IOPS + official price; show the division.",
+      "done": false,
+      "published": null
+    }
+  ]
+}

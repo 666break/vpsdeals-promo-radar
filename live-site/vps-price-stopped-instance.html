@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Does a Stopped VPS Still Cost Money? Billing by State</title>
+    <meta name="description" content="Powered off, suspended or destroyed: what each state bills at DigitalOcean, Hetzner and OVHcloud, quoted from their own pages on 2026-10-28.">
+    <link rel="canonical" href="https://serverbudget.com/vps-price-stopped-instance">
+    <meta property="og:title" content="Does a Stopped VPS Still Cost Money? Billing by State">
+    <meta property="og:description" content="Three providers, three states, three different answers, each quoted from the provider's own billing documentation on 2026-10-28.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://serverbudget.com/vps-price-stopped-instance">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Does a Stopped VPS Still Cost Money? Billing by State">
+    <meta name="twitter:description" content="The billing clock starts when you create the server and stops when you destroy it, not when you power it off.">
+
+    <!-- JSON-LD: Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Does a Stopped VPS Still Cost Money? Billing by State",
+      "author": {
+        "@type": "Person",
+        "name": "Marcus Reid",
+        "url": "https://serverbudget.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ServerBudget",
+        "url": "https://serverbudget.com"
+      },
+      "datePublished": "2026-10-28",
+      "dateModified": "2026-10-28",
+      "mainEntityOfPage": "https://serverbudget.com/vps-price-stopped-instance"
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-price"},
+        {"@type": "ListItem", "position": 3, "name": "Stopped VPS Billing", "item": "https://serverbudget.com/vps-price-stopped-instance"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does a VPS still cost money when it is powered off?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At DigitalOcean, yes, for bundled-plan CPU Droplets. Its Droplet pricing documentation states: 'Billing begins when you create the Droplet and ends when you destroy it. You are still billed for bundled-plan CPU Droplets that are powered off because the compute resources stay reserved on the hypervisor. To end billing, destroy the Droplet.' Hetzner's Cloud billing FAQ says it will bill each cloud server 'until you choose to delete them' and that 'even if you aren't actively using your server, we will bill you for it.' An OVHcloud VPS is sold as a monthly subscription, and its cancellation guide states that termination means the service is permanently discontinued at the end of the current subscription, so powering it off changes nothing on the invoice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does destroying a VPS stop billing immediately?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At DigitalOcean, destruction is the event that ends billing, but there is a floor: the minimum charge is 60 seconds or $0.01, whichever is higher, and a Droplet destroyed in under 60 seconds is still charged that minimum. Hetzner bills in whole hours and always rounds up, so a server that exists for a few minutes is billed for one full hour. At OVHcloud the service is a subscription, so cancelling sets an end date at the close of the current subscription rather than stopping the charge the same day."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I get a refund for the days I did not use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DigitalOcean's billing help answers the refund question in three words: 'We do not offer refunds.' It also states that it does not offer payment extensions. Hetzner's model avoids the question by billing the lower of the monthly cap or the hourly rate times hours used, so deleting a server mid-month produces a smaller invoice rather than a refund. OVHcloud's VPS FAQ says moving remaining subscription time from an old VPS to a new one, or getting it refunded, is 'generally possible but the process requires a request to our support team' - a case-by-case request, not a published policy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to the bill if my payment fails?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DigitalOcean's Late Payments documentation describes three stages. A past due account is placed on hold, which blocks new resources while existing resources continue to run. A suspended account has its resources powered down and logins redirected to the payment page. If the balance stays unresolved, resources may be permanently deleted and cannot be recovered. The page states plainly that DigitalOcean does not publish fixed timelines for these stages, and that after paying a past-due balance you must manually turn the resources back on."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+:root{
+  --bg:#eef1f6;
+  --surface:#ffffff;
+  --surface-2:#f6f8fc;
+  --border:#e3e8ef;
+  --text:#16202c;
+  --muted:#5b6675;
+  --muted-2:#8a94a3;
+  --primary:#2563eb;
+  --primary-d:#1d4ed8;
+  --accent:#0ca678;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow:0 12px 34px rgba(16,24,40,.10);
+  --radius:14px;
+  --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--primary);text-decoration:none;transition:color .15s}
+a:hover{text-decoration:underline;color:var(--primary-d)}
+img{max-width:100%;height:auto;display:block}
+.container{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+/* Header */
+header{border-bottom:1px solid var(--border);padding:24px 0 20px;margin-bottom:34px}
+header h1{font-size:2.05rem;line-height:1.18;letter-spacing:-.015em;color:var(--text);font-weight:800}
+header h1 a{color:var(--text)}
+header p{color:var(--muted);font-size:1.02rem;margin-top:8px;max-width:62ch}
+.brand{display:inline-block;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--text);margin-bottom:10px}
+.brand:hover{text-decoration:none;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.nav a{display:inline-block;padding:7px 14px;border:1px solid var(--border);border-radius:999px;font-size:.9rem;color:var(--muted);background:var(--surface);transition:all .15s}
+.nav a:hover{border-color:var(--primary);color:var(--primary);text-decoration:none;background:#eef3ff}
+
+/* Prose */
+h1{font-size:2.05rem;line-height:1.2;letter-spacing:-.015em;font-weight:800;margin-bottom:12px}
+h2{font-size:1.5rem;margin:34px 0 14px;color:var(--text);font-weight:750;letter-spacing:-.01em;line-height:1.3}
+h3{font-size:1.18rem;margin:26px 0 10px;color:var(--text);font-weight:700}
+p{margin-bottom:16px;color:#28323d}
+ul,ol{margin:0 0 18px 1.4rem}
+li{margin-bottom:8px}
+strong{font-weight:700;color:var(--text)}
+blockquote{border-left:3px solid var(--primary);padding:8px 0 8px 18px;margin:0 0 18px;color:var(--muted);background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+
+/* Meta line */
+.meta{color:var(--muted);font-size:.9rem;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.meta a{color:var(--primary);font-weight:600}
+
+/* First-screen answer box */
+.answer{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:22px 26px 10px;margin:0 0 28px;box-shadow:var(--shadow-sm)}
+.answer .lede{font-size:1.04rem;color:#1f2937;margin-bottom:14px}
+.answer ul{margin:0 0 14px 1.15rem}
+.answer li{margin-bottom:10px;font-size:.97rem;color:#28323d}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);margin:22px 0}
+table{width:100%;border-collapse:collapse;min-width:540px}
+th{text-align:left;padding:13px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+.price{font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.88rem}
+.srcnote{color:#5b6675;font-size:.88rem;line-height:1.6}
+
+/* Callout */
+.callout{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:22px 0;font-size:.94rem;color:var(--muted)}
+.callout strong{color:var(--text)}
+
+/* Quote block */
+.quote{background:#fff;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:16px 20px;margin:18px 0;font-size:.97rem;color:#28323d}
+.quote cite{display:block;margin-top:10px;font-style:normal;color:var(--muted);font-size:.85rem}
+
+/* Author + related */
+.author-bio{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:40px 0 0;box-shadow:var(--shadow-sm)}
+.author-name{font-weight:800;font-size:1.02rem;color:var(--text)}
+.author-role{color:var(--accent);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:4px 0 12px}
+.author-bio p{font-size:.94rem;color:var(--muted);margin-bottom:0}
+.related{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow-sm)}
+.related h2{margin:0 0 14px;font-size:1.2rem}
+.related a{display:block;padding:9px 0;border-bottom:1px solid var(--border);font-weight:600;font-size:.96rem}
+.related a:last-of-type{border-bottom:none}
+.related p{font-size:.88rem;color:var(--muted);margin:12px 0 0}
+
+/* Footer */
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+footer p{color:var(--muted);margin-bottom:10px}
+footer a{color:var(--primary)}
+
+/* Responsive */
+@media(max-width:760px){
+  body{font-size:16px}
+  h1,header h1{font-size:1.6rem}
+  .container{padding:0 14px 56px}
+  h2{font-size:1.3rem}
+  .answer{padding:18px 18px 6px}
+}
+</style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H2F4PWVG2P');
+  </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="/" class="brand">ServerBudget</a>
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/compare">Compare All</a>
+            <a href="/best-vps">Best VPS</a>
+            <a href="/cheap-vps-hosting">Cheap VPS</a>
+            <a href="/free-vps">Free VPS</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </header>
+
+    <h1>Does a Stopped VPS Still Cost Money? Billing by State</h1>
+
+    <div class="meta">
+        By <a href="/about">Marcus Reid</a> &middot; Published Oct 28, 2026 &middot; Last updated Oct 28, 2026 &middot; 7 min read
+    </div>
+
+    <div class="answer">
+        <p class="lede"><strong>Short answer: yes, in almost every case.</strong> A VPS stops costing money when you <em>destroy</em> it, not when you power it off. The meter is tied to the resource existing, not to the resource working, and all three providers we read on 2026-10-28 say so in their own documentation.</p>
+        <ul>
+            <li><strong>Powered off:</strong> still billed at DigitalOcean. Its Droplet pricing doc states that billing begins at creation and ends at destruction, and that powered-off Droplets keep billing &ldquo;because the compute resources stay reserved on the hypervisor.&rdquo; Hetzner bills each server &ldquo;until you choose to delete them.&rdquo; An OVHcloud VPS is a monthly subscription, so the power state never reaches the invoice.</li>
+            <li><strong>Suspended:</strong> the provider powers your server down for you and the balance keeps growing. DigitalOcean explicitly says it does not publish fixed timelines for the past due &rarr; suspended &rarr; deleted sequence.</li>
+            <li><strong>Destroyed:</strong> the only state that stops the meter &mdash; with two published floors: 60 seconds or $0.01 at DigitalOcean, and a rounded-up whole hour at Hetzner.</li>
+            <li><strong>No refunds:</strong> DigitalOcean answers the refund question with &ldquo;We do not offer refunds.&rdquo; OVHcloud handles unused subscription time as a support request, not a policy.</li>
+        </ul>
+    </div>
+
+    <p>This is the question that decides whether a &ldquo;$4 a month&rdquo; test box costs $4 or $40: what happens to the invoice on the days you are not using it. It is also the question the three sites ranking for <a href="/vps-price">vps price</a> never answer &mdash; across the 30 pages we catalogued for this cycle, the words &ldquo;stopped&rdquo; and &ldquo;powered off&rdquo; appear on none of them. So we went to the billing documentation instead of the marketing pages, on <strong>2026-10-28</strong>, and pulled the clauses out verbatim.</p>
+
+    <h2>Three States, Three Different Bills</h2>
+    <p>Vendors use &ldquo;stopped&rdquo; for at least three different things, and the invoice consequence is different for each. This table is the whole article in one screen:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>State</th><th>What it means</th><th>DigitalOcean</th><th>Hetzner Cloud</th><th>OVHcloud VPS</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Powered off</strong></td><td>Shut down from the panel; disk and IP still allocated</td><td class="price">Still billed</td><td class="price">Still billed</td><td class="price">Still billed (subscription)</td></tr>
+            <tr><td><strong>Suspended</strong></td><td>Provider shuts it down for you over an unpaid balance</td><td class="price">Resources powered down, balance still owed</td><td class="note">Not described on the pages we read</td><td class="note">Not described on the pages we read</td></tr>
+            <tr><td><strong>Destroyed / deleted</strong></td><td>Resource removed from the account</td><td class="price">Billing ends</td><td class="price">Billing ends</td><td class="note">At the end of the paid term</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Sources, all fetched on 2026-10-28: docs.digitalocean.com/products/droplets/details/pricing/ and docs.digitalocean.com/products/billing/late-payments/; docs.hetzner.com/cloud/billing/faq/; docs.ovhcloud.com VPS FAQ, the cancellation guide and the commitments guide. Where a cell says the behaviour is not described, the page we fetched did not state it and we did not infer it from a forum post.</p>
+
+    <h2>Powered Off: The Clock Keeps Running</h2>
+    <p>DigitalOcean is the most explicit of the three, and the sentence is worth reading twice because it names the mechanism:</p>
+    <div class="quote">
+        &ldquo;Billing begins when you create the Droplet and ends when you destroy it. You are still billed for bundled-plan CPU Droplets that are powered off because the compute resources stay reserved on the hypervisor. To end billing, destroy the Droplet.&rdquo;
+        <cite>DigitalOcean Droplet pricing documentation, fetched 2026-10-28</cite>
+    </div>
+    <p>&ldquo;Reserved on the hypervisor&rdquo; is the reason, and it is a real one: from the host's point of view your RAM is allocated whether or not your kernel is running, so a shut-down Droplet still occupies capacity that cannot be sold twice. The same page repeats the rule for the GPU line, in case the CPU wording left room for doubt: &ldquo;Powering off a GPU Droplet does not stop billing. To end billing, destroy the GPU Droplet.&rdquo;</p>
+    <p>Hetzner reaches the same place from the other direction. Its Cloud billing FAQ does not use the phrase &ldquo;powered off&rdquo; at all; it makes the server itself the unit of billing: &ldquo;We will bill you for each cloud server until you choose to delete them. Even if you aren't actively using your server, we will bill you for it.&rdquo; It then states the arithmetic it applies: the bill is the lower of the monthly price cap or the hourly price multiplied by hours used, and &ldquo;we always round up the hourly usage of a server.&rdquo;</p>
+    <p>OVHcloud does not have this problem because it does not sell VPS by the hour on the page we read. VPS-1 through VPS-4 are listed as &ldquo;Starting at $4.54 /month&rdquo; through &ldquo;Starting at $23.37 /month&rdquo;, and the cancellation guide defines what stopping means: termination &ldquo;implies that it will be permanently discontinued at the end of the current subscription.&rdquo; Power state is not an input to the invoice, so a VPS that has been off for three weeks costs exactly what it would have cost running.</p>
+
+    <h2>Suspended: What the Provider's Own Docs Actually Say</h2>
+    <p>Suspension is the state people confuse with cancellation, because the server is off and the panel is locked &mdash; it looks finished. DigitalOcean's Late Payments page lays out three stages, and only the third one ends anything:</p>
+    <ol>
+        <li><strong>Past due.</strong> The account is placed on hold, which &ldquo;prevents creating new resources&rdquo; while &ldquo;the account's existing resources continue to run.&rdquo; The server is still on and still accruing.</li>
+        <li><strong>Suspended.</strong> &ldquo;We power down the account's resources&rdquo; and logins redirect to the payment page. This is the first moment the server is off &mdash; and it is a provider action, not a billing stop.</li>
+        <li><strong>Permanently deleted.</strong> &ldquo;If an unresolved balance continues after suspension, we may permanently delete the account's resources. Deleted resources cannot be recovered.&rdquo;</li>
+    </ol>
+    <p>Two details on that page are more useful than the stages themselves. First: <strong>&ldquo;How fast an account moves between past due, suspension, and permanent deletion depends on the account. DigitalOcean does not publish fixed timelines for these stages.&rdquo;</strong> Anyone quoting you &ldquo;you get 14 days before deletion&rdquo; is quoting something that is not on the page. Second: paying does not restore service by itself &mdash; &ldquo;once you pay a past-due balance, you need to manually turn your resources (like Droplets) back on using the control panel.&rdquo;</p>
+    <p>For Hetzner and OVHcloud we could not find an equivalent published suspension timeline on the pages we fetched, so this article does not state one. What OVHcloud does publish is the commitment mechanic, which is where a &ldquo;stopped&rdquo; server can become genuinely expensive: commitments on VPS and Dedicated Servers are &ldquo;billed annually and up front only,&rdquo; and &ldquo;once you have a commitment in place, you can only cancel it early by paying the remainder of what you owe on the commitment.&rdquo; Powering the VPS off under a 24-month commitment does not reduce that remainder by a cent.</p>
+
+    <h2>Destroyed: The Only State That Stops the Meter</h2>
+    <p>Destruction ends billing at all three, but each has a floor, and the floors are measured in different units &mdash; 60 seconds at one provider, one whole hour at another, a subscription term at the third:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider</th><th>Billing increment</th><th>Floor on a very short-lived server</th><th>Monthly ceiling</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean &mdash; bundled CPU</td><td>Per second</td><td class="price">60 seconds or $0.01, whichever is higher</td><td>672 hours (28 days)</td></tr>
+            <tr><td>DigitalOcean &mdash; v5 configuration</td><td>Per second</td><td class="price">60 seconds or $0.01, whichever is higher</td><td class="price">None published</td></tr>
+            <tr><td>Hetzner Cloud</td><td>Per hour, always rounded up</td><td class="price">One whole hour</td><td>Monthly price cap</td></tr>
+            <tr><td>OVHcloud VPS</td><td>Subscription term</td><td class="note">No hourly option on the page we read</td><td>Monthly price, fixed</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>The DigitalOcean row for v5 configurations is the one that changes how you should think about &ldquo;stopped&rdquo;. On v5 the page says plainly: &ldquo;Unlike bundled plans, v5 Droplets do not have a monthly usage cap.&rdquo; You are billed per second at a rate that is the sum of the configured resources &mdash; shared vCPU at $0.0158219 per vCPU-hour, memory at $0.0040411 per GiB-hour, boot disk at $0.000137 per GiB-hour. The 672-hour ceiling that protects a bundled plan does not exist there, so a v5 box left running all month costs more in a 31-day month than in a 30-day one, and the page says so: &ldquo;The monthly total for a continuously running v5 Droplet varies based on the number of hours in the month.&rdquo;</p>
+    <p>Hetzner's floor is the opposite kind of trap. A server created to test a deploy and deleted after four minutes is billed one hour, not four minutes &mdash; the FAQ gives the reason in the provider's own words: &ldquo;When you created the server, it placed an additional load on our systems.&rdquo; DigitalOcean's floor is 60 seconds or one cent, so the same test costs $0.01.</p>
+
+    <h2>What This Does to a Two-Week Project</h2>
+    <p>Take the most common shape: a server that runs for seven days and then sits idle for the rest of the month because nobody remembered to delete it. Using only published rates, here is what each billing model does.</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Model</th><th>Hours you used</th><th>Hours you are billed for</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean bundled, destroyed on day 7</td><td>168</td><td class="price">168</td><td>Per-second billing stops at destruction</td></tr>
+            <tr><td>DigitalOcean bundled, powered off on day 7</td><td>168</td><td class="price">672 (the cap)</td><td>Billing ends at destruction, not at shutdown</td></tr>
+            <tr><td>DigitalOcean v5, powered off on day 7</td><td>168</td><td class="price">No cap &mdash; up to 720 in a 30-day month</td><td>No monthly ceiling on v5 configurations</td></tr>
+            <tr><td>Hetzner, deleted on day 7</td><td>168</td><td class="price">168 (rounded up to the hour)</td><td>Bill is the lower of cap or hourly &times; hours</td></tr>
+            <tr><td>OVHcloud VPS-1, off from day 7</td><td>168</td><td class="price">The full month, $4.54</td><td>Monthly subscription; power state is not billed</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <figure style="margin:26px 0 8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px 22px 14px">
+        <svg viewBox="0 0 960 360" width="100%" height="auto" role="img" aria-labelledby="fig2t fig2d" style="display:block;max-width:100%">
+            <title id="fig2t">Cumulative billed hours for a VPS powered off on day 7</title>
+            <desc id="fig2d">One series keeps the server and is billed to the 672-hour monthly cap by day 28. The other destroys it on day 7 and stops at 168 billed hours.</desc>
+            <text x="0" y="18" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="19" font-weight="700" fill="#111827">Powering off does not flatten the line. Destroying does.</text>
+            <text x="0" y="42" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="14" fill="#64748b">Cumulative billed hours for a server used 168 hours (7 days). DigitalOcean bundled-plan rules, 672-hour cap.</text>
+
+            <!-- gridlines -->
+            <line x1="70" y1="280" x2="900" y2="280" stroke="#cbd5e1" stroke-width="1"></line>
+            <line x1="70" y1="228.7" x2="900" y2="228.7" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 4"></line>
+            <line x1="70" y1="177.3" x2="900" y2="177.3" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 4"></line>
+            <line x1="70" y1="126" x2="900" y2="126" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 4"></line>
+            <line x1="70" y1="74.7" x2="900" y2="74.7" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 4"></line>
+            <line x1="70" y1="60" x2="900" y2="60" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 4"></line>
+
+            <!-- y labels -->
+            <text x="58" y="284" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">0 h</text>
+            <text x="58" y="232.7" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">168 h</text>
+            <text x="58" y="181.3" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">336 h</text>
+            <text x="58" y="130" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">504 h</text>
+            <text x="58" y="78.7" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">672 h</text>
+            <text x="58" y="64" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">720 h</text>
+
+            <!-- series A: kept, never destroyed -->
+            <polygon points="70,280 844.7,74.7 900,74.7 900,280" fill="#dbeafe" opacity="0.75"></polygon>
+            <polyline points="70,280 844.7,74.7 900,74.7" fill="none" stroke="#2563eb" stroke-width="3"></polyline>
+
+            <!-- series B: destroyed on day 7 -->
+            <polygon points="70,280 263.7,228.7 900,228.7 900,280" fill="#ffedd5" opacity="0.9"></polygon>
+            <polyline points="70,280 263.7,228.7 900,228.7" fill="none" stroke="#f97316" stroke-width="3" stroke-dasharray="7 4"></polyline>
+
+            <!-- markers -->
+            <circle cx="263.7" cy="228.7" r="5" fill="#f97316"></circle>
+            <line x1="263.7" y1="228.7" x2="263.7" y2="292" stroke="#f97316" stroke-width="1" stroke-dasharray="3 3"></line>
+            <text x="263.7" y="308" text-anchor="middle" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#9a3412">day 7: powered off</text>
+            <text x="263.7" y="324" text-anchor="middle" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#9a3412">168 h billed</text>
+
+            <circle cx="844.7" cy="74.7" r="5" fill="#2563eb"></circle>
+            <text x="836" y="66" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" font-weight="700" fill="#1d4ed8">day 28: 672 h cap reached</text>
+            <text x="892" y="94" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#1d4ed8">billing stops rising, not stops</text>
+
+            <!-- x labels -->
+            <text x="70" y="348" text-anchor="middle" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">day 0</text>
+            <text x="485" y="348" text-anchor="middle" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">day 15</text>
+            <text x="900" y="348" text-anchor="middle" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12" fill="#64748b">day 30</text>
+
+            <!-- legend -->
+            <rect x="70" y="58" width="0" height="0" fill="none"></rect>
+            <line x1="470" y1="34" x2="500" y2="34" stroke="#2563eb" stroke-width="3"></line>
+            <text x="508" y="38" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#334155">kept, never destroyed</text>
+            <line x1="680" y1="34" x2="710" y2="34" stroke="#f97316" stroke-width="3" stroke-dasharray="7 4"></line>
+            <text x="718" y="38" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#334155">destroyed on day 7</text>
+        </svg>
+        <figcaption style="color:#5b6675;font-size:.86rem;line-height:1.6;margin-top:10px">Source: DigitalOcean Droplet pricing documentation, fetched 2026-10-28. The 672-hour ceiling and the per-second billing rule are quoted from that page; the two lines are our own arithmetic on a fixed scale (220 px = 720 hours, 27.67 px per day), not a provider chart.</figcaption>
+    </figure>
+    <p>The gap between the two lines is the whole point of the article: the orange server and the blue server were <em>doing the same work for the same seven days</em>. The difference is a delete call nobody made.</p>
+
+    <h2>The Three Numbers to Put in Your Notes</h2>
+    <p>If you only keep three figures from this page, keep these, because they are the ones that decide whether an idle server costs cents or the full monthly price:</p>
+    <ul>
+        <li><strong>60 seconds / $0.01.</strong> DigitalOcean's minimum charge per Droplet, whether it is a bundled plan or a v5 configuration. Destroying faster than that does not make the charge zero.</li>
+        <li><strong>672 hours.</strong> The bundled-plan monthly cap at DigitalOcean, which is 28 days. A server kept but powered off still counts against it, so the cap is reached on day 28 of existence, not of uptime.</li>
+        <li><strong>One whole hour.</strong> Hetzner's rounding rule. Any server that exists for any part of an hour is billed for that hour, which makes rapid create-and-destroy cycles pointless as a cost-saving trick.</li>
+    </ul>
+    <p>Two more published details belong in the same note because they survive the server itself. At Hetzner, primary IP addresses are billed separately from cloud servers and &ldquo;we will bill you for all Primary IPs that have finished the creation process, including Primary IPs that are not assigned to any cloud server&rdquo; &mdash; if you want to stop paying for one, you have to delete it. Primary IPv6 addresses are free and generally do not appear on the invoice. At DigitalOcean, public IPv4 addresses on v5 configurations are a separate invoice line whose &ldquo;introductory line-item price is currently $0.00 but is subject to change.&rdquo; A destroyed server can therefore leave a small line item behind if you forget the IP.</p>
+
+    <h2>Frequently Asked Questions</h2>
+    <h3>Does a VPS still cost money when it is powered off?</h3>
+    <p>At DigitalOcean, yes, for bundled-plan CPU Droplets. Its Droplet pricing documentation states: &ldquo;Billing begins when you create the Droplet and ends when you destroy it. You are still billed for bundled-plan CPU Droplets that are powered off because the compute resources stay reserved on the hypervisor. To end billing, destroy the Droplet.&rdquo; Hetzner's Cloud billing FAQ says it will bill each cloud server &ldquo;until you choose to delete them&rdquo; and that &ldquo;even if you aren't actively using your server, we will bill you for it.&rdquo; An OVHcloud VPS is sold as a monthly subscription, and its cancellation guide states that termination means the service is permanently discontinued at the end of the current subscription, so powering it off changes nothing on the invoice.</p>
+    <h3>Does destroying a VPS stop billing immediately?</h3>
+    <p>At DigitalOcean, destruction is the event that ends billing, but there is a floor: the minimum charge is 60 seconds or $0.01, whichever is higher, and a Droplet destroyed in under 60 seconds is still charged that minimum. Hetzner bills in whole hours and always rounds up, so a server that exists for a few minutes is billed for one full hour. At OVHcloud the service is a subscription, so cancelling sets an end date at the close of the current subscription rather than stopping the charge the same day.</p>
+    <h3>Can I get a refund for the days I did not use?</h3>
+    <p>DigitalOcean's billing help answers the refund question in three words: &ldquo;We do not offer refunds.&rdquo; It also states that it does not offer payment extensions. Hetzner's model avoids the question by billing the lower of the monthly cap or the hourly rate times hours used, so deleting a server mid-month produces a smaller invoice rather than a refund. OVHcloud's VPS FAQ says moving remaining subscription time from an old VPS to a new one, or getting it refunded, is &ldquo;generally possible but the process requires a request to our support team&rdquo; &mdash; a case-by-case request, not a published policy.</p>
+    <h3>What happens to the bill if my payment fails?</h3>
+    <p>DigitalOcean's Late Payments documentation describes three stages. A past due account is placed on hold, which blocks new resources while existing resources continue to run. A suspended account has its resources powered down and logins redirected to the payment page. If the balance stays unresolved, resources may be permanently deleted and cannot be recovered. The page states plainly that DigitalOcean does not publish fixed timelines for these stages, and that after paying a past-due balance you must manually turn the resources back on.</p>
+
+    <h2>Bottom Line</h2>
+    <p>&ldquo;Stopped&rdquo; is not a billing state. Powering a VPS off is an operating-system action; destroying it is an account action, and only the second one reaches the meter. The three providers differ in how they measure the time &mdash; per second with a one-cent floor at DigitalOcean, whole rounded hours at Hetzner, a fixed subscription month at OVHcloud &mdash; but none of them prices a server by whether it is awake. If you are running a test box, the delete button is the only cost control that works; if you are running something you plan to keep, the 672-hour cap and the v5 no-cap rule are the two lines in the price list that will decide the invoice. For the rest of the arithmetic behind a VPS bill, see <a href="/vps-price">how a VPS price is assembled</a> and <a href="/vps-hosting-cost">what a &ldquo;from $4&rdquo; plan actually buys</a>.</p>
+
+    <div class="author-bio">
+        <div class="author-name">Marcus Reid</div>
+        <div class="author-role">Systems Architect &amp; VPS Infrastructure Analyst</div>
+        <p>Marcus has been working with virtualized server infrastructure since 2015, deploying and benchmarking VPS and cloud instances across DigitalOcean, Vultr, Hetzner, OVHcloud, Contabo, RackNerd, Hostinger, and the major hyperscalers. His work focuses on the gap between what providers advertise and what actually happens when you deploy a real workload. He verifies every price and specification against official provider pages before publication.</p>
+    </div>
+
+    <div class="related">
+        <h2>Related Articles</h2>
+        <a href="/vps-price">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
+        <a href="/vps-hosting-cost">VPS Hosting Cost: What &ldquo;From $4 a Month&rdquo; Actually Buys</a>
+        <a href="/hetzner-vs-digitalocean">Hetzner vs DigitalOcean: Which One Actually Costs Less</a>
+        <a href="/best-vps">Best VPS Hosting in 2026: The Real Winners by Category</a>
+        <p>Also see our <a href="/cheap-vps-hosting">cheap VPS hosting guide</a>, <a href="/free-vps">free VPS guide</a> and <a href="/compare">full comparison table</a>.</p>
+    </div>
+
+    <footer>
+        <p>ServerBudget &mdash; VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>
+        <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
+        <p style="margin-top:0.5rem"><a href="/">Home</a> &middot; <a href="/compare">Compare All</a> &middot; <a href="/best-vps">Best VPS</a> &middot; <a href="/cheap-vps-hosting">Cheap VPS</a> &middot; <a href="/cheap-windows-vps-hosting">Cheap Windows VPS</a> &middot; <a href="/about">About</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></p>
+    </footer>
+</div>
+</body>
+</html>

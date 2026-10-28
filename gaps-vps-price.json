@@ -3,15 +3,15 @@
   "top3": ["digitalocean.com", "us.ovhcloud.com", "vpspricetracker.com"],
   "cycle_start": "2026-10-28",
   "cycle_len_days": 28,
-  "next_index": 0,
+  "next_index": 1,
   "gaps": [
     {
       "slug": "vps-price-stopped-instance",
       "gap": "Does a stopped VPS still cost money? Three states (powered off, suspended, destroyed) and what each one bills.",
       "why_gap": "String 'stopped' appears in 0 of the 30 TOP3 pages; 'powered off' 0 of 30.",
       "source": "DigitalOcean docs on Droplet billing + OVHcloud VPS billing FAQ; both official pages fetched on publish day.",
-      "done": false,
-      "published": null
+      "done": true,
+      "published": "2026-10-28"
     },
     {
       "slug": "vps-price-sales-tax",

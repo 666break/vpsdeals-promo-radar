@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra IPv4 on a VPS: What It Costs, and Billing While Off</title>
+    <meta name="description" content="One extra IPv4 runs $0.60/mo at Hetzner, $2.40 at OVHcloud and $5.00 at DigitalOcean when unassigned. What still bills with the server powered off.">
+    <link rel="canonical" href="https://serverbudget.com/vps-price-extra-ipv4">
+    <meta property="og:title" content="Extra IPv4 on a VPS: What It Costs, and Billing While Off">
+    <meta property="og:description" content="Three official price lists read on 2026-10-30: $0.60, $2.40 and $5.00 per month for one IPv4, and why powering the server off changes none of them.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://serverbudget.com/vps-price-extra-ipv4">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Extra IPv4 on a VPS: What It Costs, and Billing While Off">
+    <meta name="twitter:description" content="An address is now a line item of its own. Prices, hourly caps and the power-off question, from official pages.">
+
+    <!-- JSON-LD: Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Extra IPv4 on a VPS: What It Costs, and Billing While Off",
+      "author": {
+        "@type": "Person",
+        "name": "Marcus Reid",
+        "url": "https://serverbudget.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ServerBudget",
+        "url": "https://serverbudget.com"
+      },
+      "datePublished": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "mainEntityOfPage": "https://serverbudget.com/vps-price-extra-ipv4"
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-price"},
+        {"@type": "ListItem", "position": 3, "name": "Extra IPv4", "item": "https://serverbudget.com/vps-price-extra-ipv4"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does an extra IPv4 address cost per month?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On the official pages we read on 2026-10-30: Hetzner charges EUR 0.50 or USD 0.60 per month excluding VAT for a Primary IPv4; OVHcloud charges $2.40 per IP per month for an Additional IPv4 on a VPS; DigitalOcean charges $5.00 per month ($0.01 per hour) for a reserved IPv4 that is not assigned to a Droplet and nothing at all while it is assigned. All three include one IPv4 with the server itself, so these are prices for the second address onward."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Am I charged for an IPv4 address when the server is powered off?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At Hetzner, yes, and twice over: the FAQ says servers are billed until you delete them independent of their state, and Primary IPs are a separate line item billed for every address that has finished the creation process. At DigitalOcean the address itself is free while it is attached to a Droplet, but the Droplet keeps billing while powered off, and destroying the Droplet turns the address into an unassigned reserved IP at $5.00 per month. At OVHcloud an Additional IPv4 is sold as a per-IP monthly charge on the VPS, and the pages we read state no power-state exemption."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a reserved IP billed if it is not attached to a server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DigitalOcean bills an unassigned reserved IPv4 at $5.00 per month, with a floor: the pricing page says you are not billed unless you accrue $1 or more per reserved IP, which at $0.01 per hour means a hold of under about 100 hours costs nothing. Hetzner bills every Primary IP that has finished the creation process, assigned or not, and the only way to stop is to delete it. OVHcloud prices an Additional IPv4 at $2.40 per IP per month and states that an address left unassigned for 30 consecutive days may be reclaimed."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I avoid the IPv4 charge by using IPv6 instead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Partly. IPv6 is free at all three providers: Hetzner does not charge for Primary IPv6s and generally does not list them on the invoice, DigitalOcean makes reserved IPv6 free even when unassigned, and OVHcloud lists Additional IPv6 blocks as free. But free is not the same as usable: OVHcloud's own FAQ says an Additional IPv6 block is only available through a vRack network and cannot be used with a VPS, and IPv4-only clients still cannot reach a v6-only host."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+:root{
+  --bg:#eef1f6;
+  --surface:#ffffff;
+  --surface-2:#f6f8fc;
+  --border:#e3e8ef;
+  --text:#16202c;
+  --muted:#5b6675;
+  --muted-2:#8a94a3;
+  --primary:#2563eb;
+  --primary-d:#1d4ed8;
+  --accent:#0ca678;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow:0 12px 34px rgba(16,24,40,.10);
+  --radius:14px;
+  --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--primary);text-decoration:none;transition:color .15s}
+a:hover{text-decoration:underline;color:var(--primary-d)}
+img{max-width:100%;height:auto;display:block}
+.container{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+/* Header */
+header{border-bottom:1px solid var(--border);padding:24px 0 20px;margin-bottom:34px}
+header h1{font-size:2.05rem;line-height:1.18;letter-spacing:-.015em;color:var(--text);font-weight:800}
+header h1 a{color:var(--text)}
+header p{color:var(--muted);font-size:1.02rem;margin-top:8px;max-width:62ch}
+.brand{display:inline-block;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--text);margin-bottom:10px}
+.brand:hover{text-decoration:none;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.nav a{display:inline-block;padding:7px 14px;border:1px solid var(--border);border-radius:999px;font-size:.9rem;color:var(--muted);background:var(--surface);transition:all .15s}
+.nav a:hover{border-color:var(--primary);color:var(--primary);text-decoration:none;background:#eef3ff}
+
+/* Prose */
+h1{font-size:2.05rem;line-height:1.2;letter-spacing:-.015em;font-weight:800;margin-bottom:12px}
+h2{font-size:1.5rem;margin:34px 0 14px;color:var(--text);font-weight:750;letter-spacing:-.01em;line-height:1.3}
+h3{font-size:1.18rem;margin:26px 0 10px;color:var(--text);font-weight:700}
+p{margin-bottom:16px;color:#28323d}
+ul,ol{margin:0 0 18px 1.4rem}
+li{margin-bottom:8px}
+strong{font-weight:700;color:var(--text)}
+blockquote{border-left:3px solid var(--primary);padding:8px 0 8px 18px;margin:0 0 18px;color:var(--muted);background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+
+/* Meta line */
+.meta{color:var(--muted);font-size:.9rem;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.meta a{color:var(--primary);font-weight:600}
+
+/* First-screen answer box */
+.takeaways{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:22px 26px 8px;margin:0 0 28px;box-shadow:var(--shadow-sm)}
+.takeaways h2{margin:0 0 14px;font-size:1.22rem;color:var(--text)}
+.takeaways ul{margin:0 0 14px 1.15rem}
+.takeaways li{margin-bottom:11px;font-size:.98rem;color:#28323d}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);margin:22px 0}
+table{width:100%;border-collapse:collapse;min-width:540px}
+th{text-align:left;padding:13px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+.price{font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.88rem}
+.srcnote{color:#5b6675;font-size:.88rem;line-height:1.6}
+
+/* Callout */
+.callout{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:22px 0;font-size:.94rem;color:var(--muted)}
+.callout strong{color:var(--text)}
+
+/* Author + related */
+.author-bio{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:40px 0 0;box-shadow:var(--shadow-sm)}
+.author-name{font-weight:800;font-size:1.02rem;color:var(--text)}
+.author-role{color:var(--accent);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:4px 0 12px}
+.author-bio p{font-size:.94rem;color:var(--muted);margin-bottom:0}
+.related{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow-sm)}
+.related h2{margin:0 0 14px;font-size:1.2rem}
+.related a{display:block;padding:9px 0;border-bottom:1px solid var(--border);font-weight:600;font-size:.96rem}
+.related a:last-of-type{border-bottom:none}
+.related p{font-size:.88rem;color:var(--muted);margin:12px 0 0}
+
+/* Footer */
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+footer p{color:var(--muted);margin-bottom:10px}
+footer a{color:var(--primary)}
+
+/* Responsive */
+@media(max-width:760px){
+  body{font-size:16px}
+  h1,header h1{font-size:1.6rem}
+  .container{padding:0 14px 56px}
+  h2{font-size:1.3rem}
+  .takeaways{padding:18px 18px 4px}
+}
+</style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H2F4PWVG2P');
+  </script>
+<!-- navrow-20261029 -->
+<style>
+/* 2026-10-29 first-screen fix: on a 390px phone the eight pill links in .nav
+   wrapped to four rows (~160px) before the H1, pushing the headline and the
+   answer box below the fold. One swipeable row instead. All links stay in the
+   DOM, so internal linking and crawlability are unchanged. */
+@media(max-width:760px){
+  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="/" class="brand">ServerBudget</a>
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/compare">Compare All</a>
+            <a href="/best-vps">Best VPS</a>
+            <a href="/cheap-vps-hosting">Cheap VPS</a>
+            <a href="/free-vps">Free VPS</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </header>
+
+    <h1>What an Extra IPv4 Costs on a VPS, and Whether It Bills While the Server Is Off</h1>
+
+    <div class="meta">
+        By <a href="/about">Marcus Reid</a> &middot; Published Oct 30, 2026 &middot; Last updated Oct 30, 2026 &middot; 9 min read
+    </div>
+
+    <div class="takeaways">
+        <h2>The Short Answer</h2>
+        <ul>
+            <li><strong>One extra IPv4 costs $0.60 per month at Hetzner, $2.40 at OVHcloud and $5.00 at DigitalOcean</strong> &mdash; and the DigitalOcean figure applies only when the address is <em>not</em> attached to a Droplet. All three include a first IPv4 with the server, so every number here is the price of the second address onward.</li>
+            <li><strong>Powering the server off stops none of these charges.</strong> Hetzner bills servers until you delete them &ldquo;independent of their state&rdquo; and bills Primary IPs as a separate line item; DigitalOcean keeps billing a powered-off Droplet, and destroying it turns the attached address into a $5.00-per-month unassigned reserved IP; OVHcloud sells the Additional IPv4 as a per-IP monthly charge with no power-state exemption stated on the pages we read.</li>
+            <li><strong>The monthly price of an address is not a month.</strong> Divide each published monthly figure by its own hourly rate and the caps land at <strong>500 hours</strong> at DigitalOcean and <strong>600 to 625 hours</strong> at Hetzner &mdash; 20.8 and about 25 days, both short of a 30-day month and far short of the 672 hours DigitalOcean uses for Droplets.</li>
+            <li><strong>DigitalOcean does not bill at all until $1 has accrued</strong> on a reserved IP. At $0.01 per hour that floor is 100 hours, so a three-day hold costs nothing and a two-week hold costs $3.36 instead of the $5.00 cap.</li>
+            <li><strong>A parked address can cost more than a server.</strong> DigitalOcean's unassigned reserved IPv4 at $5.00 per month is 125% of its own $4.00 Droplet; OVHcloud's $2.40 is 52.9% of VPS-1 at $4.54; and OVHcloud's 16-address ceiling on a VPS totals $38.40 per month, 8.46 times the price of the server it hangs off.</li>
+            <li><strong>IPv6 is free everywhere and still does not replace IPv4.</strong> OVHcloud's own FAQ says an Additional IPv6 block works only through a vRack and &ldquo;it is not possible to use it with VPS&rdquo;.</li>
+        </ul>
+    </div>
+
+    <p>An IP address used to be part of the server, priced at nothing and mentioned in a spec bullet. It is now a line item with its own meter, its own cap and its own rules about what happens when you switch the machine off. The three providers we track disagree about all of it: one charges by the month with no hourly floor worth mentioning, one charges by the hour against a $5.00 cap, and one charges a flat per-IP fee with a hard ceiling on how many you may buy.</p>
+
+    <p>Everything below was copied from official provider pages on <strong>2026-10-30</strong>. Where a page did not state something, this article says so instead of filling the gap. Every ratio, hour count and percentage is our own arithmetic on those published numbers, and the formula is shown so you can redo it.</p>
+
+    <h2>The Three Published Prices for a Second IPv4</h2>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider / product</th><th>Monthly</th><th>Hourly</th><th>State the price applies to</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Hetzner Cloud &mdash; Primary IPv4</td><td class="price">&euro;0.50 / $0.60 excl. VAT</td><td>&euro;0.0008 / $0.0010</td><td>Any address that has finished creation, assigned or not</td></tr>
+            <tr><td>Hetzner Cloud &mdash; Primary IPv6</td><td class="price">free</td><td>&mdash;</td><td>Free, and generally not listed on the invoice</td></tr>
+            <tr><td>OVHcloud VPS &mdash; Additional IPv4</td><td class="price">$2.40 per IP</td><td class="note">not published on the VPS pages</td><td>Attached to a VPS, up to 16 addresses</td></tr>
+            <tr><td>DigitalOcean &mdash; reserved IPv4, assigned</td><td class="price">$0.00</td><td>$0.00</td><td>Attached to a Droplet</td></tr>
+            <tr><td>DigitalOcean &mdash; reserved IPv4, unassigned</td><td class="price">$5.00</td><td>$0.01</td><td>Reserved but not attached to any Droplet</td></tr>
+            <tr><td>DigitalOcean &mdash; v5 Droplet public IPv4</td><td class="price">$0.00 (introductory)</td><td>$0.00</td><td>Separate invoice line on v5 configurations only</td></tr>
+            <tr><td>OVHcloud Public Cloud &mdash; Public IP IPv4 (/32)</td><td class="price">~$2.3287 excl. tax</td><td>$0.00319</td><td>Attached or not attached to an instance</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Sources, all fetched on 2026-10-30: <em>docs.hetzner.com/cloud/servers/primary-ips/overview/</em> (the price table states &euro;0.50 / $0.60 per month and &euro;0.0008 / $0.0010 per hour, all excluding VAT); <em>us.ovhcloud.com/vps/options/</em> and <em>us.ovhcloud.com/network/additional-ip/</em> (both state $2.40 per IP per month); <em>docs.digitalocean.com/products/networking/reserved-ips/details/pricing/</em> (marked &ldquo;Last verified 26 Oct 2026&rdquo; by DigitalOcean); <em>digitalocean.com/pricing/droplets</em> FAQ; <em>us.ovhcloud.com/public-cloud/prices/</em> for the Public Cloud row, which is a different product from a VPS and is included only because it is the only per-IP hourly figure OVHcloud publishes. The Public Cloud monthly column is OVHcloud's own approximation from 730 hours, not ours.</p>
+
+    <p>Two things about that table are worth pausing on. First, the spread is <strong>8.3 times</strong> between Hetzner's $0.60 and DigitalOcean's $5.00 &mdash; not because one provider values addresses differently in principle, but because DigitalOcean's number is a <em>penalty for parking</em>, and its assigned price is zero. Second, the hourly column is not decoration: it decides what you pay for any hold shorter than a month, which is exactly the case for staging environments, migration windows and failover addresses that exist for a week.</p>
+
+    <h2>Does the Charge Stop When the Server Is Off?</h2>
+    <p>This is the question people actually ask, and the answer differs by provider in a way that matters more than the headline price. Here is what each official page says, quoted rather than paraphrased.</p>
+
+    <h3>Hetzner: no, and the address is billed twice over</h3>
+    <p>Two separate statements, both from Hetzner's own documentation. On server billing: &ldquo;We will bill you for your servers until you delete them, independent of their state. This is because we allocate full resources to servers, regardless of their power state.&rdquo; On addresses: &ldquo;We bill Primary IPs (IPv4, IPv6) and cloud servers separately, and we list both resources separately in invoices. We will bill you for all Primary IPs that have finished the creation process, including Primary IPs that are not assigned to any cloud server. If you want to stop paying for a Primary IP, you need to delete it. If it still exists, we will still bill you for it.&rdquo;</p>
+    <p>So at Hetzner, powering off is irrelevant twice: the server keeps billing because the resources stay allocated, and the address keeps billing because it exists. Hetzner's own FAQ offers the workaround it considers cheaper for long downtime &mdash; take a snapshot, delete the server, recreate it later &mdash; which is a statement about snapshot cost versus idle server cost, not about IP cost.</p>
+
+    <h3>DigitalOcean: the address was free anyway, but deleting the Droplet starts the meter</h3>
+    <p>DigitalOcean's reserved IP pricing page is unusually blunt: &ldquo;All reserved IPs are free when assigned to a Droplet. Reserved IPv4 addresses cost $5.00 per month ($0.01 per hour) when reserved but not assigned to a Droplet, due to the shortage of available IPv4 addresses.&rdquo; Powering off does not unassign the address, so the IP line stays at zero &mdash; but the Droplet line does not stop, because &ldquo;You are still billed for bundled-plan CPU Droplets that are powered off because the compute resources stay reserved on the hypervisor.&rdquo;</p>
+    <p>The trap is one step later. Destroy the Droplet to stop the compute charge and the reserved address becomes unassigned, which is the exact state that costs $5.00 per month. The sequence that looks like saving money &mdash; delete the server, keep the IP for later &mdash; is the sequence that creates the only IP charge DigitalOcean has.</p>
+
+    <h3>OVHcloud: a per-IP monthly charge, with a 30-day reclaim clause</h3>
+    <p>OVHcloud's VPS page lists the first address as included and any further address as an optional extra, and the options page puts a figure on it: <strong>$2.40 /IP/month</strong>, with a stated maximum of 16 addresses per VPS and failover between VPSs described on the same page. The additional-IP product page repeats the same $2.40 and adds a rule that no other provider in this comparison publishes: &ldquo;If the Additional IP addresses or block of IP addresses are not used (i.e. not assigned to a service) during 30 consecutive days, OVHcloud reserves the right to reclaim them after notifying the user.&rdquo;</p>
+    <p>What the OVHcloud pages do <em>not</em> state is an exemption for a powered-off VPS. The charge is expressed per IP per month, so the power state has no stated role in it. We are flagging that as an absence of evidence rather than evidence of a charge that continues, because the page does not say either way.</p>
+
+    <div class="callout">
+        <strong>One rule that covers all three:</strong> the meter follows the <em>address object</em>, not the machine. Delete the address to stop paying for the address; delete the server to stop paying for the server. Powering the server off is not a billing action at any of the three.
+    </div>
+
+    <h2>The Monthly Price Is Not a Month: 500, 600 and 625 Hours</h2>
+    <p>Where a provider publishes both an hourly and a monthly rate for the same address, dividing one by the other tells you when the cap starts protecting you. This is the same arithmetic we applied to Droplets in <a href="/vps-price">our breakdown of VPS pricing</a>, and the answer for addresses is different from the answer for servers.</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Item</th><th>Monthly</th><th>Hourly</th><th>Monthly &divide; hourly</th><th>In days</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean reserved IPv4, unassigned</td><td class="price">$5.00</td><td>$0.01</td><td>500 h</td><td>20.8</td></tr>
+            <tr><td>Hetzner Primary IPv4 (USD)</td><td class="price">$0.60</td><td>$0.0010</td><td>600 h</td><td>25.0</td></tr>
+            <tr><td>Hetzner Primary IPv4 (EUR)</td><td class="price">&euro;0.50</td><td>&euro;0.0008</td><td>625 h</td><td>26.0</td></tr>
+            <tr><td class="note">For contrast: DigitalOcean 4 GiB Droplet</td><td class="note">$24.00</td><td class="note">$0.03571</td><td class="note">672 h</td><td class="note">28.0</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>The address caps arrive earlier than the server cap at every provider that publishes both. DigitalOcean's reserved IP reaches its $5.00 ceiling at <strong>500 hours</strong>, while its Droplets reach theirs at 672 &mdash; the address cap lands about seven days sooner. Hetzner's USD pair implies 600 hours, its EUR pair 625, and the small difference between the two is rounding in the published rates rather than a different policy.</p>
+    <p>What that means in practice is that the monthly figure is the price of <em>holding</em> an address, and the hourly figure is the price of <em>testing</em> one. Work the two-week case both ways:</p>
+    <ul>
+        <li><strong>DigitalOcean, 336 hours (14 days):</strong> 336 &times; $0.01 = <strong>$3.36</strong>, below the $5.00 cap. The same hold for a full month is $5.00.</li>
+        <li><strong>Hetzner, 336 hours:</strong> 336 &times; $0.0010 = <strong>$0.336</strong>, below the $0.60 cap. In euros, 336 &times; &euro;0.0008 = <strong>&euro;0.2688</strong>.</li>
+        <li><strong>OVHcloud, 336 hours:</strong> <strong>$2.40</strong>, because the VPS pages publish no hourly rate for an Additional IP. A two-week failover address costs the same as a two-month one.</li>
+    </ul>
+    <p>DigitalOcean adds a second threshold that no other provider here has: &ldquo;You are not billed unless you accrue $1 or more per reserved IP.&rdquo; At $0.01 per hour, $1.00 is <strong>100 hours</strong>, or 4.2 days. A 72-hour hold accrues $0.72 and is therefore billed at nothing; a 120-hour hold accrues $1.20 and is billed. This is the difference between a provider that rounds a small usage up and one that drops it, and it is only visible on the pricing page, not in the plan table.</p>
+
+    <h2>What One Address Costs Relative to the Server</h2>
+    <p>Percentages make the three prices comparable in a way the dollar figures do not, because each provider's cheapest server is a different size. Using only numbers published on 2026-10-30:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider</th><th>Cheapest server</th><th>One IPv4</th><th>Address as share of server</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean</td><td>$4.00/mo (512 MiB, 1 vCPU)</td><td class="price">$5.00</td><td class="price">125.0%</td></tr>
+            <tr><td>OVHcloud</td><td>$4.54/mo (VPS-1, 2 vCores, 4 GB)</td><td class="price">$2.40</td><td class="price">52.9%</td></tr>
+            <tr><td>Hetzner</td><td class="note">not captured on 2026-10-30</td><td class="price">$0.60</td><td class="note">not computed</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>DigitalOcean's unassigned price is the outlier that makes the point: <strong>one parked address costs 125% of the cheapest Droplet</strong>, or $60.00 a year against $48.00. That is not a rounding error in a price list, it is a deliberate incentive to release addresses you are not using, and DigitalOcean says as much in the same sentence by citing &ldquo;the shortage of available IPv4 addresses&rdquo;.</p>
+    <p>Hetzner's row is deliberately empty. Its cloud pricing table did not render the per-plan monthly figures in the markup we could read on 2026-10-30, and we will not divide by a number we did not see that day.</p>
+    <p>The same $5.00 can also be read in units of the resources it competes with. DigitalOcean publishes per-resource rates for v5 configurations: $0.0158219 per shared vCPU per hour and $0.0040411 per GiB of memory per hour. At 730 hours that is $11.55 for a vCPU-month and $2.95 for a GiB-month, so one parked address buys roughly <strong>1.7 GiB of memory</strong> or <strong>43% of a vCPU</strong>. An address is no longer the cheapest thing on the invoice.</p>
+
+    <h2>OVHcloud's Ceiling: 16 Addresses, $38.40, and a Server That Costs $4.54</h2>
+    <p>The number that surprises people is not the per-IP price but the cap on how many you can buy. OVHcloud allows up to 16 additional addresses on a VPS and does not support IP blocks on that product at all: &ldquo;PCI instances and VPS do not support IP blocks and allows connecting accordingly up to 265 (PCI) and 16 (VPS) addresses.&rdquo;</p>
+    <p>Sixteen addresses at $2.40 is <strong>$38.40 per month</strong> in IP fees attached to a server that starts at <strong>$4.54</strong>. The addresses would cost <strong>8.46 times</strong> the server. This is the shape of a product where the network identity, not the compute, is the expensive part &mdash; and it is the reason multi-tenant hosting on a single small VPS stops making economic sense well before it stops making technical sense. If your plan involves one address per customer site, price the addresses first.</p>
+
+    <h2>IPv6 Is Free at All Three, and That Is Not the Whole Story</h2>
+    <ul>
+        <li><strong>Hetzner:</strong> &ldquo;We do not charge for our Primary IPv6s&rdquo;, and the billing FAQ adds that &ldquo;Primary IPv6s are free and are not listed in the invoice in general.&rdquo; One Primary IPv6 per server, same as IPv4.</li>
+        <li><strong>DigitalOcean:</strong> &ldquo;Reserved IPv6 addresses are free even when not assigned to a Droplet.&rdquo; The $5.00 penalty applies to IPv4 only, which is consistent with the stated reason for the charge.</li>
+        <li><strong>OVHcloud:</strong> &ldquo;Additional IPv6 blocks (/56) FREE&rdquo;. But the same page's FAQ closes the door for this product: &ldquo;Can I use Additional IPv6 block with a VPS server? No, it is only available via a vRack network, so it is not possible to use it with VPS.&rdquo;</li>
+    </ul>
+    <p>So the free v6 capacity exists at all three, and at OVHcloud it is structurally out of reach for a VPS customer who is not running a vRack. Even where it is reachable, an IPv6-only host is not a drop-in replacement: the clients and integrations that still resolve to v4 only will not connect, which is why the address line stays on the invoice for most deployments.</p>
+
+    <h2>The Cheap Way to Keep an Address</h2>
+    <p>If you need to hold a DigitalOcean address across a rebuild, the arithmetic favours a different move than parking it. Attaching a reserved IP to the smallest Droplet costs <strong>$4.00 per month</strong> for the Droplet and <strong>$0.00</strong> for the address &mdash; $4.00 in total, against $5.00 for the address alone. You pay a dollar less and you get a server. The catch is that the Droplet keeps billing while powered off, so this is only cheaper if you actually want a machine at that address; if you do not, releasing the IP is the only move that costs nothing.</p>
+    <p>At Hetzner the equivalent decision is simpler because both resources meter separately and neither stops on power-off: delete the address to stop the address charge, and if the server will sit idle for months, Hetzner's own advice is a snapshot plus a delete rather than an off server.</p>
+
+    <h2>How to Check Your Own Bill in Three Steps</h2>
+    <ol>
+        <li><strong>Count the address objects, not the servers.</strong> A failover address that outlived its server, a reserved IP you kept &ldquo;just in case&rdquo;, a second address from a migration &mdash; each is a line item at $5.00, $2.40 or $0.60 depending on the provider. The server count will not show them.</li>
+        <li><strong>Divide the monthly figure by the hourly one.</strong> If the result is under 730, the monthly price is a cap you will always hit, and the hourly rate only matters for holds shorter than that number of hours. For DigitalOcean reserved IPs the number is 500; for Hetzner's USD pair, 600.</li>
+        <li><strong>Check the accrual floor before you panic about a short hold.</strong> At DigitalOcean nothing is billed under $1 accrued, which is 100 hours at $0.01. A three-day test is free; a five-day test is not.</li>
+    </ol>
+
+    <figure style="margin:26px 0 8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px 22px 14px">
+        <svg viewBox="0 0 960 360" width="100%" height="auto" role="img" aria-labelledby="fig1t fig1d" style="display:block;max-width:100%">
+            <title id="fig1t">Monthly price of one extra IPv4 address by provider, 2026-10-30</title>
+            <desc id="fig1d">Hetzner 0.60 dollars, OVHcloud 2.40 dollars, DigitalOcean 0.00 dollars while assigned and 5.00 dollars while unassigned. A dashed marker at 4.00 dollars shows DigitalOcean's smallest Droplet, which the unassigned address price exceeds.</desc>
+            <text x="0" y="18" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="19" font-weight="700" fill="#111827">One extra IPv4, per month: $0.00 to $5.00</text>
+            <text x="0" y="42" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="14" fill="#64748b">Prices copied from each provider's own page on 2026-10-30. Bars are linear in US dollars.</text>
+
+            <text x="0" y="100" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="15" fill="#1f2937">Hetzner Primary IPv4</text>
+            <text x="0" y="119" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">excl. VAT</text>
+            <rect x="230" y="82" width="74" height="38" rx="4" fill="#0ea5e9"></rect>
+            <text x="314" y="107" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="16" font-weight="700" fill="#0c4a6e">$0.60</text>
+
+            <text x="0" y="160" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="15" fill="#1f2937">OVHcloud Additional IPv4</text>
+            <text x="0" y="179" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">per IP, max 16 per VPS</text>
+            <rect x="230" y="142" width="298" height="38" rx="4" fill="#7c3aed"></rect>
+            <text x="538" y="167" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="16" font-weight="700" fill="#4c1d95">$2.40</text>
+
+            <text x="0" y="220" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="15" fill="#1f2937">DigitalOcean reserved, assigned</text>
+            <text x="0" y="239" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">attached to a Droplet</text>
+            <rect x="230" y="202" width="4" height="38" rx="2" fill="#0ca678"></rect>
+            <text x="246" y="227" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="16" font-weight="700" fill="#065f46">$0.00</text>
+
+            <text x="0" y="280" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="15" fill="#1f2937">DigitalOcean reserved, unassigned</text>
+            <text x="0" y="299" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">$0.01/hr, capped at $5.00</text>
+            <rect x="230" y="262" width="620" height="38" rx="4" fill="#dc2626"></rect>
+            <text x="840" y="287" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="16" font-weight="700" fill="#ffffff">$5.00</text>
+
+            <line x1="726" y1="60" x2="726" y2="316" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 5"></line>
+            <text x="720" y="56" text-anchor="end" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#475569">$4.00 = DigitalOcean's smallest Droplet</text>
+
+            <line x1="230" y1="326" x2="850" y2="326" stroke="#cbd5e1" stroke-width="1"></line>
+            <text x="230" y="344" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">$0</text>
+            <text x="800" y="344" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="12.5" fill="#64748b">$5</text>
+        </svg>
+        <figcaption style="color:#5b6675;font-size:.86rem;line-height:1.6;margin-top:10px">Source: Hetzner Primary IPs documentation (price table, excl. VAT), OVHcloud VPS options page and Additional IP product page, DigitalOcean Reserved IPs pricing page and Droplet price table &mdash; all fetched on 2026-10-30. The four prices are the providers' own figures; bar lengths are our own arithmetic on a fixed scale (620 px = $5.00, i.e. 124 px per dollar). The dashed marker sits at DigitalOcean's $4.00 entry Droplet, read from the same price table on the same day.</figcaption>
+    </figure>
+
+    <p>The chart is the whole article in one picture: two providers price an address as a small accessory, one prices it as a penalty, and the penalty is larger than the cheapest server that provider sells. The vertical marker is there because that comparison &mdash; $5.00 of address against $4.00 of server &mdash; is the one that changes behaviour, and it is only visible when both numbers come from the same page on the same day.</p>
+
+    <h2>Frequently Asked Questions</h2>
+    <h3>How much does an extra IPv4 address cost per month?</h3>
+    <p>On the official pages we read on 2026-10-30: Hetzner charges &euro;0.50 or $0.60 per month excluding VAT for a Primary IPv4; OVHcloud charges $2.40 per IP per month for an Additional IPv4 on a VPS; DigitalOcean charges $5.00 per month ($0.01 per hour) for a reserved IPv4 that is not assigned to a Droplet and nothing at all while it is assigned. All three include one IPv4 with the server itself, so these are prices for the second address onward.</p>
+    <h3>Am I charged for an IPv4 address when the server is powered off?</h3>
+    <p>At Hetzner, yes, and twice over: the FAQ says servers are billed until you delete them independent of their state, and Primary IPs are a separate line item billed for every address that has finished the creation process. At DigitalOcean the address itself is free while it is attached to a Droplet, but the Droplet keeps billing while powered off, and destroying the Droplet turns the address into an unassigned reserved IP at $5.00 per month. At OVHcloud an Additional IPv4 is sold as a per-IP monthly charge on the VPS, and the pages we read state no power-state exemption.</p>
+    <h3>Is a reserved IP billed if it is not attached to a server?</h3>
+    <p>DigitalOcean bills an unassigned reserved IPv4 at $5.00 per month, with a floor: the pricing page says you are not billed unless you accrue $1 or more per reserved IP, which at $0.01 per hour means a hold of under about 100 hours costs nothing. Hetzner bills every Primary IP that has finished the creation process, assigned or not, and the only way to stop is to delete it. OVHcloud prices an Additional IPv4 at $2.40 per IP per month and states that an address left unassigned for 30 consecutive days may be reclaimed.</p>
+    <h3>Can I avoid the IPv4 charge by using IPv6 instead?</h3>
+    <p>Partly. IPv6 is free at all three providers: Hetzner does not charge for Primary IPv6s and generally does not list them on the invoice, DigitalOcean makes reserved IPv6 free even when unassigned, and OVHcloud lists Additional IPv6 blocks as free. But free is not the same as usable: OVHcloud's own FAQ says an Additional IPv6 block is only available through a vRack network and cannot be used with a VPS, and IPv4-only clients still cannot reach a v6-only host.</p>
+
+    <h2>Bottom Line</h2>
+    <p>A second IPv4 address is now a subscription: $0.60 a month at Hetzner, $2.40 at OVHcloud, $5.00 at DigitalOcean when it is not attached to anything. The power switch does not touch it, because the meter is on the address rather than the machine, and at DigitalOcean the act of deleting the server to save money is precisely what starts the $5.00 charge. Read the hourly rate before you hold an address for a week, check whether the provider has an accrual floor, and remember that at OVHcloud the addresses can cost 8.46 times the server they belong to.</p>
+
+    <div class="author-bio">
+        <div class="author-name">Marcus Reid</div>
+        <div class="author-role">Systems Architect &amp; VPS Infrastructure Analyst</div>
+        <p>Marcus has been working with virtualized server infrastructure since 2015, deploying and benchmarking VPS and cloud instances across DigitalOcean, Vultr, Hetzner, OVHcloud, Contabo, RackNerd, Hostinger, and the major hyperscalers. His work focuses on the gap between what providers advertise and what actually happens when you deploy a real workload. He verifies every price and specification against official provider pages before publication.</p>
+    </div>
+
+    <div class="related">
+        <h2>Related Articles</h2>
+        <a href="/vps-price">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
+        <a href="/vps-price-stopped-instance">Does a Stopped VPS Still Cost Money? Billing by State</a>
+        <a href="/vps-price-sales-tax">VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax</a>
+        <a href="/vps-price-currency-and-fx">VPS Price Currency: Same Plan, Four Stores, 7% Gap</a>
+        <a href="/vps-hosting-cost">VPS Hosting Cost: What &ldquo;From $4 a Month&rdquo; Actually Buys</a>
+        <a href="/hetzner-vs-digitalocean">Hetzner vs DigitalOcean: Which One Actually Costs Less</a>
+        <p>Also see our <a href="/best-vps">best VPS guide</a>, <a href="/cheap-vps-hosting">cheap VPS hosting</a>, and <a href="/virtual-private-server">what a virtual private server is</a>.</p>
+    </div>
+
+    <footer>
+        <p>ServerBudget &mdash; VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>
+        <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
+        <p style="margin-top:0.5rem"><a href="/">Home</a> &middot; <a href="/compare">Compare All</a> &middot; <a href="/best-vps">Best VPS</a> &middot; <a href="/cheap-vps-hosting">Cheap VPS</a> &middot; <a href="/cheap-windows-vps-hosting">Cheap Windows VPS</a> &middot; <a href="/about">About</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></p>
+    </footer>
+</div>
+</body>
+</html>

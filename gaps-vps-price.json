@@ -7,7 +7,7 @@
   ],
   "cycle_start": "2026-10-28",
   "cycle_len_days": 28,
-  "next_index": 3,
+  "next_index": 4,
   "gaps": [
     {
       "slug": "vps-price-stopped-instance",
@@ -38,8 +38,8 @@
       "gap": "What an additional IPv4 address costs per month, and whether it is billed even when the server is off.",
       "why_gap": "'IPv4' appears 14/30 but every hit is a feature flag, never a price.",
       "source": "Official networking/add-on price lists.",
-      "done": false,
-      "published": null
+      "done": true,
+      "published": "2026-10-30"
     },
     {
       "slug": "vps-price-snapshot-billing",

@@ -75,3 +75,38 @@
 | Hetzner 把 IP 和服务器分开计费，且**未绑定的 IP 也照收** | docs.hetzner.com/cloud/billing/faq/：「We bill Primary IPs (IPv4, IPv6) and cloud servers separately, and we list both resources separately in invoices. We will bill you for all Primary IPs that have finished the creation process, including Primary IPs that are not assigned to any cloud server. If you want to stop paying for a Primary IP, you need to delete it.」另：「Primary IPv6s are free and are not listed in the invoice in general.」 | 明天这篇的核心对照之一：IPv6 免费、IPv4 按个收、没绑也收 |
 | DigitalOcean 的 IPv4 计费按套餐类型分裂：Bundled 含、v5 另收 | digitalocean.com/pricing/droplets 的 FAQ「Do Droplets come with a dedicated IP address?」：「For Bundled Plans, a public IPv4 is included at no extra cost. Public IPv4 addresses for Droplets with v5 configurations are billed separately from the v5 configur…」（句子被页面截断，明天要抓完整句和单价） | 明天第一件事：抓 DO 的 networking / additional-IP 价目页拿单价，再抓 OVH 的额外 IP 价 |
 | OVHcloud 的 VPS 页提到数据中以外的机房「cannot be modified or upgraded after delivery」 | us.ovhcloud.com/vps/ 底部注 | 与 IP 关系不大，先存着，留给"机房选择影响后续变更"的缺口 |
+
+## 2026-10-30（第四班，发 `vps-price-extra-ipv4`）
+
+> 本班不跑 SERP。下面每一条都写清在哪个页面的哪个位置看到的，抓取日期 2026-10-30，全部 HTTP 200。
+
+### 今天这篇用掉的料（来自 2026-10-29 清单的三条）
+
+| 用料 | 出处 | 怎么用的 |
+|---|---|---|
+| Hetzner「Primary IP 与服务器分开计费、未绑定也照收、IPv6 免费」 | 2026-10-29 清单第 1 行，本次回原页核实 | 原文核实无误，另抓到单价页 `docs.hetzner.com/cloud/servers/primary-ips/overview/`：€0.50 / $0.60 每月（不含税）、€0.0008 / $0.0010 每小时，每台服务器上限 1 个 IPv4 + 1 个 IPv6 |
+| DO 的 IPv4 计费按套餐类型分裂（Bundled 含、v5 另收） | 2026-10-29 清单第 2 行，本次抓到完整句 | 完整句在 `digitalocean.com/pricing/droplets` 的 FAQ「Do Droplets come with a dedicated IP address?」：Bundled 含、v5 单独列项、入门价 $0.00/hour，另有 Private Droplet 无公网 IP 故无该行 |
+| DO 的 networking / additional-IP 价目 | 2026-10-29 清单第 2 行要求的动作 | 关键页不是 networking 价目（`digitalocean.com/pricing/networking` 已 404），而是 `docs.digitalocean.com/products/networking/reserved-ips/details/pricing/`：已绑定 $0、未绑定 $5.00/月（$0.01/小时）、未满 $1 不计费 |
+
+### 今天新抓到的、可复用的料
+
+| 线索 | 在哪看到的 | 能怎么用 |
+|---|---|---|
+| OVH VPS 的 Additional IP 单价 $2.40/IP/月，上限 16 个 | `us.ovhcloud.com/vps/options/`（价目块）与 `us.ovhcloud.com/network/additional-ip/`（「Additional IPv4 address & blocks $2.40 /IP/month」） | 已用。16 × $2.40 = $38.40，是 VPS-1（$4.54）的 8.46 倍 —— 以后写「多站点/多租户成本」可复用 |
+| OVH 明确写：VPS 不支持 IP 段（只能 /32），IPv6 /56 免费但只能走 vRack、不能用于 VPS | `us.ovhcloud.com/network/additional-ip/` 的 FAQ 与限额段 | 已用。「免费的东西用不上」是最硬的一类独家料，可复用到 IPv6-only 那条缺口 |
+| OVH 对未绑定 Additional IP 的回收条款：连续 30 天未绑定可回收 | `us.ovhcloud.com/network/additional-ip/` FAQ「What is the maximum period of non-assignation of my Additional IP?」 | 已用。三家唯一一条「不用就收回」的明文 |
+| OVH Public Cloud 的 Public IP IPv4 (/32)：$0.00319/小时、约 $2.3287/月（不含税），且「including when it is not attached to an instance」 | `us.ovhcloud.com/public-cloud/prices/` | 已用（并明确标注是 Public Cloud 不是 VPS）。以后写「IP 是不是资产」可当反例：OVH 自己两个产品线对同一件事的定价差 3% |
+| Hetzner 服务器计费原文：「until you delete them, independent of their state… we allocate full resources to servers, regardless of their power state」 | `docs.hetzner.com/cloud/billing/faq/` | 已用。这句是「关机不省钱」的通用引证，任何涉及停机的缺口都能引 |
+
+### 明天（`vps-price-snapshot-billing`）的料，今晚就位
+
+| 线索 | 在哪看到的（2026-10-30 实抓，逐字） | 明天怎么用 |
+|---|---|---|
+| Hetzner 快照按 GB·月计费，且只算压缩后实际占用 | `docs.hetzner.com/cloud/billing/faq/`「How do you bill for Snapshots and Backups?」：「We will bill you for Snapshots per gigabyte per month. If a Snapshot only exists for a fraction of a month, then we will only bill for this fraction. We will only bill you for the space the compressed Snapshot uses in our storage system. So if you create a Snapshot of a disk of 40GB, we will bill you for 40GB or less — depending on how the data on your disk compresses.」 | 明天的主对照之一：同一块盘，快照账单取决于压缩率，不取决于盘大小 |
+| Hetzner 备份是「服务器价格的 20%」固定月费，含 7 个槽位 | 同上页：「we will bill you for Backups with a monthly flat price, which is 20% of the price of the server… For this price, you will get a total of 7 Backup slots.」并给了 €3.29 → €0.658/月 的算例 | 备份 vs 快照两条计价逻辑（百分比 vs 每 GB）正好做一张对照表 |
+| Hetzner 建议「长期关机不如拍快照再删机」 | 同上页 server 计费段 | 与今天的关机计费串起来：快照是官方推荐的停机替代品，那它的单价就直接决定「停机省钱」成不成立 |
+
+### 还没拿到、需要下次补的
+
+- DO 的快照单价（`docs.digitalocean.com` 的 snapshots 定价页本次未抓），明天第一件事。
+- OVH VPS 的 snapshot 选项价只在 `/vps/` 上看到「Starting at $0.40/month」，是否按容量分档未确认，明天回原页看选项表。

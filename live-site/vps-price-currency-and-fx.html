@@ -217,6 +217,19 @@ footer a{color:var(--primary)}
   .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
 }
 </style>
+<!-- videobox-20261030 -->
+<style>
+/* 16:9 player block. Uses the page's own surface/border/radius tokens so it reads
+   as another article card, not an ad slot. aspect-ratio keeps the frame 16:9 on any
+   width without a padding-top hack. */
+.videobox{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:26px 0;box-shadow:var(--shadow-sm)}
+.videobox h2{margin:0 0 12px;font-size:1.15rem;letter-spacing:-.005em}
+.videoframe{position:relative;width:100%;aspect-ratio:16/9;background:#0b1220;border-radius:var(--radius-sm);overflow:hidden}
+.videoframe iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
+.videobox .vcap{font-size:.94rem;color:var(--muted);margin:12px 0 0;line-height:1.62}
+.videobox .vlink{font-size:.88rem;color:var(--muted);margin:8px 0 0}
+.videobox .vlink a{font-weight:600}
+</style>
 </head>
 <body>
 <div class="container">
@@ -252,6 +265,15 @@ footer a{color:var(--primary)}
 
     <p>This is the last question left over from the <a href="/vps-price">vps price</a> breakdown. We had already separated the sticker price from the tax added at checkout in <a href="/vps-price-sales-tax">the sales tax piece</a>, and separated billing states in <a href="/vps-price-stopped-instance">the stopped-instance piece</a>. What none of those answered is which currency the number is even denominated in, and what happens when the answer is not your own.</p>
     <p>Across the 30 pages we catalogued for this cycle, the currency codes &ldquo;USD&rdquo;, &ldquo;EUR&rdquo; and &ldquo;GBP&rdquo; appear on zero of them, and the phrase &ldquo;exchange rate&rdquo; appears on zero. So the data here comes from four OVHcloud country storefronts captured side by side on one day, from DigitalOcean's and Hetzner's billing documentation, and from the European Central Bank's published reference rates. No provider was asked to estimate anything, and nothing below is a projection.</p>
+
+    <div class="videobox">
+        <h2>Video: the same plan on four storefronts, 59 seconds</h2>
+        <div class="videoframe">
+            <iframe src="https://www.youtube.com/embed/OnCQ3wqDYxU" title="VPS Price Currency: The Same Plan in Four Storefronts" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <p class="vcap">The video walks the same OVHcloud VPS-1 through the US, UK, German and French storefronts, converts all four at the ECB reference rate for 2026-10-28, and shows where the 7.0% before-tax spread and the 4.6% after-VAT spread come from. Narration is synthetic text-to-speech and the frames are rendered from this article's own tables, so every figure spoken on screen is one of the figures below.</p>
+        <p class="vlink">If the player does not load: <a href="https://youtu.be/OnCQ3wqDYxU">youtu.be/OnCQ3wqDYxU</a></p>
+    </div>
 
     <h2>Who Decides the Currency, and Who Lets You Change It</h2>
     <p>Three providers, three different answers, and only one of them gives you a choice at any point after signup:</p>

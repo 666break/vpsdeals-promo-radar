@@ -211,6 +211,19 @@ footer a{color:var(--primary)}
   .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
 }
 </style>
+<!-- videobox-20261030 -->
+<style>
+/* 16:9 player block. Uses the page's own surface/border/radius tokens so it reads
+   as another article card, not an ad slot. aspect-ratio keeps the frame 16:9 on any
+   width without a padding-top hack. */
+.videobox{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:26px 0;box-shadow:var(--shadow-sm)}
+.videobox h2{margin:0 0 12px;font-size:1.15rem;letter-spacing:-.005em}
+.videoframe{position:relative;width:100%;aspect-ratio:16/9;background:#0b1220;border-radius:var(--radius-sm);overflow:hidden}
+.videoframe iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
+.videobox .vcap{font-size:.94rem;color:var(--muted);margin:12px 0 0;line-height:1.62}
+.videobox .vlink{font-size:.88rem;color:var(--muted);margin:8px 0 0}
+.videobox .vlink a{font-weight:600}
+</style>
 </head>
 <body>
 <div class="container">
@@ -245,6 +258,15 @@ footer a{color:var(--primary)}
     </div>
 
     <p>This is the question the <a href="/vps-price">vps price</a> pages do not answer: whether the number you see is the number you pay. Across the 30 pages we catalogued for this cycle, the words &ldquo;VAT&rdquo; and &ldquo;sales tax&rdquo; appear on zero of them. So we went to the billing and tax documentation instead, on <strong>2026-10-29</strong>, and pulled the clauses and rates out verbatim. Every figure below is copied from the provider's own page on that date; every ratio is our own calculation with the formula shown.</p>
+
+    <div class="videobox">
+        <h2>Video: the same comparison in 59 seconds</h2>
+        <div class="videoframe">
+            <iframe src="https://www.youtube.com/embed/OnCQ3wqDYxU" title="VPS Price Currency: The Same Plan in Four Storefronts" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <p class="vcap">This is the companion video to the tax piece: it takes the same OVHcloud VPS-1 that the tables below quote at $4.54 and follows it across the US, UK, German and French storefronts, where the printed price changes with the currency and with whether tax is already inside it. It covers currency, not sales tax &mdash; the tax arithmetic is in the sections below. Narration is synthetic text-to-speech and the frames are rendered from the article's own tables.</p>
+        <p class="vlink">If the player does not load: <a href="https://youtu.be/OnCQ3wqDYxU">youtu.be/OnCQ3wqDYxU</a></p>
+    </div>
 
     <h2>Three Providers, Three Tax Treatments</h2>
     <p>The first thing to know is that &ldquo;the price&rdquo; on the marketing page and &ldquo;the price&rdquo; on the invoice are different numbers at all three providers, and the gap between them is created by tax. This table is the whole article in one screen:</p>

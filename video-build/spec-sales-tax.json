@@ -1,0 +1,62 @@
+{
+  "slug": "vps-price-sales-tax",
+  "brand": "SERVERBUDGET",
+  "source_page": "https://serverbudget.com/vps-price-sales-tax",
+  "slides": [
+    {
+      "kicker": "VPS PRICE · PART 2",
+      "headline": "VPS Price Sales Tax",
+      "small": false,
+      "caption": "The advertised price is not the price you pay. At all three providers we checked, the number on the pricing page is pre-tax."
+    },
+    {
+      "kicker": "THREE PROVIDERS, THREE TREATMENTS",
+      "headline": "What gets added at checkout",
+      "small": true,
+      "bullets": [
+        "DigitalOcean adds state and city sales tax on top of the advertised figure",
+        "OVHcloud's US page discloses tax only through an HTML class named tax-excluded-price",
+        "Hetzner prints excl. VAT next to every monthly and hourly price"
+      ],
+      "caption": "DigitalOcean adds state sales tax. OVHcloud's US page discloses tax only through an HTML class name. Hetzner prints excl. VAT next to every price."
+    },
+    {
+      "kicker": "DIGITALOCEAN",
+      "headline": "About two dozen US states and cities",
+      "small": true,
+      "stats": [
+        { "value": "1%", "label": "Connecticut", "sub": "state rate, charged since Nov 2019" },
+        { "value": "6.25%", "label": "Texas", "sub": "plus 0-2% local" },
+        { "value": "11.5%", "label": "Puerto Rico", "sub": "highest rate listed" }
+      ],
+      "caption": "DigitalOcean publishes the rates: about two dozen states and cities, from one percent in Connecticut to eleven and a half percent in Puerto Rico."
+    },
+    {
+      "kicker": "SAME 4 GB / 2 vCPU VPS",
+      "headline": "What a $24 plan costs after tax",
+      "small": true,
+      "stats": [
+        { "value": "$25.50", "label": "Texas", "sub": "6.25% state rate" },
+        { "value": "$25.56", "label": "Washington", "sub": "6.5% state rate" },
+        { "value": "$26.76", "label": "Puerto Rico", "sub": "11.5%" }
+      ],
+      "caption": "A twenty-four dollar plan becomes twenty-five fifty in Texas, twenty-five fifty-six in Washington state, and twenty-six seventy-six in Puerto Rico."
+    },
+    {
+      "kicker": "THE GAP",
+      "headline": "5.3x becomes 5.90x",
+      "small": true,
+      "stats": [
+        { "value": "5.3x", "label": "before tax", "sub": "$24.00 against $4.54" },
+        { "value": "5.90x", "label": "after tax", "sub": "$26.76 against $4.54" }
+      ],
+      "caption": "Against OVHcloud's four fifty-four, the pre-tax gap is five point three times. After DigitalOcean's tax alone it becomes five point nine times."
+    },
+    {
+      "kicker": "SOURCE",
+      "headline": "Every figure traces to a provider page",
+      "small": true,
+      "caption": "Every figure, its source, and the formula behind each ratio is on the page: serverbudget dot com, slash vps price sales tax."
+    }
+  ]
+}

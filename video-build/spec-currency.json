@@ -1,0 +1,63 @@
+{
+  "slug": "vps-price-currency-and-fx",
+  "brand": "SERVERBUDGET",
+  "source_page": "https://serverbudget.com/vps-price-currency-and-fx",
+  "slides": [
+    {
+      "kicker": "VPS PRICE · PART 3",
+      "headline": "One plan. Four stores. Four currencies.",
+      "small": false,
+      "caption": "The same virtual server, on four storefronts, in four currencies. Here is what each page actually prints."
+    },
+    {
+      "kicker": "OVHCLOUD VPS-1 · 2 vCPU / 4 GB / 40 GB NVMe",
+      "headline": "The same plan, four prices",
+      "small": true,
+      "stats": [
+        { "value": "$4.54", "label": "US store", "sub": "no tax text on the page" },
+        { "value": "£3.31", "label": "UK store", "sub": "excl. VAT" },
+        { "value": "€4.53", "label": "German store", "sub": "incl. VAT" },
+        { "value": "€3.81", "label": "French store", "sub": "before tax" }
+      ],
+      "caption": "US four fifty-four. UK three pounds thirty-one excluding VAT. Germany four euros fifty-three including VAT. France three eighty-one before tax."
+    },
+    {
+      "kicker": "CONVERTED AT THE ECB REFERENCE RATE",
+      "headline": "A 7% spread on identical hardware",
+      "small": true,
+      "stats": [
+        { "value": "€3.81", "label": "France", "sub": "before tax" },
+        { "value": "€3.95", "label": "United Kingdom", "sub": "before tax" },
+        { "value": "€4.08", "label": "United States", "sub": "before tax" }
+      ],
+      "caption": "At the ECB reference rate for October twenty-eighth: three eighty-one, three ninety-five, four oh eight. A seven percent spread on identical hardware."
+    },
+    {
+      "kicker": "WITH THE VAT EACH STORE PRINTS",
+      "headline": "The spread narrows to 4.6%",
+      "small": true,
+      "stats": [
+        { "value": "€4.53", "label": "Germany", "sub": "incl. VAT" },
+        { "value": "€4.57", "label": "France", "sub": "incl. VAT" },
+        { "value": "€4.74", "label": "United Kingdom", "sub": "incl. VAT" }
+      ],
+      "caption": "Include the VAT each store prints and the spread narrows: four fifty-three in Germany, four fifty-seven in France, four seventy-four in the United Kingdom."
+    },
+    {
+      "kicker": "AND THE CURRENCY ITSELF",
+      "headline": "Two providers, no choice",
+      "small": true,
+      "bullets": [
+        "DigitalOcean bills in USD only, and states it cannot provide an invoice in another currency",
+        "Hetzner fixes the account currency at signup and will not change it afterwards"
+      ],
+      "caption": "DigitalOcean bills in US dollars only and says it cannot issue an invoice in another currency. Hetzner fixes your account currency at signup."
+    },
+    {
+      "kicker": "SOURCE",
+      "headline": "The table, the rates, the arithmetic",
+      "small": true,
+      "caption": "The full table, the exchange rates and every division are on the page: serverbudget dot com, slash vps price currency and fx."
+    }
+  ]
+}

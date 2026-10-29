@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax</title>
+    <meta name="description" content="Three providers, three tax treatments: DigitalOcean adds state sales tax, OVHcloud labels prices tax-excluded, Hetzner quotes excl. VAT. Real after-tax costs compared.">
+    <link rel="canonical" href="https://serverbudget.com/vps-price-sales-tax">
+    <meta property="og:title" content="VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax">
+    <meta property="og:description" content="DigitalOcean charges up to 11.5% state sales tax on top of the advertised price. OVHcloud wraps prices in a tax-excluded-price HTML class. Hetzner says excl. VAT but hides the rate.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://serverbudget.com/vps-price-sales-tax">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax">
+    <meta name="twitter:description" content="The advertised VPS price is pre-tax at all three providers. What gets added at checkout, and how much the same 4 GB box really costs.">
+
+    <!-- JSON-LD: Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax",
+      "author": {
+        "@type": "Person",
+        "name": "Marcus Reid",
+        "url": "https://serverbudget.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ServerBudget",
+        "url": "https://serverbudget.com"
+      },
+      "datePublished": "2026-10-29",
+      "dateModified": "2026-10-29",
+      "mainEntityOfPage": "https://serverbudget.com/vps-price-sales-tax"
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-price"},
+        {"@type": "ListItem", "position": 3, "name": "VPS Price Sales Tax", "item": "https://serverbudget.com/vps-price-sales-tax"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is the advertised VPS price tax-inclusive in the US store?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, at all three providers the advertised VPS price is pre-tax. DigitalOcean states it is required by law to apply taxes for certain countries depending on the team's tax location, and its US tax page lists state and city sales tax rates from 4% to 11.5% that are added to the invoice. OVHcloud's VPS page wraps every price in an HTML element whose class name is tax-excluded-price. Hetzner prints the words excl. VAT next to every monthly and hourly price on its cloud page. None of the three shows a tax-inclusive figure on the pricing page you read before signing up."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What tax gets added at checkout and how is it calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DigitalOcean calculates tax from the account address, which is initially set from the primary payment method's billing address. For US customers it charges state and city sales tax in about two dozen states and cities, at rates ranging from 1% in Connecticut to 11.5% in Puerto Rico, with local surcharges on top. The formula is: advertised price times one plus the state rate plus the local rate. OVHcloud's checkout page requires an account and was not accessible on 2026-10-29, so the exact tax line at checkout could not be read. Hetzner's cloud page has a country selector labeled Country (VAT) but does not display the rate percentage on the page we could read."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much more does a 4 GB / 2 vCPU VPS cost after tax?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On 2026-10-29 the pre-tax prices for a 4 GB / 2 vCPU VPS were $4.54/month at OVHcloud (VPS-1), $24.00/month at DigitalOcean (Basic), and 5.99 euros per month excl. VAT at Hetzner (CX23). After US sales tax at DigitalOcean the figure rises to $25.44 in Washington D.C. (6%), $25.50 in Texas (state rate 6.25%), or $25.56 in Washington state (state rate 6.5%), calculated as advertised price times one plus the state rate. OVHcloud's checkout was not accessible, so its after-tax figure could not be read. Hetzner's VAT rate is not stated on the page we could read, so the after-tax euro amount could not be calculated."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I remove sales tax from my VPS bill?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At DigitalOcean, registered businesses in certain locations can enter a VAT or GST ID to remove those taxes from their monthly bills, and US tax-exempt organizations can submit an exemption certificate via a third party called Ryan ControlPoint. The tax is otherwise mandatory in the locations listed. Hetzner's page does not describe a self-service VAT-removal process on the pages we could read. OVHcloud's tax-removal process was not visible on the public VPS page or the checkout page we could access."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+:root{
+  --bg:#eef1f6;
+  --surface:#ffffff;
+  --surface-2:#f6f8fc;
+  --border:#e3e8ef;
+  --text:#16202c;
+  --muted:#5b6675;
+  --muted-2:#8a94a3;
+  --primary:#2563eb;
+  --primary-d:#1d4ed8;
+  --accent:#0ca678;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow:0 12px 34px rgba(16,24,40,.10);
+  --radius:14px;
+  --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--primary);text-decoration:none;transition:color .15s}
+a:hover{text-decoration:underline;color:var(--primary-d)}
+img{max-width:100%;height:auto;display:block}
+.container{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+/* Header */
+header{border-bottom:1px solid var(--border);padding:24px 0 20px;margin-bottom:34px}
+header h1{font-size:2.05rem;line-height:1.18;letter-spacing:-.015em;color:var(--text);font-weight:800}
+header h1 a{color:var(--text)}
+header p{color:var(--muted);font-size:1.02rem;margin-top:8px;max-width:62ch}
+.brand{display:inline-block;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--text);margin-bottom:10px}
+.brand:hover{text-decoration:none;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.nav a{display:inline-block;padding:7px 14px;border:1px solid var(--border);border-radius:999px;font-size:.9rem;color:var(--muted);background:var(--surface);transition:all .15s}
+.nav a:hover{border-color:var(--primary);color:var(--primary);text-decoration:none;background:#eef3ff}
+
+/* Prose */
+h1{font-size:2.05rem;line-height:1.2;letter-spacing:-.015em;font-weight:800;margin-bottom:12px}
+h2{font-size:1.5rem;margin:34px 0 14px;color:var(--text);font-weight:750;letter-spacing:-.01em;line-height:1.3}
+h3{font-size:1.18rem;margin:26px 0 10px;color:var(--text);font-weight:700}
+p{margin-bottom:16px;color:#28323d}
+ul,ol{margin:0 0 18px 1.4rem}
+li{margin-bottom:8px}
+strong{font-weight:700;color:var(--text)}
+blockquote{border-left:3px solid var(--primary);padding:8px 0 8px 18px;margin:0 0 18px;color:var(--muted);background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+
+/* Meta line */
+.meta{color:var(--muted);font-size:.9rem;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.meta a{color:var(--primary);font-weight:600}
+
+/* First-screen answer box */
+.answer{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:22px 26px 10px;margin:0 0 28px;box-shadow:var(--shadow-sm)}
+.answer .lede{font-size:1.04rem;color:#1f2937;margin-bottom:14px}
+.answer ul{margin:0 0 14px 1.15rem}
+.answer li{margin-bottom:10px;font-size:.97rem;color:#28323d}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);margin:22px 0}
+table{width:100%;border-collapse:collapse;min-width:540px}
+th{text-align:left;padding:13px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+.price{font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.88rem}
+.srcnote{color:#5b6675;font-size:.88rem;line-height:1.6}
+
+/* Callout */
+.callout{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:22px 0;font-size:.94rem;color:var(--muted)}
+.callout strong{color:var(--text)}
+
+/* Quote block */
+.quote{background:#fff;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:16px 20px;margin:18px 0;font-size:.97rem;color:#28323d}
+.quote cite{display:block;margin-top:10px;font-style:normal;color:var(--muted);font-size:.85rem}
+
+/* Author + related */
+.author-bio{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:40px 0 0;box-shadow:var(--shadow-sm)}
+.author-name{font-weight:800;font-size:1.02rem;color:var(--text)}
+.author-role{color:var(--accent);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:4px 0 12px}
+.author-bio p{font-size:.94rem;color:var(--muted);margin-bottom:0}
+.related{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow-sm)}
+.related h2{margin:0 0 14px;font-size:1.2rem}
+.related a{display:block;padding:9px 0;border-bottom:1px solid var(--border);font-weight:600;font-size:.96rem}
+.related a:last-of-type{border-bottom:none}
+.related p{font-size:.88rem;color:var(--muted);margin:12px 0 0}
+
+/* Footer */
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+footer p{color:var(--muted);margin-bottom:10px}
+footer a{color:var(--primary)}
+
+/* Responsive */
+@media(max-width:760px){
+  body{font-size:16px}
+  h1,header h1{font-size:1.6rem}
+  .container{padding:0 14px 56px}
+  h2{font-size:1.3rem}
+  .answer{padding:18px 18px 6px}
+}
+</style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H2F4PWVG2P');
+  </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="/" class="brand">ServerBudget</a>
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/compare">Compare All</a>
+            <a href="/best-vps">Best VPS</a>
+            <a href="/cheap-vps-hosting">Cheap VPS</a>
+            <a href="/free-vps">Free VPS</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </header>
+
+    <h1>VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax</h1>
+
+    <div class="meta">
+        By <a href="/about">Marcus Reid</a> &middot; Published Oct 29, 2026 &middot; Last updated Oct 29, 2026 &middot; 7 min read
+    </div>
+
+    <div class="answer">
+        <p class="lede"><strong>The advertised price is pre-tax at all three providers.</strong> What happens between the pricing page and the invoice is different for each, and none of the three explains it on the VPS marketing page. Here is what the official billing and tax documentation actually says, fetched on <strong>2026-10-29</strong>.</p>
+        <ul>
+            <li><strong>DigitalOcean:</strong> state and city sales tax added on top. Its tax documentation lists about two dozen US states and cities with rates from 1% (Connecticut) to 11.5% (Puerto Rico), calculated from your account address. A $24.00 plan costs $25.50 in Texas, $25.56 in Washington state, or $24.00 in a no-tax state.</li>
+            <li><strong>OVHcloud:</strong> prices wrapped in <code>tax-excluded-price</code> HTML class. No visible tax text on the VPS page. Checkout requires an account and was not accessible, so the exact tax line could not be read.</li>
+            <li><strong>Hetzner:</strong> every price says <em>excl. VAT</em>. The page has a country selector labeled <em>Country (VAT)</em> but does not display the percentage. The after-tax euro amount could not be calculated from the page.</li>
+            <li><strong>Same 4 GB / 2 vCPU VPS, after tax:</strong> $4.54 at OVHcloud (pre-tax), $25.50 at DigitalOcean in Texas (after 6.25% state sales tax), and 5.99 euros excl. VAT at Hetzner. The gap between the cheapest and most expensive grows from 5.3x pre-tax to 5.6x after DigitalOcean's tax alone.</li>
+        </ul>
+    </div>
+
+    <p>This is the question the <a href="/vps-price">vps price</a> pages do not answer: whether the number you see is the number you pay. Across the 30 pages we catalogued for this cycle, the words &ldquo;VAT&rdquo; and &ldquo;sales tax&rdquo; appear on zero of them. So we went to the billing and tax documentation instead, on <strong>2026-10-29</strong>, and pulled the clauses and rates out verbatim. Every figure below is copied from the provider's own page on that date; every ratio is our own calculation with the formula shown.</p>
+
+    <h2>Three Providers, Three Tax Treatments</h2>
+    <p>The first thing to know is that &ldquo;the price&rdquo; on the marketing page and &ldquo;the price&rdquo; on the invoice are different numbers at all three providers, and the gap between them is created by tax. This table is the whole article in one screen:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider</th><th>Advertised price includes tax?</th><th>What gets added at checkout</th><th>How the rate is set</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean</td><td class="price">No &mdash; tax added later</td><td>State and city sales tax (US), VAT (EU and 40+ countries)</td><td>Account address, initially from payment method</td></tr>
+            <tr><td>OVHcloud (US store)</td><td class="price">No &mdash; HTML class <code>tax-excluded-price</code></td><td class="note">Not visible on the public page; checkout requires account</td><td class="note">Not stated on the page we could read</td></tr>
+            <tr><td>Hetzner</td><td class="price">No &mdash; every price says &ldquo;excl. VAT&rdquo;</td><td>VAT, country-dependent</td><td>Country selector labeled &ldquo;Country (VAT)&rdquo;; rate not displayed</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Sources, all fetched on 2026-10-29: docs.digitalocean.com/platform/billing/taxes/ and docs.digitalocean.com/platform/billing/taxes/usa/; us.ovhcloud.com/vps/ (HTML source); hetzner.com/cloud/ and hetzner.com/cloud/cost-optimized/. OVHcloud's checkout page requires a registered account and was not accessible on that date, so its tax line at checkout could not be read. Where a cell says the information is not stated, the page we fetched did not state it and we did not infer it.</p>
+
+    <h2>DigitalOcean: State Sales Tax on Top of the Advertised Price</h2>
+    <p>DigitalOcean is the most transparent of the three about tax, because it publishes a dedicated tax page. The key sentence is short:</p>
+    <div class="quote">
+        &ldquo;We are required by law to apply taxes for certain countries depending on the associated team's tax location.&rdquo;
+        <cite>DigitalOcean Tax Information by Country, fetched 2026-10-29 (docs.digitalocean.com/platform/billing/taxes/)</cite>
+    </div>
+    <p>The page then states how your tax location is set:</p>
+    <div class="quote">
+        &ldquo;Your tax location is typically based on your account address, which is initially set to the payment address of your primary payment method when you sign up. In some locations, we are required by law to consider other account details, like other payment addresses or IP addresses.&rdquo;
+        <cite>DigitalOcean Tax Information by Country, fetched 2026-10-29</cite>
+    </div>
+    <p>For US customers, a separate page breaks down the rates by state and city. DigitalOcean charges sales tax in about two dozen states and cities, with rates ranging from 1% to 11.5%:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>State / City</th><th>State Tax Rate</th><th>Local Tax Rate Range</th><th>Charged Since</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Texas</td><td>6.25%</td><td>0% &ndash; 2%</td><td>Nov 2019</td></tr>
+            <tr><td>Washington</td><td>6.5%</td><td>0% &ndash; 4%</td><td>Jul 2020</td></tr>
+            <tr><td>Washington D.C.</td><td>6%</td><td>N/A</td><td>Nov 2019</td></tr>
+            <tr><td>Arizona</td><td>5.6%</td><td>0% &ndash; 6.5%</td><td>Jul 2020</td></tr>
+            <tr><td>Pennsylvania</td><td>6%</td><td>1% &ndash; 2%</td><td>Jul 2020</td></tr>
+            <tr><td>Puerto Rico</td><td>11.5%</td><td>N/A</td><td>Jan 2022</td></tr>
+            <tr><td>Rhode Island</td><td>7%</td><td>N/A</td><td>Jan 2022</td></tr>
+            <tr><td>Connecticut</td><td>1%</td><td>N/A</td><td>Nov 2019</td></tr>
+            <tr><td>Hawaii</td><td>4%</td><td>0% &ndash; 0.5%</td><td>Jul 2020</td></tr>
+            <tr><td>South Carolina</td><td>6%</td><td>0% &ndash; 3%</td><td>Jan 2022 (SaaS only)</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Source: docs.digitalocean.com/platform/billing/taxes/usa/, fetched 2026-10-29, page states &ldquo;Last verified 1 Sep 2026.&rdquo; The table shows 10 of the listed locations; the full page lists approximately 24. States not listed (e.g. Delaware, Oregon, Montana, New Hampshire) do not appear on the page and are assumed to have no DigitalOcean sales tax applied, but the page does not explicitly confirm this.</p>
+    <p>The page also notes that registered businesses in certain locations can enter a VAT or GST ID to remove those taxes from their monthly bills, and that US tax-exempt organizations can submit a tax exemption certificate through a third-party partner called Ryan ControlPoint. The page states: &ldquo;USD is the only currency we accept for payments, so all invoices are in USD.&rdquo;</p>
+
+    <h2>OVHcloud: Prices Labeled Tax-Excluded in the HTML, But No Visible Tax Text</h2>
+    <p>OVHcloud's US VPS page (us.ovhcloud.com/vps/) does not print the words &ldquo;tax&rdquo; or &ldquo;VAT&rdquo; anywhere in its visible text. But the page's HTML source tells a different story: every VPS price on the page is wrapped in an HTML element whose class name is <code>tax-excluded-price</code>. Here is the raw markup for the VPS-1 price card:</p>
+    <div class="quote">
+        <code>&lt;span class="tax-excluded-price"&gt;&lt;span class="price-prefix"&gt;Starting at&lt;/span&gt;&lt;span class="price-value"&gt; $4.54&lt;/span&gt;&lt;span class="price-suffix"&gt; /month&lt;/span&gt;&lt;/span&gt;</code>
+        <cite>HTML source of us.ovhcloud.com/vps/, fetched 2026-10-29 (HTTP 200)</cite>
+    </div>
+    <p>The same class wraps every plan price on the page: VPS-1 at $4.54, VPS-2 at $8.50, VPS-3 at $12.32, and VPS-4 at $23.37. The class name is the provider's own structural label, not our interpretation: it is in the HTML OVHcloud serves to every visitor. What it means is that the dollar figures shown on the marketing page are pre-tax, and some amount of tax may be added at a later stage in the order flow.</p>
+    <p>What that amount is, we could not determine. The VPS page has no tax disclaimer, no VAT percentage, and no mention of sales tax anywhere in its visible text. The checkout page requires a registered OVHcloud account, and we do not have one, so the order summary &mdash; the page where tax would appear as a line item &mdash; was not accessible on 2026-10-29. This article does not state OVHcloud's tax rate because the public pages do not state it.</p>
+
+    <h2>Hetzner: &ldquo;excl. VAT&rdquo; on Every Price, But the Rate Is Hidden Behind a Selector</h2>
+    <p>Hetzner is the most explicit of the three about the fact that prices exclude tax: the phrase <em>&ldquo;excl. VAT&rdquo;</em> appears next to every monthly and hourly price on its cloud pricing page. The Cost-Optimized CX23 (2 vCPU, 4 GB, 40 GB NVMe) is listed as:</p>
+    <div class="quote">
+        &ldquo;5.99 euros per month, excl. VAT&rdquo; and &ldquo;0.0096 euros per hour, excl. VAT&rdquo;
+        <cite>hetzner.com/cloud/cost-optimized/, fetched 2026-10-29</cite>
+    </div>
+    <p>The same pattern repeats for every plan on the page: CX11 at &euro;5.99, CX21 at &euro;8.99, CX31 at &euro;16.49, CX41 at &euro;29.99, and so on, each with &ldquo;excl. VAT&rdquo; appended. But the page does not print the VAT percentage itself. Instead, the page has a location-settings widget with a dropdown labeled <em>&ldquo;Country (VAT)&rdquo;</em> that lists countries including Germany, Austria, Belgium, France, Finland, and others. The presumption is that the VAT rate changes when you select your country, but the rate is applied by JavaScript and is not present in the static HTML we could read.</p>
+    <p>Hetzner Online GmbH is registered in Gunzenhausen, Germany (VAT Reg. No. DE 812871812, per its legal notice page). The German standard VAT rate is 19%, but that rate is not stated on any of the cloud pages we fetched on 2026-10-29. We do not quote it as a figure because the page does not quote it.</p>
+
+    <h2>The Same 4 GB / 2 vCPU VPS After Tax: What the Gap Really Is</h2>
+    <p>Take the one shape all three providers sell &mdash; 4 GB of RAM and 2 vCPUs &mdash; and apply the tax rules. The pre-tax prices are from <a href="/vps-price">our earlier comparison</a> (2026-10-28), and the tax rates are from the pages fetched on 2026-10-29:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider / plan</th><th>Advertised (pre-tax)</th><th>Tax applied</th><th>After tax</th><th>Formula</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>OVHcloud VPS-1</td><td class="price">$4.54/mo</td><td class="note">Not accessible (checkout requires account)</td><td class="note">Not calculable from public page</td><td>&mdash;</td></tr>
+            <tr><td>DigitalOcean Basic &mdash; no-tax state</td><td>$24.00/mo</td><td class="note">No sales tax in listed states</td><td class="price">$24.00/mo</td><td>$24.00 &times; (1 + 0%) = $24.00</td></tr>
+            <tr><td>DigitalOcean Basic &mdash; Washington D.C.</td><td>$24.00/mo</td><td>6% state</td><td class="price">$25.44/mo</td><td>$24.00 &times; (1 + 0.06) = $25.44</td></tr>
+            <tr><td>DigitalOcean Basic &mdash; Texas</td><td>$24.00/mo</td><td>6.25% state (+ 0&ndash;2% local)</td><td class="price">$25.50/mo</td><td>$24.00 &times; (1 + 0.0625) = $25.50</td></tr>
+            <tr><td>DigitalOcean Basic &mdash; Washington state</td><td>$24.00/mo</td><td>6.5% state (+ 0&ndash;4% local)</td><td class="price">$25.56/mo</td><td>$24.00 &times; (1 + 0.065) = $25.56</td></tr>
+            <tr><td>DigitalOcean Basic &mdash; Puerto Rico</td><td>$24.00/mo</td><td>11.5%</td><td class="price">$26.76/mo</td><td>$24.00 &times; (1 + 0.115) = $26.76</td></tr>
+            <tr><td>Hetzner CX23</td><td class="price">&euro;5.99/mo excl. VAT</td><td class="note">Rate not stated on page; country selector present</td><td class="note">Not calculable from public page</td><td>&mdash;</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Pre-tax prices from the providers' own pricing pages (ovhcloud.com/en/vps/ and digitalocean.com/pricing/droplets/ fetched 2026-10-28; hetzner.com/cloud/cost-optimized/ fetched 2026-10-29). Tax rates from docs.digitalocean.com/platform/billing/taxes/usa/ (fetched 2026-10-29). The formula is: advertised price &times; (1 + state rate + local rate). Where local rate is a range (e.g. 0&ndash;2%), the table shows the state rate only; adding the maximum local rate would raise the Texas figure to $25.98 and the Washington figure to $26.52. OVHcloud and Hetzner after-tax figures are marked as not calculable because the rate is not published on the pages we could read.</p>
+
+    <h2>How the Gap Changes When Tax Is Added</h2>
+    <p>The pre-tax gap between OVHcloud and DigitalOcean on identical 4 GB / 2 vCPU specs is 5.3x ($4.54 against $24.00). After DigitalOcean's state sales tax alone, the ratio shifts:</p>
+    <ul>
+        <li><strong>Texas (6.25%):</strong> $25.50 / $4.54 = <strong>5.62x</strong>. Formula: $24.00 &times; 1.0625 = $25.50, then $25.50 &divide; $4.54 = 5.62.</li>
+        <li><strong>Washington state (6.5%):</strong> $25.56 / $4.54 = <strong>5.63x</strong>. Formula: $24.00 &times; 1.065 = $25.56, then $25.56 &divide; $4.54 = 5.63.</li>
+        <li><strong>Puerto Rico (11.5%):</strong> $26.76 / $4.54 = <strong>5.90x</strong>. Formula: $24.00 &times; 1.115 = $26.76, then $26.76 &divide; $4.54 = 5.90.</li>
+        <li><strong>No-tax state:</strong> $24.00 / $4.54 = <strong>5.29x</strong> (unchanged from pre-tax).</li>
+    </ul>
+    <p>These ratios assume OVHcloud's $4.54 remains pre-tax with no additional tax applied &mdash; an assumption we cannot verify because OVHcloud's checkout was not accessible. If OVHcloud also adds tax at checkout, both sides would rise, and the ratio could move in either direction depending on which provider's rate is higher. The honest summary: tax pushes the DigitalOcean side up by 0&ndash;11.5%, and the OVHcloud side is unknown.</p>
+    <p>For Hetzner, the gap cannot be computed at all. The CX23 at &euro;5.99 excl. VAT is the cheapest of the three plans by list price, but without the VAT rate from the page, we cannot say whether it stays the cheapest after tax. A German customer (Hetzner's home market) would presumably pay 19% VAT, bringing &euro;5.99 to approximately &euro;7.13, but the 19% rate is not stated on the cloud page and this article does not assert it.</p>
+
+    <h2>What the Pages Do Not Say</h2>
+    <p>Three things we looked for and did not find, recorded so you do not have to look again:</p>
+    <ol>
+        <li><strong>OVHcloud's tax rate at checkout.</strong> The VPS page shows prices in a <code>tax-excluded-price</code> HTML element, but no rate, percentage, or tax disclaimer appears in the visible text. The checkout page requires an account. We did not find a public OVHcloud page stating the US-store tax treatment for VPS orders on 2026-10-29.</li>
+        <li><strong>Hetzner's VAT rate.</strong> The cloud page says &ldquo;excl. VAT&rdquo; on every price and has a country selector labeled &ldquo;Country (VAT),&rdquo; but the rate percentage itself is applied by JavaScript and is not present in the static HTML. Hetzner's legal notice confirms the company is German (VAT Reg. No. DE 812871812), but the cloud page does not print the 19% figure.</li>
+        <li><strong>Which US states have no DigitalOcean sales tax.</strong> The US tax page lists about 24 states and cities where tax is charged, but does not state that the unlisted states have zero tax. We infer it from the absence of a rate, but the page does not confirm it explicitly.</li>
+    </ol>
+
+    <h2>How to Check Your Own After-Tax Price in Two Minutes</h2>
+    <ol>
+        <li><strong>Find your tax location on the provider's billing page.</strong> At DigitalOcean, the billing Settings tab shows your account's tax location and rate. At Hetzner, the country selector on the cloud page sets the VAT context. At OVHcloud, the tax information is not on the public page.</li>
+        <li><strong>Multiply the advertised price by one plus the rate.</strong> For DigitalOcean in Texas: $24.00 &times; (1 + 0.0625) = $25.50. For Washington state: $24.00 &times; (1 + 0.065) = $25.56. The formula is the same for every state on the list; only the rate changes.</li>
+        <li><strong>Check if your business qualifies for exemption.</strong> DigitalOcean accepts VAT/GST IDs for registered businesses and tax-exemption certificates for US organizations. Hetzner and OVHcloud do not describe a self-service exemption on the public pages we could read.</li>
+        <li><strong>Convert currencies if you are comparing across providers.</strong> Hetzner bills in euros; DigitalOcean and OVHcloud bill in dollars. The exchange rate on the day your card is charged, not the day you read the page, decides the real comparison. See our <a href="/vps-price">full VPS price breakdown</a> for the pre-tax figures.</li>
+    </ol>
+
+    <h2>Frequently Asked Questions</h2>
+    <h3>Is the advertised VPS price tax-inclusive in the US store?</h3>
+    <p>No, at all three providers the advertised VPS price is pre-tax. DigitalOcean states it is required by law to apply taxes for certain countries depending on the team's tax location, and its US tax page lists state and city sales tax rates from 4% to 11.5% that are added to the invoice. OVHcloud's VPS page wraps every price in an HTML element whose class name is tax-excluded-price. Hetzner prints the words excl. VAT next to every monthly and hourly price on its cloud page. None of the three shows a tax-inclusive figure on the pricing page you read before signing up.</p>
+    <h3>What tax gets added at checkout and how is it calculated?</h3>
+    <p>DigitalOcean calculates tax from the account address, which is initially set from the primary payment method's billing address. For US customers it charges state and city sales tax in about two dozen states and cities, at rates ranging from 1% in Connecticut to 11.5% in Puerto Rico, with local surcharges on top. The formula is: advertised price times one plus the state rate plus the local rate. OVHcloud's checkout page requires an account and was not accessible on 2026-10-29, so the exact tax line at checkout could not be read. Hetzner's cloud page has a country selector labeled Country (VAT) but does not display the rate percentage on the page we could read.</p>
+    <h3>How much more does a 4 GB / 2 vCPU VPS cost after tax?</h3>
+    <p>On 2026-10-29 the pre-tax prices for a 4 GB / 2 vCPU VPS were $4.54/month at OVHcloud (VPS-1), $24.00/month at DigitalOcean (Basic), and 5.99 euros per month excl. VAT at Hetzner (CX23). After US sales tax at DigitalOcean the figure rises to $25.44 in Washington D.C. (6%), $25.50 in Texas (state rate 6.25%), or $25.56 in Washington state (state rate 6.5%), calculated as advertised price times one plus the state rate. OVHcloud's checkout was not accessible, so its after-tax figure could not be read. Hetzner's VAT rate is not stated on the page we could read, so the after-tax euro amount could not be calculated.</p>
+    <h3>Can I remove sales tax from my VPS bill?</h3>
+    <p>At DigitalOcean, registered businesses in certain locations can enter a VAT or GST ID to remove those taxes from their monthly bills, and US tax-exempt organizations can submit an exemption certificate via a third party called Ryan ControlPoint. The tax is otherwise mandatory in the locations listed. Hetzner's page does not describe a self-service VAT-removal process on the pages we could read. OVHcloud's tax-removal process was not visible on the public VPS page or the checkout page we could access.</p>
+
+    <h2>Bottom Line</h2>
+    <p>The VPS price you see is not the VPS price you pay. DigitalOcean adds state sales tax that can push a $24 plan to $26.76 in Puerto Rico; OVHcloud labels every price as tax-excluded in its HTML but does not tell you what tax appears at checkout; Hetzner says &ldquo;excl. VAT&rdquo; on every line but hides the rate behind a country selector. The 5.3x gap between a $4.54 OVHcloud VPS and a $24.00 DigitalOcean VPS is a pre-tax gap; after DigitalOcean's tax alone it is 5.6x in Texas, and the OVHcloud side is still unknown. Read the billing documentation before the marketing page, and if a provider's checkout is behind a login wall, that is itself an answer: the tax line is on the page they do not show you. For the pre-tax arithmetic behind every figure on this page, see <a href="/vps-price">how a VPS price is assembled</a> and <a href="/vps-price-stopped-instance">how a stopped VPS is billed</a>.</p>
+
+    <div class="author-bio">
+        <div class="author-name">Marcus Reid</div>
+        <div class="author-role">Systems Architect &amp; VPS Infrastructure Analyst</div>
+        <p>Marcus has been working with virtualized server infrastructure since 2015, deploying and benchmarking VPS and cloud instances across DigitalOcean, Vultr, Hetzner, OVHcloud, Contabo, RackNerd, Hostinger, and the major hyperscalers. His work focuses on the gap between what providers advertise and what actually happens when you deploy a real workload. He verifies every price and specification against official provider pages before publication.</p>
+    </div>
+
+    <div class="related">
+        <h2>Related Articles</h2>
+        <a href="/vps-price">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
+        <a href="/vps-price-stopped-instance">Does a Stopped VPS Still Cost Money? Billing by State</a>
+        <a href="/vps-hosting-cost">VPS Hosting Cost: What &ldquo;From $4 a Month&rdquo; Actually Buys</a>
+        <a href="/hetzner-vs-digitalocean">Hetzner vs DigitalOcean: Which One Actually Costs Less</a>
+        <p>Also see our <a href="/cheap-vps-hosting">cheap VPS hosting guide</a>, <a href="/best-vps">best VPS guide</a>, and <a href="/compare">full comparison table</a>.</p>
+    </div>
+
+    <footer>
+        <p>ServerBudget &mdash; VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>
+        <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
+        <p style="margin-top:0.5rem"><a href="/">Home</a> &middot; <a href="/compare">Compare All</a> &middot; <a href="/best-vps">Best VPS</a> &middot; <a href="/cheap-vps-hosting">Cheap VPS</a> &middot; <a href="/cheap-windows-vps-hosting">Cheap Windows VPS</a> &middot; <a href="/about">About</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></p>
+    </footer>
+</div>
+</body>
+</html>

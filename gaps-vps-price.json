@@ -3,7 +3,7 @@
   "top3": ["digitalocean.com", "us.ovhcloud.com", "vpspricetracker.com"],
   "cycle_start": "2026-10-28",
   "cycle_len_days": 28,
-  "next_index": 1,
+  "next_index": 2,
   "gaps": [
     {
       "slug": "vps-price-stopped-instance",
@@ -18,8 +18,8 @@
       "gap": "Is the advertised VPS price tax-inclusive in the US store? What gets added at checkout and when.",
       "why_gap": "'VAT' 0/30, 'sales tax' 0/30 across all 30 pages.",
       "source": "Official checkout/tax pages or terms of service from each provider; quote the exact clause.",
-      "done": false,
-      "published": null
+      "done": true,
+      "published": "2026-10-29"
     },
     {
       "slug": "vps-price-currency-and-fx",

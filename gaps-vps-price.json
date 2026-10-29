@@ -1,9 +1,13 @@
 {
   "keyword": "vps price",
-  "top3": ["digitalocean.com", "us.ovhcloud.com", "vpspricetracker.com"],
+  "top3": [
+    "digitalocean.com",
+    "us.ovhcloud.com",
+    "vpspricetracker.com"
+  ],
   "cycle_start": "2026-10-28",
   "cycle_len_days": 28,
-  "next_index": 2,
+  "next_index": 3,
   "gaps": [
     {
       "slug": "vps-price-stopped-instance",
@@ -26,8 +30,8 @@
       "gap": "Which currency you are actually charged in, and how the card issuer's FX spread changes the same plan's real cost.",
       "why_gap": "'EUR' 0/30, 'USD' 0/30, 'exchange rate' 0/30.",
       "source": "Official price pages in each currency variant (e.g. /vps/ vs /en-gb/ vs /de/), captured side by side on one day.",
-      "done": false,
-      "published": null
+      "done": true,
+      "published": "2026-10-29"
     },
     {
       "slug": "vps-price-extra-ipv4",

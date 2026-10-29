@@ -7,6 +7,7 @@
 | 2026-10-28 | vps-price | VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB | https://serverbudget.com/vps-price | 开局页（672 小时月上限 / 每 GiB 与每 vCPU 阶梯 / 5.3 倍同规格价差） | 本轮补：4GB-2vCPU 三价对比柱状图（内联 SVG，2026-10-28 官方价） | vps-price-stopped-instance |
 | 2026-10-28 | vps-price-stopped-instance | Does a Stopped VPS Still Cost Money? Billing by State | https://serverbudget.com/vps-price-stopped-instance | 缺口 #1 `vps-price-stopped-instance`（关机 / 暂停 / 销毁三态的计费差） | 累计计费小时阶梯图（168h 用 / 672h 上限两条线，内联 SVG，DO 官方 672 小时规则） | vps-price-sales-tax |
 | 2026-10-29 | vps-price-sales-tax | VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax | https://serverbudget.com/vps-price-sales-tax | 缺口 #2 `vps-price-sales-tax`（标价含不含税 / 结账加什么 / 同一台 4G2核含税后差多少） | 无图（三价对比表代替；DO 税率表 + 三家税处理对比表 + 4G2核税后表，公式写进正文） | vps-price-currency-and-fx |
+| 2026-10-29（第三班 11:12） | vps-price-currency-and-fx | VPS Price Currency: Same Plan, Four Stores, 7% Gap | https://serverbudget.com/vps-price-currency-and-fx | 缺口 #3 `vps-price-currency-and-fx`（同一台 VPS-1 在 OVH 四个区域商店的币种与价差 / DO 只收 USD 且不出外币发票 / Hetzner 建号后币种不可改） | 一张内联 SVG 六柱图（四个商店按 ECB 2026-10-28 参考汇率折算成欧元，税前 3.81–4.08、含税 4.53–4.74） | vps-price-extra-ipv4 |
 
 ## 说明
 

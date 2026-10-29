@@ -46,3 +46,32 @@
 
 - OVHcloud `/vps/` 页上有一句给老客户的话："To purchase the same configuration you have today, you may need to choose a different model. There is a new VPS-1 entry-level model, and the configurations for the other models have shifted." —— 这是官方自己承认产品线改版会让老配置对不上新 SKU，写 `vps-price-renewal-vs-first-term` 时的好料，先记着。
 - DO 的 v5 与 bundled 两套计费规则写在同一个文档页里、相邻两节，但**月上限只有 bundled 有**。这种"同页两套规则"的结构可以直接复用到"税"那篇（标价页 vs 出账页两套口径）。
+
+## 2026-10-29（第三班，发 `vps-price-currency-and-fx`）
+
+> 本班不跑 SERP。下面每一条都写清在哪个页面的哪个位置看到的，抓取日期 2026-10-29，全部 HTTP 200。
+
+### 今天这篇用掉的料（来自 2026-10-28 清单的那一条）
+
+| 用料 | 出处 | 怎么用的 |
+|---|---|---|
+| 「Hetzner 的 Cloud billing FAQ 里有一节 Can I change the currency in the invoice?，并写明项目按 owner 配置的币种计费」 | 2026-10-28 清单「明天（`vps-price-sales-tax`）可直接用的官方线索」第 3 行，本次回原页核实 | 核实后原文是 "It is not possible to change the currency after an account has been created."，比 10-28 记的更强：不是"按 owner 配置"，而是**建号后不可改**。已写进正文并逐字引用 |
+
+### 今天新抓到的、可复用的料
+
+| 线索 | 在哪看到的 | 能怎么用 |
+|---|---|---|
+| OVHcloud 同一台 VPS-1（2 vCore / 4 GB / 40 GB NVMe）在四个区域商店的价：US $4.54、UK £3.31 ex./£3.97 incl.、DE 4,53 € inkl. MwSt.、FR 3,81 € HT/4,57 € TTC | us.ovhcloud.com/vps/、ovhcloud.com/en-gb/vps/、ovhcloud.com/de/vps/、ovhcloud.com/fr/vps/ 四页同日抓 | 已用于今天这篇。这组四商店对照可以反复用作"同规格跨店比价"的基准 |
+| 美国站可见文本里 tax / VAT / excl / incl **各 0 次**，但 `tax-excluded-price` 这个 class 出现 6 次 | us.ovhcloud.com/vps/ 去标签后正则计数 | 「美国站唯一的税披露是一个 CSS 类名」—— 这是结构级证据，比文字引用更硬 |
+| ECB 每日参考汇率文件 `ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml`（免费、无 key、XML，日期在 `<Cube time=...>`） | 本次实抓，2026-10-29 抓到的是 2026-10-28 那期 | 以后任何"跨币种比价"都该用这个做分母，可溯源到官方，不用商业汇率站 |
+| DigitalOcean 税页 FAQ：「USD is the only currency we accept for payments, so all invoices are in USD.」 | docs.digitalocean.com/platform/billing/taxes/ | 已用。注意这句在**税**页而不是计费页，别人不容易找到 |
+| Hetzner 跨币种搬服务器会触发重新定价：「the server will be switched to the current pricing scheme upon completion of the transfer」 | docs.hetzner.com/cloud/billing/faq/ | 已用。这条对"老价格客户别乱搬项目"是硬提醒 |
+| Visa 汇率计算器页 HTTP 520、Mastercard 换汇页 HTTP 403，两者当天都抓不到 | 本次实抓 | 按纪律整段排除。以后要写"卡组织怎么定汇率"必须先解决抓取，不能凭常识补 |
+
+### 明天（`vps-price-extra-ipv4`）的料，今晚就位
+
+| 线索 | 在哪看到的（2026-10-29 实抓，逐字） | 明天怎么用 |
+|---|---|---|
+| Hetzner 把 IP 和服务器分开计费，且**未绑定的 IP 也照收** | docs.hetzner.com/cloud/billing/faq/：「We bill Primary IPs (IPv4, IPv6) and cloud servers separately, and we list both resources separately in invoices. We will bill you for all Primary IPs that have finished the creation process, including Primary IPs that are not assigned to any cloud server. If you want to stop paying for a Primary IP, you need to delete it.」另：「Primary IPv6s are free and are not listed in the invoice in general.」 | 明天这篇的核心对照之一：IPv6 免费、IPv4 按个收、没绑也收 |
+| DigitalOcean 的 IPv4 计费按套餐类型分裂：Bundled 含、v5 另收 | digitalocean.com/pricing/droplets 的 FAQ「Do Droplets come with a dedicated IP address?」：「For Bundled Plans, a public IPv4 is included at no extra cost. Public IPv4 addresses for Droplets with v5 configurations are billed separately from the v5 configur…」（句子被页面截断，明天要抓完整句和单价） | 明天第一件事：抓 DO 的 networking / additional-IP 价目页拿单价，再抓 OVH 的额外 IP 价 |
+| OVHcloud 的 VPS 页提到数据中以外的机房「cannot be modified or upgraded after delivery」 | us.ovhcloud.com/vps/ 底部注 | 与 IP 关系不大，先存着，留给"机房选择影响后续变更"的缺口 |

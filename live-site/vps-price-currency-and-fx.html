@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Price Currency: Same Plan, Four Stores, 7% Gap</title>
+    <meta name="description" content="DigitalOcean bills only in USD and won't issue a EUR invoice. Hetzner locks your currency at signup. OVHcloud's same VPS-1 ranges 3.81 to 4.54 euros.">
+    <link rel="canonical" href="https://serverbudget.com/vps-price-currency-and-fx">
+    <meta property="og:title" content="VPS Price Currency: Same Plan, Four Stores, 7% Gap">
+    <meta property="og:description" content="The same OVHcloud VPS-1 is quoted in four currencies on four storefronts. Converted at the ECB reference rate, the gap is 7.0%. DigitalOcean quotes USD only.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://serverbudget.com/vps-price-currency-and-fx">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VPS Price Currency: Same Plan, Four Stores, 7% Gap">
+    <meta name="twitter:description" content="Which currency a VPS provider charges you in, what it will not change, and how much the same plan costs once you convert every storefront to one currency.">
+
+    <!-- JSON-LD: Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "VPS Price Currency: Same Plan, Four Stores, 7% Gap",
+      "author": {
+        "@type": "Person",
+        "name": "Marcus Reid",
+        "url": "https://serverbudget.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ServerBudget",
+        "url": "https://serverbudget.com"
+      },
+      "datePublished": "2026-10-29",
+      "dateModified": "2026-10-29",
+      "mainEntityOfPage": "https://serverbudget.com/vps-price-currency-and-fx"
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-price"},
+        {"@type": "ListItem", "position": 3, "name": "VPS Price Currency and FX", "item": "https://serverbudget.com/vps-price-currency-and-fx"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why is my DigitalOcean invoice in USD, and can I get one in another currency?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "DigitalOcean answers this directly in its own tax documentation. The question heading is Why is my invoice in USD? Can I get an invoice in another currency? and the answer reads: USD is the only currency we accept for payments, so all invoices are in USD. We cannot provide invoices in other currencies. There is no currency selector described anywhere in that documentation, so an account billed from a euro card is still invoiced in dollars and the conversion happens between the card network and your bank, not at DigitalOcean."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which currency will I actually be charged in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is decided by the storefront you order from, not by your billing address. DigitalOcean documents USD as the only accepted payment currency. Hetzner bills each project in the currency its owner configured for the account, and its billing FAQ states it is not possible to change the currency after an account has been created. OVHcloud runs separate country storefronts, and on 2026-10-29 the identical VPS-1 plan was printed as 4.54 dollars on the US store, 3.31 pounds excluding VAT on the UK store, 4.53 euros including VAT on the German store, and 3.81 euros excluding VAT on the French store."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does the same plan cost across OVHcloud's storefronts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Converted to euros at the European Central Bank reference rate published for 2026-10-28, the VPS-1 plan came to 3.81 euros on the French store before tax, 3.95 euros on the UK store before tax, 4.08 euros on the US store before tax, 4.53 euros on the German store including VAT, 4.57 euros on the French store including VAT, and 4.74 euros on the UK store including VAT. The before-tax spread is 7.0 percent and the after-VAT spread is 4.6 percent, on identical 2 vCPU, 4 GB, 40 GB NVMe specifications."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a card foreign-currency fee decide which storefront is cheaper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually not, and the arithmetic shows why. Take the US store figure of 4.08 euros and the German store figure of 4.53 euros, both measured on 2026-10-29. The break-even fee is 4.53 divided by 4.08 minus 1, which is 11.08 percent. A card fee below that leaves the dollar figure cheaper even after conversion; at a 3 percent fee the dollar figure becomes 4.20 euros. The fee is therefore rarely the deciding factor, while the currency an account can be invoiced in is fixed at signup and cannot be revisited later."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+:root{
+  --bg:#eef1f6;
+  --surface:#ffffff;
+  --surface-2:#f6f8fc;
+  --border:#e3e8ef;
+  --text:#16202c;
+  --muted:#5b6675;
+  --muted-2:#8a94a3;
+  --primary:#2563eb;
+  --primary-d:#1d4ed8;
+  --accent:#0ca678;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow:0 12px 34px rgba(16,24,40,.10);
+  --radius:14px;
+  --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--primary);text-decoration:none;transition:color .15s}
+a:hover{text-decoration:underline;color:var(--primary-d)}
+img{max-width:100%;height:auto;display:block}
+.container{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+/* Header */
+header{border-bottom:1px solid var(--border);padding:24px 0 20px;margin-bottom:34px}
+header h1{font-size:2.05rem;line-height:1.18;letter-spacing:-.015em;color:var(--text);font-weight:800}
+header h1 a{color:var(--text)}
+header p{color:var(--muted);font-size:1.02rem;margin-top:8px;max-width:62ch}
+.brand{display:inline-block;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--text);margin-bottom:10px}
+.brand:hover{text-decoration:none;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.nav a{display:inline-block;padding:7px 14px;border:1px solid var(--border);border-radius:999px;font-size:.9rem;color:var(--muted);background:var(--surface);transition:all .15s}
+.nav a:hover{border-color:var(--primary);color:var(--primary);text-decoration:none;background:#eef3ff}
+
+/* Prose */
+h1{font-size:2.05rem;line-height:1.2;letter-spacing:-.015em;font-weight:800;margin-bottom:12px}
+h2{font-size:1.5rem;margin:34px 0 14px;color:var(--text);font-weight:750;letter-spacing:-.01em;line-height:1.3}
+h3{font-size:1.18rem;margin:26px 0 10px;color:var(--text);font-weight:700}
+p{margin-bottom:16px;color:#28323d}
+ul,ol{margin:0 0 18px 1.4rem}
+li{margin-bottom:8px}
+strong{font-weight:700;color:var(--text)}
+blockquote{border-left:3px solid var(--primary);padding:8px 0 8px 18px;margin:0 0 18px;color:var(--muted);background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+
+/* Meta line */
+.meta{color:var(--muted);font-size:.9rem;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.meta a{color:var(--primary);font-weight:600}
+
+/* First-screen answer box */
+.answer{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:22px 26px 10px;margin:0 0 28px;box-shadow:var(--shadow-sm)}
+.answer .lede{font-size:1.04rem;color:#1f2937;margin-bottom:14px}
+.answer ul{margin:0 0 14px 1.15rem}
+.answer li{margin-bottom:10px;font-size:.97rem;color:#28323d}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);margin:22px 0}
+table{width:100%;border-collapse:collapse;min-width:540px}
+th{text-align:left;padding:13px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+.price{font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.88rem}
+.srcnote{color:#5b6675;font-size:.88rem;line-height:1.6}
+
+/* Figures */
+figure{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 20px 12px;margin:26px 0;box-shadow:var(--shadow-sm)}
+figure svg{display:block;width:100%;height:auto}
+figcaption{color:var(--muted);font-size:.86rem;line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+
+/* Callout */
+.callout{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:22px 0;font-size:.94rem;color:var(--muted)}
+.callout strong{color:var(--text)}
+
+/* Quote block */
+.quote{background:#fff;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:16px 20px;margin:18px 0;font-size:.97rem;color:#28323d}
+.quote cite{display:block;margin-top:10px;font-style:normal;color:var(--muted);font-size:.85rem}
+
+/* Author + related */
+.author-bio{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:40px 0 0;box-shadow:var(--shadow-sm)}
+.author-name{font-weight:800;font-size:1.02rem;color:var(--text)}
+.author-role{color:var(--accent);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:4px 0 12px}
+.author-bio p{font-size:.94rem;color:var(--muted);margin-bottom:0}
+.related{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow-sm)}
+.related h2{margin:0 0 14px;font-size:1.2rem}
+.related a{display:block;padding:9px 0;border-bottom:1px solid var(--border);font-weight:600;font-size:.96rem}
+.related a:last-of-type{border-bottom:none}
+.related p{font-size:.88rem;color:var(--muted);margin:12px 0 0}
+
+/* Footer */
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+footer p{color:var(--muted);margin-bottom:10px}
+footer a{color:var(--primary)}
+
+/* Responsive */
+@media(max-width:760px){
+  body{font-size:16px}
+  h1,header h1{font-size:1.6rem}
+  .container{padding:0 14px 56px}
+  h2{font-size:1.3rem}
+  .answer{padding:18px 18px 6px}
+  figure{padding:14px 12px 10px}
+}
+</style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H2F4PWVG2P');
+  </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="/" class="brand">ServerBudget</a>
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/compare">Compare All</a>
+            <a href="/best-vps">Best VPS</a>
+            <a href="/cheap-vps-hosting">Cheap VPS</a>
+            <a href="/free-vps">Free VPS</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </header>
+
+    <h1>VPS Price Currency: Same Plan, Four Stores, 7% Gap</h1>
+
+    <div class="meta">
+        By <a href="/about">Marcus Reid</a> &middot; Published Oct 29, 2026 &middot; Last updated Oct 29, 2026 &middot; 8 min read
+    </div>
+
+    <div class="answer">
+        <p class="lede"><strong>The currency you are billed in is decided by the storefront you order from, not by your address &mdash; and at two of the three providers it cannot be changed afterwards.</strong> Every figure below was read off a provider page or an official rate file on <strong>2026-10-29</strong>; every ratio is our own division with the formula printed next to it.</p>
+        <ul>
+            <li><strong>DigitalOcean: USD only.</strong> Its tax documentation answers the question &ldquo;Can I get an invoice in another currency?&rdquo; with one sentence: USD is the only currency it accepts, all invoices are in USD, and it cannot provide invoices in other currencies. A euro card is still invoiced in dollars.</li>
+            <li><strong>Hetzner: your account currency is fixed at signup.</strong> The billing FAQ states it is not possible to change the currency after an account has been created. A project is billed in the currency its owner configured.</li>
+            <li><strong>OVHcloud: four storefronts, four currencies, one plan.</strong> On 2026-10-29 the VPS-1 (2 vCPU, 4 GB, 40 GB NVMe) was printed as $4.54 on the US store, &pound;3.31 ex. VAT on the UK store, &euro;4.53 incl. MwSt. on the German store, and &euro;3.81 HT on the French store.</li>
+            <li><strong>Converted to euros at the ECB reference rate for 2026-10-28:</strong> &euro;3.81 (France, before tax), &euro;3.95 (UK, before tax), &euro;4.08 (US, before tax). The before-tax spread on identical hardware is <strong>7.0%</strong>. Including the VAT each store prints, the spread is &euro;4.53 to &euro;4.74, or <strong>4.6%</strong>.</li>
+        </ul>
+    </div>
+
+    <p>This is the last question left over from the <a href="/vps-price">vps price</a> breakdown. We had already separated the sticker price from the tax added at checkout in <a href="/vps-price-sales-tax">the sales tax piece</a>, and separated billing states in <a href="/vps-price-stopped-instance">the stopped-instance piece</a>. What none of those answered is which currency the number is even denominated in, and what happens when the answer is not your own.</p>
+    <p>Across the 30 pages we catalogued for this cycle, the currency codes &ldquo;USD&rdquo;, &ldquo;EUR&rdquo; and &ldquo;GBP&rdquo; appear on zero of them, and the phrase &ldquo;exchange rate&rdquo; appears on zero. So the data here comes from four OVHcloud country storefronts captured side by side on one day, from DigitalOcean's and Hetzner's billing documentation, and from the European Central Bank's published reference rates. No provider was asked to estimate anything, and nothing below is a projection.</p>
+
+    <h2>Who Decides the Currency, and Who Lets You Change It</h2>
+    <p>Three providers, three different answers, and only one of them gives you a choice at any point after signup:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider</th><th>Currency you are invoiced in</th><th>Can it change later?</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean</td><td class="price">USD only</td><td class="note">No &mdash; documentation states it cannot issue other-currency invoices</td><td class="note">docs.digitalocean.com/platform/billing/taxes/</td></tr>
+            <tr><td>Hetzner</td><td class="price">The currency configured on the account owner</td><td class="note">No &mdash; &ldquo;not possible to change the currency after an account has been created&rdquo;</td><td class="note">docs.hetzner.com/cloud/billing/faq/</td></tr>
+            <tr><td>OVHcloud</td><td class="price">Whichever country store you order from</td><td class="note">Not stated on the pages we read</td><td class="note">us.ovhcloud.com/vps/ and three EU stores</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">All three rows read on 2026-10-29, all HTTP 200. The DigitalOcean sentence and the Hetzner sentence are quoted verbatim in the two sections below. The OVHcloud row says &ldquo;not stated&rdquo; because none of the four storefronts we fetched describes a currency-change procedure; we did not look inside a logged-in account, so the absence of a documented process is all we can report.</p>
+
+    <h2>One Plan, Four Storefronts: What Each Page Actually Prints</h2>
+    <p>OVHcloud sells the same VPS-1 configuration on every country storefront: 2 vCores, 4 GB RAM, 40 GB NVMe, daily backup, unlimited traffic, 500 Mbps public bandwidth. The specification line is identical on all four pages. The price line is not, and neither is the way tax is presented:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Storefront</th><th>What the page prints for VPS-1</th><th>Tax wording on the page</th><th>Count of the word &ldquo;tax&rdquo; in visible text</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>United States<br><span class="note">us.ovhcloud.com/vps/</span></td><td class="price">Starting at $4.54 /month</td><td class="note">None. Every price is wrapped in a span whose class is <code>tax-excluded-price</code>, but the word never appears as text.</td><td class="note">0</td></tr>
+            <tr><td>United Kingdom<br><span class="note">ovhcloud.com/en-gb/vps/</span></td><td class="price">&pound;3.31 ex. VAT/month<br>or &pound;3.97 incl. VAT/month</td><td>Both figures printed side by side</td><td class="note">&ldquo;VAT&rdquo; appears 14 times</td></tr>
+            <tr><td>Germany<br><span class="note">ovhcloud.com/de/vps/</span></td><td class="price">Ab 4,53 &euro; inkl. MwSt./Monat</td><td>Tax-inclusive only; no before-tax figure printed</td><td class="note">&ldquo;MwSt.&rdquo; only</td></tr>
+            <tr><td>France<br><span class="note">ovhcloud.com/fr/vps/</span></td><td class="price">3,81 &euro; HT/mois<br>soit 4,57 &euro; TTC/mois</td><td>Both figures printed side by side</td><td class="note">&ldquo;TVA&rdquo; appears once, in the abbreviation HT/TTC pair</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">All four pages fetched 2026-10-29, HTTP 200, prices read from the rendered text of the VPS-1 card. The &ldquo;count&rdquo; column is a literal search of the page text after tags were stripped: on the US page, the strings &ldquo;tax&rdquo;, &ldquo;VAT&rdquo;, &ldquo;excl&rdquo; and &ldquo;incl&rdquo; each returned 0 hits, while the HTML attribute <code>tax-excluded-price</code> returned 6 hits. That is the entire tax disclosure on the US storefront: a CSS class name.</p>
+    <p>Two things follow from this table, and neither is a matter of opinion. First, the same company shows a pre-tax number in one country and a tax-inclusive number in another, so the number on the page is not comparable across stores until you know which convention you are looking at. Second, the only place the US store discloses that its prices exclude tax is an HTML class name, which no reader sees.</p>
+    <p>The UK and French pages print both figures, which lets us derive the multiplier each store applies without leaving the page. On the UK page, &pound;3.97 &divide; &pound;3.31 = <strong>1.1994</strong>. On the French page, 4,57 &euro; &divide; 3,81 &euro; = <strong>1.1995</strong>. Both come to roughly 20%. The German page prints only 4,53 &euro; including tax, so its multiplier has to be inferred; dividing by the 3,81 &euro; base the French page prints gives 4,53 &divide; 3,81 = <strong>1.1890</strong>, or 18.9%. That is an inference, not a printed rate &mdash; the German page does not print one &mdash; but it is consistent with the German store using a different standard rate from the French store, which is what the 0,04 &euro; difference between 4,53 and 4,57 is made of.</p>
+
+    <h2>Converting All Four to One Currency</h2>
+    <p>A price in dollars, a price in pounds and a price in euros cannot be ranked until they share a denominator. We used the European Central Bank's published reference rate, which is an official daily file rather than a commercial quote. The file we fetched on 2026-10-29 carried the reference date <strong>2026-10-28</strong> and gave 1.1133 USD per euro and 0.83785 GBP per euro.</p>
+    <figure>
+      <svg viewBox="0 0 680 330" role="img" aria-label="Bar chart of the same OVHcloud VPS-1 plan converted to euros at the ECB reference rate across four storefronts">
+        <title>Same plan, four storefronts, converted to euros</title>
+        <g font-family="-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+          <line x1="60" y1="250" x2="660" y2="250" stroke="#e3e8ef" stroke-width="1"/>
+          <line x1="60" y1="206" x2="660" y2="206" stroke="#eef1f6" stroke-width="1"/>
+          <line x1="60" y1="162" x2="660" y2="162" stroke="#eef1f6" stroke-width="1"/>
+          <line x1="60" y1="118" x2="660" y2="118" stroke="#eef1f6" stroke-width="1"/>
+          <line x1="60" y1="74" x2="660" y2="74" stroke="#eef1f6" stroke-width="1"/>
+          <line x1="60" y1="30" x2="660" y2="30" stroke="#eef1f6" stroke-width="1"/>
+          <text x="50" y="254" text-anchor="end" font-size="11" fill="#8a94a3">0</text>
+          <text x="50" y="210" text-anchor="end" font-size="11" fill="#8a94a3">1</text>
+          <text x="50" y="166" text-anchor="end" font-size="11" fill="#8a94a3">2</text>
+          <text x="50" y="122" text-anchor="end" font-size="11" fill="#8a94a3">3</text>
+          <text x="50" y="78" text-anchor="end" font-size="11" fill="#8a94a3">4</text>
+          <text x="50" y="34" text-anchor="end" font-size="11" fill="#8a94a3">5</text>
+          <text x="60" y="16" font-size="11" fill="#5b6675">euros per month</text>
+
+          <rect x="75" y="82.4" width="72" height="167.6" fill="#2563eb" rx="3"/>
+          <text x="111" y="74" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">3.81</text>
+          <text x="111" y="270" text-anchor="middle" font-size="11" fill="#5b6675">France</text>
+          <text x="111" y="285" text-anchor="middle" font-size="10" fill="#8a94a3">before tax</text>
+
+          <rect x="165" y="76.2" width="72" height="173.8" fill="#2563eb" rx="3"/>
+          <text x="201" y="68" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">3.95</text>
+          <text x="201" y="270" text-anchor="middle" font-size="11" fill="#5b6675">UK</text>
+          <text x="201" y="285" text-anchor="middle" font-size="10" fill="#8a94a3">before tax</text>
+
+          <rect x="255" y="70.5" width="72" height="179.5" fill="#2563eb" rx="3"/>
+          <text x="291" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">4.08</text>
+          <text x="291" y="270" text-anchor="middle" font-size="11" fill="#5b6675">US</text>
+          <text x="291" y="285" text-anchor="middle" font-size="10" fill="#8a94a3">as printed</text>
+
+          <rect x="345" y="50.7" width="72" height="199.3" fill="#0ca678" rx="3"/>
+          <text x="381" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">4.53</text>
+          <text x="381" y="270" text-anchor="middle" font-size="11" fill="#5b6675">Germany</text>
+          <text x="381" y="285" text-anchor="middle" font-size="10" fill="#8a94a3">incl. VAT</text>
+
+          <rect x="435" y="48.9" width="72" height="201.1" fill="#0ca678" rx="3"/>
+          <text x="471" y="40" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">4.57</text>
+          <text x="471" y="270" text-anchor="middle" font-size="11" fill="#5b6675">France</text>
+          <text x="471" y="285" text-anchor="middle" font-size="10" fill="#8a94a3">incl. VAT</text>
+
+          <rect x="525" y="41.4" width="72" height="208.6" fill="#0ca678" rx="3"/>
+          <text x="561" y="33" text-anchor="middle" font-size="12" font-weight="700" fill="#16202c">4.74</text>
+          <text x="561" y="270" text-anchor="middle" font-size="11" fill="#5b6675">UK</text>
+          <text x="561" y="285" text-anchor="middle" font-size="10" fill="#8a94a3">incl. VAT</text>
+
+          <rect x="75" y="306" width="10" height="10" fill="#2563eb" rx="2"/>
+          <text x="92" y="315" font-size="11" fill="#5b6675">before tax</text>
+          <rect x="175" y="306" width="10" height="10" fill="#0ca678" rx="2"/>
+          <text x="192" y="315" font-size="11" fill="#5b6675">tax-inclusive figure as printed</text>
+        </g>
+      </svg>
+      <figcaption>The same OVHcloud VPS-1 (2 vCPU, 4 GB RAM, 40 GB NVMe) on four storefronts, each figure divided by the ECB reference rate for 2026-10-28 (1.1133 USD per euro, 0.83785 GBP per euro). Prices read on 2026-10-29. Before-tax spread: 4.08 &divide; 3.81 = 1.070, or 7.0%. Tax-inclusive spread: 4.74 &divide; 4.53 = 1.046, or 4.6%. The US bar is the page figure as printed; the US storefront prints no tax information, so whether tax is added to it later is not stated on that page and is not assumed here.</figcaption>
+    </figure>
+
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Storefront</th><th>Page figure</th><th>Conversion</th><th>Euros</th><th>Tax treatment</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>France</td><td>&euro;3.81</td><td class="note">already in euros</td><td class="price">&euro;3.81</td><td class="note">HT, before tax</td></tr>
+            <tr><td>United Kingdom</td><td>&pound;3.31</td><td class="note">&pound;3.31 &divide; 0.83785</td><td class="price">&euro;3.95</td><td class="note">ex. VAT</td></tr>
+            <tr><td>United States</td><td>$4.54</td><td class="note">$4.54 &divide; 1.1133</td><td class="price">&euro;4.08</td><td class="note">page prints no tax information</td></tr>
+            <tr><td>Germany</td><td>&euro;4.53</td><td class="note">already in euros</td><td class="price">&euro;4.53</td><td class="note">inkl. MwSt.</td></tr>
+            <tr><td>France</td><td>&euro;4.57</td><td class="note">already in euros</td><td class="price">&euro;4.57</td><td class="note">TTC, tax included</td></tr>
+            <tr><td>United Kingdom</td><td>&pound;3.97</td><td class="note">&pound;3.97 &divide; 0.83785</td><td class="price">&euro;4.74</td><td class="note">incl. VAT</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Rates: ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml, fetched 2026-10-29, file dated 2026-10-28. Prices: the four OVHcloud storefronts listed in the previous table. Rounded to two decimals. This is a conversion of published list prices at an official reference rate; it is not a quote you would receive from a bank, and it deliberately excludes any card fee, which is a separate line the card issuer adds and which no provider page describes.</p>
+
+    <h3>How much does the same plan cost across OVHcloud's storefronts?</h3>
+    <p>Converted to euros at the European Central Bank reference rate published for 2026-10-28, the VPS-1 plan came to 3.81 euros on the French store before tax, 3.95 euros on the UK store before tax, 4.08 euros on the US store before tax, 4.53 euros on the German store including VAT, 4.57 euros on the French store including VAT, and 4.74 euros on the UK store including VAT. The before-tax spread is 7.0 percent and the after-VAT spread is 4.6 percent, on identical 2 vCPU, 4 GB, 40 GB NVMe specifications.</p>
+
+    <h2>The 7% Gap Is Bigger Than Rounding, and the Pages Do Not Explain It</h2>
+    <p>Treat the euro figure as the base and ask what exchange rate the dollar and pound prices imply. Three divisions, all from numbers already on this page:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Pair</th><th>Implied by OVHcloud's price list</th><th>ECB reference</th><th>Difference</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>USD per EUR</td><td>$4.54 &divide; &euro;3.81 = <strong>1.1916</strong></td><td>1.1133</td><td class="price">+7.03%</td></tr>
+            <tr><td>GBP per EUR</td><td>&pound;3.31 &divide; &euro;3.81 = <strong>0.86877</strong></td><td>0.83785</td><td class="price">+3.69%</td></tr>
+            <tr><td>GBP per USD</td><td>&pound;3.31 &divide; $4.54 = <strong>0.72907</strong></td><td>0.83785 &divide; 1.1133 = 0.75258</td><td class="price">&minus;3.12%</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p>The three numbers are internally consistent, which is the check that matters: 1.0369 &divide; 1.0703 &minus; 1 = &minus;3.12%, exactly the third row. So this is one price list converted at one set of internal rates, not three unrelated rounding accidents.</p>
+    <p>Could the gap be rounding? Both prices are printed to two decimals, so the maximum error is half a cent on each: 0.005 &divide; 4.54 = 0.110% on the dollar figure and 0.005 &divide; 3.81 = 0.131% on the euro figure, for a combined bound of about 0.24%. The measured gap is 7.03%, roughly thirty times the rounding bound. Rounding cannot produce it.</p>
+    <div class="callout">
+        <strong>What we can say and what we cannot.</strong> We can say the dollar storefront is priced 7.03% above the euro storefront once both are expressed before tax and the pound storefront 3.69% above it, and that this is far outside rounding error. We cannot say why. The pages do not describe an exchange-rate policy, and a different cost base for US regions would produce the same arithmetic. Any statement that the 7% <em>is</em> a currency markup would be our inference, not a fact from the page, so we are labelling it as an open question rather than answering it.
+    </div>
+
+    <h2>DigitalOcean: One Currency, and No Way to Get Another Invoice</h2>
+    <p>DigitalOcean does not run country storefronts. It prices everything in dollars and says so in the FAQ section of its tax documentation, under a heading that is itself the question readers ask:</p>
+    <div class="quote">
+        &ldquo;Why is my invoice in USD? Can I get an invoice in another currency? &mdash; USD is the only currency we accept for payments, so all invoices are in USD. We cannot provide invoices in other currencies.&rdquo;
+        <cite>DigitalOcean, Tax Information by Country, fetched 2026-10-29 (docs.digitalocean.com/platform/billing/taxes/)</cite>
+    </div>
+    <p>That is the whole policy: not a preference, not a default, but the only option. The consequence is structural rather than cosmetic. The 4 GB / 2 vCPU Droplet is listed at <strong>$24.00 per month</strong> and $0.03571 per hour on the pricing page we fetched on 2026-10-29. A customer whose card is denominated in euros pays that invoice through a conversion performed between the card network and the issuing bank. At the ECB reference rate the $24.00 comes to <strong>&euro;21.56</strong>, and any fee the issuer adds is applied on top of that figure, outside anything DigitalOcean controls or documents.</p>
+    <p>For anyone reclaiming VAT or matching invoices to a euro ledger, the second half of that sentence matters more than the price: there is no euro invoice to file. The tax is calculated and shown, as we documented in <a href="/vps-price-sales-tax">the sales tax piece</a>, but the document is always in dollars.</p>
+
+    <h2>Hetzner: The Currency Is Chosen Once, at Account Creation</h2>
+    <p>Hetzner supports more than one billing currency &mdash; its own documentation example shows a project billed in EUR and another billed in USD &mdash; but the choice is not a setting you revisit. The billing FAQ answers the question in one line:</p>
+    <div class="quote">
+        &ldquo;Can I change the currency in the invoice? &mdash; It is not possible to change the currency after an account has been created.&rdquo;
+        <cite>Hetzner Cloud billing FAQ, fetched 2026-10-29 (docs.hetzner.com/cloud/billing/faq/)</cite>
+    </div>
+    <p>The same page explains how the currency propagates through projects, and here the consequence becomes concrete: &ldquo;A project is billed in the currency that the owner of the project has configured for their account.&rdquo; Move a server between two projects whose owners use different currencies and, in Hetzner's words, &ldquo;the server will be switched to the current pricing scheme upon completion of the transfer and will be billed in the currency of the target project going forward.&rdquo; The same page lists what does <em>not</em> trigger a price change &mdash; rebuilding a server, transferring to a project with the same currency &mdash; and what does: rescaling, restoring a deleted server, and transferring across currencies.</p>
+    <p>So a currency choice is not only permanent, it is also attached to a repricing event. A server on older pricing that gets moved into a differently denominated project comes out the other side on current pricing. The 4 GB / 2 vCPU plan on Hetzner is the CX23, listed at <strong>&euro;5.99 per month excluding VAT</strong> and &euro;0.0096 per hour excluding VAT on the page we fetched on 2026-10-29. The page carries a currency selector offering euros and dollars, but the dollar figures are not present in the static HTML &mdash; they are applied by script &mdash; so we did not capture a dollar price and are not going to invent one.</p>
+
+    <h2>Comparing Two Prices in Two Currencies Without Guessing</h2>
+    <p>Given two quotes in two currencies, the comparison has three inputs and only one of them is uncertain: the official rate, the two prices, and whatever your card adds. The first two you can read. The third you can only read off your own statement. The formula is:</p>
+    <blockquote>cost in your currency = (price in foreign currency &divide; official rate) &times; (1 + your card's foreign-currency fee)</blockquote>
+    <p>Worked on the OVHcloud pair, using the euro figures from the chart above: the US storefront comes to &euro;4.08 and the German storefront to &euro;4.53. The fee at which the two become equal is 4.53 &divide; 4.08 &minus; 1 = <strong>11.08%</strong>. Below that fee the dollar figure stays cheaper after conversion; at a 3% fee it becomes &euro;4.20, still below &euro;4.53. This is arithmetic on published list prices, not a recommendation about which storefront you are eligible to order from &mdash; none of the four pages states its eligibility rules, so we are not asserting any.</p>
+    <p>What the same arithmetic does establish is that the card fee is rarely the deciding term. A 7.0% price gap swamps a fee that is usually a small single-digit percentage, which is why the currency an account is invoiced in &mdash; fixed at signup at two of the three providers &mdash; matters more than the fee line on the statement.</p>
+
+    <h2>What the Three Providers Cost on the Same Shape of Box</h2>
+    <p>One last table, all in euros, for a 4 GB / 2 vCPU server. It is here to keep the three providers in one frame rather than to declare a winner, because the three rows are not the same product:</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider / plan</th><th>Invoiced in</th><th>As printed</th><th>Euros</th><th>Conversion</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>OVHcloud VPS-1 (German store)</td><td>EUR</td><td class="price">&euro;4.53 incl. MwSt.</td><td class="price">&euro;4.53</td><td class="note">none needed</td></tr>
+            <tr><td>Hetzner CX23</td><td>EUR (or USD, fixed at signup)</td><td class="price">&euro;5.99 excl. VAT</td><td class="price">&euro;5.99</td><td class="note">none needed; VAT extra</td></tr>
+            <tr><td>DigitalOcean Basic 4 GB / 2 vCPU</td><td>USD only</td><td class="price">$24.00</td><td class="price">&euro;21.56</td><td class="note">$24.00 &divide; 1.1133</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">DigitalOcean figure from digitalocean.com/pricing/droplets, fetched 2026-10-29 (HTTP 200), read from the rendered table row &ldquo;4 GiB / 2 vCPUs / $0.03571 per hour / $24.00 per month&rdquo;. Hetzner from hetzner.com/cloud/cost-optimized/, fetched 2026-10-29, which prints &euro;5.99 per month and &euro;0.0096 per hour, both marked excl. VAT, and does not print a VAT rate. OVHcloud from ovhcloud.com/de/vps/, fetched 2026-10-29. The euro column for DigitalOcean applies the ECB reference rate and no card fee; add your own fee to that figure. The three rows differ in what is included (OVHcloud's daily backup and unlimited traffic, Hetzner's 20 TB included traffic, DigitalOcean's 4,000 GiB transfer), so this is a currency comparison, not a specification comparison &mdash; the specification comparison is in <a href="/vps-price">the vps price breakdown</a>.</p>
+
+    <h2>Questions This Raises</h2>
+    <h3>Why is my DigitalOcean invoice in USD, and can I get one in another currency?</h3>
+    <p>DigitalOcean answers this directly in its own tax documentation. The question heading is Why is my invoice in USD? Can I get an invoice in another currency? and the answer reads: USD is the only currency we accept for payments, so all invoices are in USD. We cannot provide invoices in other currencies. There is no currency selector described anywhere in that documentation, so an account billed from a euro card is still invoiced in dollars and the conversion happens between the card network and your bank, not at DigitalOcean.</p>
+
+    <h3>Which currency will I actually be charged in?</h3>
+    <p>It is decided by the storefront you order from, not by your billing address. DigitalOcean documents USD as the only accepted payment currency. Hetzner bills each project in the currency its owner configured for the account, and its billing FAQ states it is not possible to change the currency after an account has been created. OVHcloud runs separate country storefronts, and on 2026-10-29 the identical VPS-1 plan was printed as 4.54 dollars on the US store, 3.31 pounds excluding VAT on the UK store, 4.53 euros including VAT on the German store, and 3.81 euros excluding VAT on the French store.</p>
+
+    <h3>Does a card foreign-currency fee decide which storefront is cheaper?</h3>
+    <p>Usually not, and the arithmetic shows why. Take the US store figure of 4.08 euros and the German store figure of 4.53 euros, both measured on 2026-10-29. The break-even fee is 4.53 divided by 4.08 minus 1, which is 11.08 percent. A card fee below that leaves the dollar figure cheaper even after conversion; at a 3 percent fee the dollar figure becomes 4.20 euros. The fee is therefore rarely the deciding factor, while the currency an account can be invoiced in is fixed at signup and cannot be revisited later.</p>
+
+    <h2>Sources and Method</h2>
+    <p class="srcnote">Every page below was fetched on 2026-10-29 and returned HTTP 200. Prices were read from the rendered text of the page after tags were stripped; where a figure is absent from the static HTML it is reported as absent rather than filled in. Rates come from the European Central Bank's daily reference file, which carried the reference date 2026-10-28 on the day we fetched it. All divisions and percentage differences are our own and the formula is printed beside each one. Two pages we wanted were not readable on that date: Visa's exchange-rate calculator returned HTTP 520 and Mastercard's currency-conversion page returned HTTP 403, so this article contains no statement about how a card network sets its rate and no fee percentage attributed to any issuer. The fee figures used in the break-even arithmetic are illustrative inputs, clearly labelled as such, and are meant to be replaced with the number on your own statement.</p>
+    <ul class="srcnote">
+        <li>us.ovhcloud.com/vps/ &mdash; US storefront, $4.54/month, zero visible tax words, 6 occurrences of the class <code>tax-excluded-price</code></li>
+        <li>ovhcloud.com/en-gb/vps/ &mdash; UK storefront, &pound;3.31 ex. VAT and &pound;3.97 incl. VAT</li>
+        <li>ovhcloud.com/de/vps/ &mdash; German storefront, 4,53 &euro; inkl. MwSt.</li>
+        <li>ovhcloud.com/fr/vps/ &mdash; French storefront, 3,81 &euro; HT and 4,57 &euro; TTC</li>
+        <li>docs.digitalocean.com/platform/billing/taxes/ &mdash; the USD-only invoice statement, quoted above</li>
+        <li>digitalocean.com/pricing/droplets &mdash; 4 GiB / 2 vCPUs at $24.00 per month, $0.03571 per hour</li>
+        <li>docs.hetzner.com/cloud/billing/faq/ &mdash; currency fixed at account creation, project currency rules, transfer repricing</li>
+        <li>hetzner.com/cloud/cost-optimized/ &mdash; CX23 at &euro;5.99 per month and &euro;0.0096 per hour, excl. VAT</li>
+        <li>ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml &mdash; reference rates dated 2026-10-28: USD 1.1133, GBP 0.83785 per euro</li>
+    </ul>
+
+    <div class="related">
+        <h2>Related</h2>
+        <a href="/vps-price">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
+        <a href="/vps-price-sales-tax">VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax</a>
+        <a href="/vps-price-stopped-instance">Does a Stopped VPS Still Cost Money? Billing by State</a>
+        <p>Part of a 28-day series on what a VPS actually costs, one billing question at a time.</p>
+    </div>
+
+    <div class="author-bio">
+        <div class="author-name">Marcus Reid</div>
+        <div class="author-role">Writing about hosting economics</div>
+        <p>I read provider documentation for a living and quote it rather than paraphrase it. When a page does not state something, I say the page does not state it, and when a number is my own division I show the division. Every figure on this page traces to a source listed above.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ServerBudget. Prices and terms change; verify on the provider's page before you buy.</p>
+        <p><a href="/about">About</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></p>
+    </footer>
+</div>
+</body>
+</html>

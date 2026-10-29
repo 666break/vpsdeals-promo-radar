@@ -195,6 +195,18 @@ footer a{color:var(--primary)}
     gtag('js', new Date());
     gtag('config', 'G-H2F4PWVG2P');
   </script>
+<!-- navrow-20261029 -->
+<style>
+/* 2026-10-29 first-screen fix: on a 390px phone the eight pill links in .nav
+   wrapped to four rows (~160px) before the H1, pushing the headline and the
+   answer box below the fold. One swipeable row instead. All links stay in the
+   DOM, so internal linking and crawlability are unchanged. */
+@media(max-width:760px){
+  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
+}
+</style>
 </head>
 <body>
 <div class="container">

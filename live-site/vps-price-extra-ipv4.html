@@ -207,6 +207,19 @@ footer a{color:var(--primary)}
   .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
 }
 </style>
+<!-- videobox-20261030 -->
+<style>
+/* 16:9 player block. Uses the page's own surface/border/radius tokens so it reads
+   as another article card, not an ad slot. aspect-ratio keeps the frame 16:9 on any
+   width without a padding-top hack. */
+.videobox{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:26px 0;box-shadow:var(--shadow-sm)}
+.videobox h2{margin:0 0 12px;font-size:1.15rem;letter-spacing:-.005em}
+.videoframe{position:relative;width:100%;aspect-ratio:16/9;background:#0b1220;border-radius:var(--radius-sm);overflow:hidden}
+.videoframe iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
+.videobox .vcap{font-size:.94rem;color:var(--muted);margin:12px 0 0;line-height:1.62}
+.videobox .vlink{font-size:.88rem;color:var(--muted);margin:8px 0 0}
+.videobox .vlink a{font-weight:600}
+</style>
 </head>
 <body>
 <div class="container">
@@ -245,6 +258,15 @@ footer a{color:var(--primary)}
     <p>An IP address used to be part of the server, priced at nothing and mentioned in a spec bullet. It is now a line item with its own meter, its own cap and its own rules about what happens when you switch the machine off. The three providers we track disagree about all of it: one charges by the month with no hourly floor worth mentioning, one charges by the hour against a $5.00 cap, and one charges a flat per-IP fee with a hard ceiling on how many you may buy.</p>
 
     <p>Everything below was copied from official provider pages on <strong>2026-10-30</strong>. Where a page did not state something, this article says so instead of filling the gap. Every ratio, hour count and percentage is our own arithmetic on those published numbers, and the formula is shown so you can redo it.</p>
+
+    <div class="videobox">
+        <h2>Video: what an extra IPv4 costs, in 1:00</h2>
+        <div class="videoframe">
+            <iframe src="https://www.youtube.com/embed/CPWpw4d6q34" title="VPS Extra IPv4: What It Costs and Whether It Bills While Off" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <p class="vcap">One minute on the three published prices and the arithmetic behind them: $0.60 a month at Hetzner, $2.40 at OVHcloud, $5.00 at DigitalOcean when the address is unassigned &mdash; an 8.3x spread between Hetzner's $0.60 and DigitalOcean's $5.00. It then divides each monthly figure by its own hourly rate to show where the caps land: 500 hours at DigitalOcean ($5.00 &divide; $0.01), 600 hours for Hetzner's USD pair ($0.60 &divide; $0.0010), 625 hours for its EUR pair (&euro;0.50 &divide; &euro;0.0008). The last two slides put one address against the server it hangs off: 125% of DigitalOcean's $4.00 Droplet, 52.9% of OVHcloud's $4.54 VPS-1, and 8.46x once sixteen addresses reach OVHcloud's $38.40 ceiling, measured against its $4.54 VPS-1. Narration is synthetic text-to-speech and the frames are rendered from this article's own tables.</p>
+        <p class="vlink">If the player does not load: <a href="https://youtu.be/CPWpw4d6q34">youtu.be/CPWpw4d6q34</a></p>
+    </div>
 
     <h2>The Three Published Prices for a Second IPv4</h2>
     <div class="table-wrap">

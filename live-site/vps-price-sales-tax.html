@@ -253,19 +253,19 @@ footer a{color:var(--primary)}
             <li><strong>DigitalOcean:</strong> state and city sales tax added on top. Its tax documentation lists about two dozen US states and cities with rates from 1% (Connecticut) to 11.5% (Puerto Rico), calculated from your account address. A $24.00 plan costs $25.50 in Texas, $25.56 in Washington state, or $24.00 in a no-tax state.</li>
             <li><strong>OVHcloud:</strong> prices wrapped in <code>tax-excluded-price</code> HTML class. No visible tax text on the VPS page. Checkout requires an account and was not accessible, so the exact tax line could not be read.</li>
             <li><strong>Hetzner:</strong> every price says <em>excl. VAT</em>. The page has a country selector labeled <em>Country (VAT)</em> but does not display the percentage. The after-tax euro amount could not be calculated from the page.</li>
-            <li><strong>Same 4 GB / 2 vCPU VPS, after tax:</strong> $4.54 at OVHcloud (pre-tax), $25.50 at DigitalOcean in Texas (after 6.25% state sales tax), and 5.99 euros excl. VAT at Hetzner. The gap between the cheapest and most expensive grows from 5.3x pre-tax to 5.6x after DigitalOcean's tax alone.</li>
+            <li><strong>Same 4 GB / 2 vCPU VPS, after tax:</strong> $4.54 at OVHcloud (pre-tax), $25.50 at DigitalOcean in Texas (after 6.25% state sales tax) or $26.76 in Puerto Rico (11.5%), and 5.99 euros excl. VAT at Hetzner. The gap between the cheapest and most expensive grows from 5.3x pre-tax (no state tax on either side) to 5.6x in Texas after DigitalOcean's state tax alone, and 5.9x in Puerto Rico.</li>
         </ul>
     </div>
 
     <p>This is the question the <a href="/vps-price">vps price</a> pages do not answer: whether the number you see is the number you pay. Across the 30 pages we catalogued for this cycle, the words &ldquo;VAT&rdquo; and &ldquo;sales tax&rdquo; appear on zero of them. So we went to the billing and tax documentation instead, on <strong>2026-10-29</strong>, and pulled the clauses and rates out verbatim. Every figure below is copied from the provider's own page on that date; every ratio is our own calculation with the formula shown.</p>
 
     <div class="videobox">
-        <h2>Video: the same comparison in 59 seconds</h2>
+        <h2>Video: the advertised price versus the after-tax price, in 1:00</h2>
         <div class="videoframe">
-            <iframe src="https://www.youtube.com/embed/OnCQ3wqDYxU" title="VPS Price Currency: The Same Plan in Four Storefronts" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/wRZ41EIB42Q" title="VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-        <p class="vcap">This is the companion video to the tax piece: it takes the same OVHcloud VPS-1 that the tables below quote at $4.54 and follows it across the US, UK, German and French storefronts, where the printed price changes with the currency and with whether tax is already inside it. It covers currency, not sales tax &mdash; the tax arithmetic is in the sections below. Narration is synthetic text-to-speech and the frames are rendered from the article's own tables.</p>
-        <p class="vlink">If the player does not load: <a href="https://youtu.be/OnCQ3wqDYxU">youtu.be/OnCQ3wqDYxU</a></p>
+        <p class="vcap">One minute on the gap between the pricing page and the invoice: the advertised figure is pre-tax at all three providers, DigitalOcean adds state and city sales tax from 1% in Connecticut to 11.5% in Puerto Rico, OVHcloud discloses tax only through an HTML class name, and Hetzner prints &ldquo;excl. VAT&rdquo; without a rate. A $24.00 plan becomes $25.50 in Texas, $25.56 in Washington state and $26.76 in Puerto Rico, which turns the 5.3x pre-tax gap against OVHcloud's $4.54 into 5.6x in Texas and 5.9x in Puerto Rico after DigitalOcean's tax alone. Narration is synthetic text-to-speech and the frames are rendered from this article's own tables.</p>
+        <p class="vlink">If the player does not load: <a href="https://youtu.be/wRZ41EIB42Q">youtu.be/wRZ41EIB42Q</a></p>
     </div>
 
     <h2>Three Providers, Three Tax Treatments</h2>
@@ -357,7 +357,7 @@ footer a{color:var(--primary)}
     <p class="srcnote">Pre-tax prices from the providers' own pricing pages (ovhcloud.com/en/vps/ and digitalocean.com/pricing/droplets/ fetched 2026-10-28; hetzner.com/cloud/cost-optimized/ fetched 2026-10-29). Tax rates from docs.digitalocean.com/platform/billing/taxes/usa/ (fetched 2026-10-29). The formula is: advertised price &times; (1 + state rate + local rate). Where local rate is a range (e.g. 0&ndash;2%), the table shows the state rate only; adding the maximum local rate would raise the Texas figure to $25.98 and the Washington figure to $26.52. OVHcloud and Hetzner after-tax figures are marked as not calculable because the rate is not published on the pages we could read.</p>
 
     <h2>How the Gap Changes When Tax Is Added</h2>
-    <p>The pre-tax gap between OVHcloud and DigitalOcean on identical 4 GB / 2 vCPU specs is 5.3x ($4.54 against $24.00). After DigitalOcean's state sales tax alone, the ratio shifts:</p>
+    <p>The pre-tax gap between OVHcloud and DigitalOcean on identical 4 GB / 2 vCPU specs is 5.3x ($4.54 against $24.00), with no state tax applied on either side. After DigitalOcean's state sales tax alone, the ratio shifts, and each state lands at a different multiplier:</p>
     <ul>
         <li><strong>Texas (6.25%):</strong> $25.50 / $4.54 = <strong>5.62x</strong>. Formula: $24.00 &times; 1.0625 = $25.50, then $25.50 &divide; $4.54 = 5.62.</li>
         <li><strong>Washington state (6.5%):</strong> $25.56 / $4.54 = <strong>5.63x</strong>. Formula: $24.00 &times; 1.065 = $25.56, then $25.56 &divide; $4.54 = 5.63.</li>

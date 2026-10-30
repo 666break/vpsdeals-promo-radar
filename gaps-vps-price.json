@@ -7,7 +7,7 @@
   ],
   "cycle_start": "2026-10-28",
   "cycle_len_days": 28,
-  "next_index": 4,
+  "next_index": 5,
   "gaps": [
     {
       "slug": "vps-price-stopped-instance",
@@ -46,8 +46,8 @@
       "gap": "Snapshots are advertised as a feature everywhere; what does the storage actually cost per GB-month.",
       "why_gap": "'snapshot' 11/30, zero of them price it.",
       "source": "Official backup/snapshot pricing docs.",
-      "done": false,
-      "published": null
+      "done": true,
+      "published": "2026-10-31"
     },
     {
       "slug": "vps-price-bandwidth-overage",

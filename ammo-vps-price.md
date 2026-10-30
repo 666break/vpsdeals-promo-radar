@@ -110,3 +110,13 @@
 
 - DO 的快照单价（`docs.digitalocean.com` 的 snapshots 定价页本次未抓），明天第一件事。
 - OVH VPS 的 snapshot 选项价只在 `/vps/` 上看到「Starting at $0.40/month」，是否按容量分档未确认，明天回原页看选项表。
+
+## 2026-10-31 追加（明天 = 缺口 #6 `vps-price-bandwidth-overage`：超流量那一个月账单上发生什么）
+
+| 线索 | 在哪看到的（2026-10-31 实抓，逐字） | 明天怎么用 |
+|---|---|---|
+| Hetzner 超额按 100MB 块计、不足一块向上取整 | `docs.hetzner.com/cloud/billing/faq/`「How do you bill for traffic?」：「If you exceed the traffic included in your package, we will bill you for the over-usage in blocks of 100MB. If you only consume a fraction of 100MB, we will round up to the next full 100MB.」并给算例：含 20TB，用了 20.00008TB，计 0.0001TB（=100MB）超额 | 主对照：计费颗粒度（100MB 向上取整）本身就是独家料，TOP3 无一页写颗粒度 |
+| Hetzner 超额告警只是通知、不停机 | 同上页：「We will notify you, the project owner, if the traffic usage exceeds 75% of the included free traffic, and again if you reach 100%… they do not cap or stop it… Any traffic used beyond the included amount is billed as usual, even if a notification reaches you late or does not arrive at all.」 | 「75% / 100% 两次告警但都不封顶」是可引用的原文 |
+| Hetzner EU 机型含 20TB，超额单价写在机型卡下方 | `hetzner.com/cloud/cost-optimized/` CX23 段：「Traffic inclusive 20 TB」「For each additional TB at EU-Central locations we charge € 1.00 per hour, excl. VAT.」 | **这句措辞要先复核**：写的是 per TB **per hour**，与「per month」不符，可能是页面文案错误；明天回原页确认后再决定能不能用，不许照抄当结论 |
+| DO 每档 Basic 的 included transfer 是 500GiB–6,000GiB 递增 | `digitalocean.com/pricing/droplets` Basic 表 Transfer 列（2026-10-31 抓）：512MiB=500GiB、1GiB=1,000GiB、2GiB=2,000GiB、2GiB/2vCPU=3,000GiB、4GiB=4,000GiB、8GiB=5,000GiB、16GiB=6,000GiB | 已核实的一半；**超额单价本次没抓到**，明天去 `docs.digitalocean.com` 的 bandwidth/transfer 定价页补 |
+| OVH VPS 页的流量口径本次未取 | 今天只读了 `/vps/options/`，没读 `/vps/` 的流量段 | 明天第一件事：`us.ovhcloud.com/vps/` 抓 unmetered / fair-use 的原文，抓不到就在正文写明「该页当天未取到」 |

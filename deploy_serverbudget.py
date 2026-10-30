@@ -109,4 +109,8 @@ if r.returncode != 0:
     print(f"DEPLOY FAILED (exit {r.returncode})", file=sys.stderr)
     sys.exit(r.returncode)
 print("\n=== DEPLOY COMPLETE ===")
-print(f"  Verify: https://serverbudget.com/a2-hosting-coupon-not-working.html")
+# Point the operator at a page that actually exists in live-site/. The old line
+# named /a2-hosting-coupon-not-working.html, which is not in the repo and returns
+# 404 on the live site, so it could never confirm a deploy.
+VERIFY_PATH = "/vps-price"
+print(f"  Verify: https://serverbudget.com{VERIFY_PATH}")

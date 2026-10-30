@@ -164,6 +164,21 @@ tbody tr:hover{background:var(--surface-2)}
 .price{font-weight:800;color:var(--accent)}
 .note{color:var(--muted);font-size:.88rem}
 .srcnote{color:#5b6675;font-size:.88rem;line-height:1.6}
+.vpt-bar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 14px;margin:20px 0 14px}
+.vpt-f{display:flex;flex-direction:column;gap:4px;font-size:.76rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.vpt-f select{font:inherit;font-size:.92rem;font-weight:600;text-transform:none;letter-spacing:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 10px;min-width:150px}
+.vpt-f select:focus-visible{outline:2px solid var(--primary);outline-offset:1px}
+.vpt-reset{font:inherit;font-size:.9rem;font-weight:700;color:var(--primary);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 14px;cursor:pointer}
+.vpt-reset:hover{border-color:var(--primary);background:#eef3ff}
+.vpt-count{font-size:.85rem;color:var(--muted);margin-left:auto}
+.vpt-table th.vpt-sortable{cursor:pointer;user-select:none;white-space:nowrap}
+.vpt-table th.vpt-sortable:hover{color:var(--primary)}
+.vpt-table th.vpt-sortable:focus-visible{outline:2px solid var(--primary);outline-offset:-2px}
+.vpt-table th[aria-sort="ascending"]::after{content:" \25B2";font-size:.7em}
+.vpt-table th[aria-sort="descending"]::after{content:" \25BC";font-size:.7em}
+.vpt-table td:first-child{font-weight:700;white-space:nowrap}
+.vpt-table td{white-space:nowrap}
+.vpt-table td:nth-child(2){white-space:normal;min-width:190px}
 
 /* Callout */
 .callout{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:22px 0;font-size:.94rem;color:var(--muted)}
@@ -249,31 +264,106 @@ footer a{color:var(--primary)}
         </ul>
     </div>
 
-    <p>Most VPS price pages give you the &ldquo;from&rdquo; number and stop. That number is not wrong, it is just unfinished: it is the cheapest row of a ladder whose rungs are set by billing granularity, RAM ratio and CPU isolation. This page takes the three official price lists we could open and read on <strong>2026-10-28</strong> &mdash; OVHcloud, DigitalOcean and Hetzner &mdash; and does the arithmetic the pages leave to you. Every price below is copied from the provider's own page on that date. Every ratio and per-unit figure is our own calculation from those prices, and the formula is shown so you can redo it.</p>
+    <p>Most VPS price pages give you the &ldquo;from&rdquo; number and stop. That number is not wrong, it is just unfinished: it is the cheapest row of a ladder whose rungs are set by billing granularity, RAM ratio and CPU isolation. This page takes twelve providers' own price lists, opened and read on <strong>2026-10-30</strong> &mdash; Vultr, Linode, Contabo, Namecheap, IONOS, Hostinger, Scaleway, UpCloud, Kamatera, OVHcloud, DigitalOcean and Hetzner &mdash; and does the arithmetic the page leaves to you. Every price below is copied from the provider's own page on that date. Every ratio and per-unit figure is our own calculation from those prices, and the formula is shown so you can redo it.</p>
 
-    <h2>The Three Price Lists, as Published on 2026-10-28</h2>
+    <h2>Twelve Price Lists, as Published on 2026-10-30</h2>
+    <div class="vpt" id="vps-price">
+    <div class="vpt-bar">
+        <label class="vpt-f" for="vpt-provider">Provider
+            <select id="vpt-provider">
+                <option value="">All</option>
+                <option value="contabo">Contabo</option>
+                <option value="digitalocean">DigitalOcean</option>
+                <option value="hetzner">Hetzner</option>
+                <option value="hostinger">Hostinger</option>
+                <option value="ionos">IONOS</option>
+                <option value="kamatera">Kamatera</option>
+                <option value="linode">Linode</option>
+                <option value="namecheap">Namecheap</option>
+                <option value="ovhcloud">OVHcloud</option>
+                <option value="scaleway">Scaleway</option>
+                <option value="upcloud">UpCloud</option>
+                <option value="vultr">Vultr</option>
+            </select>
+        </label>
+        <label class="vpt-f" for="vpt-region">Region
+            <select id="vpt-region">
+                <option value="">All</option>
+                <option value="eu">EU</option>
+                <option value="global">Global</option>
+                <option value="us">US</option>
+            </select>
+        </label>
+        <label class="vpt-f" for="vpt-ram">RAM
+            <select id="vpt-ram">
+                <option value="">All</option>
+                <option value="le1">1 GB or less</option>
+                <option value="2">2 GB</option>
+                <option value="4">4 GB</option>
+                <option value="gt4">More than 4 GB</option>
+            </select>
+        </label>
+        <button type="button" class="vpt-reset" id="vpt-reset">Reset</button>
+        <span class="vpt-count" id="vpt-count" aria-live="polite"></span>
+    </div>
     <div class="table-wrap">
-    <table>
+    <table class="vpt-table">
         <thead>
-            <tr><th>Provider / plan</th><th>Stated price</th><th>vCPU</th><th>RAM</th><th>Storage</th><th>Notes on the page</th></tr>
+            <tr>
+                <th scope="col" data-sort="text">Provider</th>
+                <th scope="col" data-sort="text">Plan</th>
+                <th scope="col" data-sort="num">Monthly</th>
+                <th scope="col" data-sort="num">Hourly</th>
+                <th scope="col" data-sort="num">vCPU</th>
+                <th scope="col" data-sort="size">RAM</th>
+                <th scope="col" data-sort="size">Storage</th>
+                <th scope="col" data-sort="text">Region</th>
+                <th scope="col" data-sort="date">Checked</th>
+            </tr>
         </thead>
         <tbody>
-            <tr><td>OVHcloud &mdash; VPS-1</td><td class="price">From $4.54/mo</td><td>2 vCores</td><td>4 GB</td><td>40 GB NVMe</td><td>Daily backup, unlimited traffic, 500 Mbps</td></tr>
-            <tr><td>OVHcloud &mdash; VPS-2</td><td class="price">From $8.50/mo</td><td>4 vCores</td><td>8 GB</td><td>75 GB NVMe</td><td>Daily backup, unlimited traffic, 1 Gbps</td></tr>
-            <tr><td>OVHcloud &mdash; VPS-3</td><td class="price">From $12.32/mo</td><td>6 vCores</td><td>12 GB</td><td>100 GB NVMe</td><td>Daily backup, unlimited traffic, 2 Gbps</td></tr>
-            <tr><td>OVHcloud &mdash; VPS-4</td><td class="price">From $23.37/mo</td><td>8 vCores</td><td>24 GB</td><td>200 GB NVMe</td><td>Daily backup, unlimited traffic, 3 Gbps</td></tr>
-            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$4.00/mo &middot; $0.00595/hr</td><td>1</td><td>512 MiB</td><td>10 GiB SSD</td><td>500 GiB transfer</td></tr>
-            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$6.00/mo &middot; $0.00893/hr</td><td>1</td><td>1 GiB</td><td>25 GiB SSD</td><td>1,000 GiB transfer</td></tr>
-            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$12.00/mo &middot; $0.01786/hr</td><td>1</td><td>2 GiB</td><td>50 GiB SSD</td><td>2,000 GiB transfer</td></tr>
-            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$24.00/mo &middot; $0.03571/hr</td><td>2</td><td>4 GiB</td><td>80 GiB SSD</td><td>4,000 GiB transfer</td></tr>
-            <tr><td>DigitalOcean &mdash; Basic</td><td class="price">$48.00/mo &middot; $0.07143/hr</td><td>4</td><td>8 GiB</td><td>160 GiB SSD</td><td>5,000 GiB transfer</td></tr>
-            <tr><td>Hetzner &mdash; Cost-Optimized</td><td class="price">&euro;5.99/mo excl. VAT</td><td colspan="3" class="note">Page states the starting price only &mdash; per-plan specs are not in the markup we could read</td><td>Shared CPU</td></tr>
-            <tr><td>Hetzner &mdash; Regular Performance</td><td class="price">&euro;6.49/mo excl. VAT</td><td colspan="3" class="note">Page states the starting price only</td><td>Shared CPU</td></tr>
-            <tr><td>Hetzner &mdash; General Purpose</td><td class="price">&euro;43.49/mo excl. VAT</td><td colspan="3" class="note">Page states the starting price only</td><td>Dedicated vCPUs</td></tr>
+            <tr><td>Vultr</td><td>Regular Performance 1 vCPU / 1 GB</td><td class="price">$5.00/mo</td><td>$0.007/hr</td><td>1</td><td>1 GB</td><td>25 GB SSD</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Vultr</td><td>Regular Performance 2 vCPU / 2 GB</td><td class="price">$15.00/mo</td><td>$0.022/hr</td><td>2</td><td>2 GB</td><td>65 GB SSD</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Vultr</td><td>Regular Performance 4 vCPU / 8 GB</td><td class="price">$40.00/mo</td><td>$0.06/hr</td><td>4</td><td>8 GB</td><td>160 GB SSD</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Linode</td><td>Nanode 1GB</td><td class="price">$5.00/mo</td><td>$0.0075/hr</td><td>1</td><td>1 GB</td><td>25 GB SSD</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Linode</td><td>Linode 2GB</td><td class="price">$12.00/mo</td><td>$0.018/hr</td><td>1</td><td>2 GB</td><td>50 GB SSD</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Linode</td><td>Linode 4GB</td><td class="price">$24.00/mo</td><td>$0.036/hr</td><td>2</td><td>4 GB</td><td>80 GB SSD</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Contabo</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>2026-10-30</td></tr>
+            <tr><td>Contabo</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>2026-10-30</td></tr>
+            <tr><td>Contabo</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>2026-10-30</td></tr>
+            <tr><td>Namecheap</td><td>Spark</td><td class="price">$3.88/mo</td><td>未取得</td><td>1</td><td>1 GB</td><td>20 GB SSD</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>Namecheap</td><td>Pulsar</td><td class="price">$6.88/mo</td><td>未取得</td><td>2</td><td>2 GB</td><td>40 GB SSD</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>Namecheap</td><td>Quasar</td><td class="price">$12.88/mo</td><td>未取得</td><td>4</td><td>6 GB</td><td>120 GB SSD</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>IONOS</td><td>VPS S+</td><td class="price">$6.00/mo</td><td>未取得</td><td>1</td><td>2 GB</td><td>60 GB NVMe</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>IONOS</td><td>VPS M+</td><td class="price">$14.00/mo</td><td>未取得</td><td>2</td><td>4 GB</td><td>120 GB NVMe</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>IONOS</td><td>VPS L+</td><td class="price">$25.00/mo</td><td>未取得</td><td>4</td><td>8 GB</td><td>240 GB NVMe</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>Hostinger</td><td>KVM 1</td><td class="price">$6.49/mo</td><td>未取得</td><td>1</td><td>4 GB</td><td>50 GB NVMe</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Hostinger</td><td>KVM 2</td><td class="price">$8.79/mo</td><td>未取得</td><td>2</td><td>8 GB</td><td>100 GB NVMe</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Hostinger</td><td>KVM 4</td><td class="price">$12.99/mo</td><td>未取得</td><td>4</td><td>16 GB</td><td>200 GB NVMe</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Scaleway</td><td>PLAY2-PICO</td><td class="price">€10.42/mo</td><td>€0.01428/hr</td><td>1</td><td>2 GB</td><td>未取得</td><td>EU</td><td>2026-10-30</td></tr>
+            <tr><td>Scaleway</td><td>PLAY2-NANO</td><td class="price">€20.10/mo</td><td>€0.02754/hr</td><td>2</td><td>4 GB</td><td>未取得</td><td>EU</td><td>2026-10-30</td></tr>
+            <tr><td>Scaleway</td><td>PLAY2-MICRO</td><td class="price">€40.20/mo</td><td>€0.05508/hr</td><td>4</td><td>8 GB</td><td>未取得</td><td>EU</td><td>2026-10-30</td></tr>
+            <tr><td>UpCloud</td><td>1 GB / 1 core</td><td class="price">€3.00/mo</td><td>未取得</td><td>1</td><td>1 GB</td><td>10 GB</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>UpCloud</td><td>4 GB / 1 core</td><td class="price">€10.00/mo</td><td>未取得</td><td>1</td><td>4 GB</td><td>30 GB</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>UpCloud</td><td>8 GB / 2 cores</td><td class="price">€18.00/mo</td><td>未取得</td><td>2</td><td>8 GB</td><td>40 GB</td><td>Global</td><td>2026-10-30</td></tr>
+            <tr><td>Kamatera</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>2026-10-30</td></tr>
+            <tr><td>Kamatera</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>2026-10-30</td></tr>
+            <tr><td>Kamatera</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>2026-10-30</td></tr>
+            <tr><td>OVHcloud</td><td>VPS-1</td><td class="price">$4.54/mo</td><td>未取得</td><td>2</td><td>4 GB</td><td>40 GB NVMe</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>OVHcloud</td><td>VPS-2</td><td class="price">$8.50/mo</td><td>未取得</td><td>4</td><td>8 GB</td><td>75 GB NVMe</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>OVHcloud</td><td>VPS-3</td><td class="price">$12.32/mo</td><td>未取得</td><td>6</td><td>12 GB</td><td>100 GB NVMe</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>DigitalOcean</td><td>Basic 512 MiB</td><td class="price">$4.00/mo</td><td>$0.00595/hr</td><td>1</td><td>512 MiB</td><td>10 GiB SSD</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>DigitalOcean</td><td>Basic 2 GiB</td><td class="price">$12.00/mo</td><td>$0.01786/hr</td><td>1</td><td>2 GiB</td><td>50 GiB SSD</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>DigitalOcean</td><td>Basic 4 GiB</td><td class="price">$24.00/mo</td><td>$0.03571/hr</td><td>2</td><td>4 GiB</td><td>80 GiB SSD</td><td>US</td><td>2026-10-30</td></tr>
+            <tr><td>Hetzner</td><td>Cost-Optimized (entry)</td><td class="price">€5.99/mo</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>EU</td><td>2026-10-30</td></tr>
+            <tr><td>Hetzner</td><td>Regular Performance (entry)</td><td class="price">€6.49/mo</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>EU</td><td>2026-10-30</td></tr>
+            <tr><td>Hetzner</td><td>General Purpose (entry)</td><td class="price">€43.49/mo</td><td>未取得</td><td>未取得</td><td>未取得</td><td>未取得</td><td>EU</td><td>2026-10-30</td></tr>
         </tbody>
     </table>
     </div>
-    <p class="srcnote">Sources: ovhcloud.com/en/vps/, digitalocean.com/pricing/droplets and hetzner.com/cloud/, each fetched once on 2026-10-28. Vultr, Contabo, RackNerd and Linode returned bot-walls (HTTP 403) to our fetch on the same day, so they are absent from this table; we did not fill their rows from memory or from older articles. Where a cell says the page states the starting price only, the page did not publish per-plan specs in the markup we could read, and we did not substitute numbers from a third-party review.</p>
+    <p class="srcnote">Every figure above was read off the provider's own pricing page on <strong>2026-10-30</strong>. <strong>未取得</strong> means the page did not publish that number, or the page could not be opened at all &mdash; no cell was filled from memory, from an older capture, or from a third-party article. Contabo's pricing page returned a bot check on three attempts and never rendered; Kamatera publishes a per-resource calculator and a "from" figure but no plan table. Namecheap and Hostinger figures are the promotional rates their pages display for annual and 24-month terms; IONOS shows a 3-month introductory rate alongside the regular monthly price used here; Hetzner publishes only a per-tier entry price in readable text, so its three rows carry no per-plan specs. Sorting on Monthly and Hourly compares the quoted number and does not convert between USD and EUR. No promotional codes appear in this table.</p>
+    <script src="/assets/vps-price-table.js" defer></script>
+    </div>
 
     <h2>The Monthly Price Is a 672-Hour Cap, Not 730 Hours &mdash; on Bundled Plans</h2>
     <p>This cap is a Bundled Plan rule, not a Droplet-wide one: DigitalOcean's pricing FAQ says &ldquo;Bundled Plans have a monthly cap&rdquo; while &ldquo;v5 Droplets are billed on actual hours used each month and are not capped at 672 hours,&rdquo; and its pricing docs apply the 672 hours only to &ldquo;Bundled-plan CPU Droplets&rdquo; &mdash; the tier every row in the table below belongs to, with Basic, CPU-Optimized and Memory-Optimized given as examples of Bundled Plans.</p>

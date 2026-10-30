@@ -79,6 +79,20 @@
     return 'gt4';
   }
 
+  // Column indexes are resolved from the header row, so inserting a column
+  // (the Term column sits before Monthly) cannot silently move a filter onto
+  // the wrong cell.
+  function colIndex(name) {
+    for (var i = 0; i < ths.length; i++) {
+      if (ths[i].textContent.replace(/\s+/g, ' ').trim().toLowerCase() === name) return i;
+    }
+    return -1;
+  }
+
+  var COL_PROVIDER = colIndex('provider');
+  var COL_RAM = colIndex('ram');
+  var COL_REGION = colIndex('region');
+
   function applyFilters() {
     var p = selProvider ? selProvider.value : '';
     var r = selRegion ? selRegion.value : '';
@@ -87,9 +101,9 @@
 
     for (var i = 0; i < rows.length; i++) {
       var tr = rows[i];
-      var okP = !p || toText(tr.cells[0]) === p;
-      var okR = !r || toText(tr.cells[7]) === r;
-      var okM = !m || ramBand(tr.cells[5]) === m;
+      var okP = !p || (COL_PROVIDER >= 0 && toText(tr.cells[COL_PROVIDER]) === p);
+      var okR = !r || (COL_REGION >= 0 && toText(tr.cells[COL_REGION]) === r);
+      var okM = !m || (COL_RAM >= 0 && ramBand(tr.cells[COL_RAM]) === m);
       var ok = okP && okR && okM;
       tr.style.display = ok ? '' : 'none';
       if (ok) shown++;

@@ -7,7 +7,7 @@
   ],
   "cycle_start": "2026-10-28",
   "cycle_len_days": 28,
-  "next_index": 5,
+  "next_index": 6,
   "gaps": [
     {
       "slug": "vps-price-stopped-instance",
@@ -54,8 +54,8 @@
       "gap": "What happens on the invoice the month you exceed the included transfer allowance.",
       "why_gap": "'bandwidth overage' 0/30; 'egress' only 5/30 and none quantifies the overage rate.",
       "source": "Official bandwidth/transfer overage price pages.",
-      "done": false,
-      "published": null
+      "done": true,
+      "published": "2026-11-01"
     },
     {
       "slug": "vps-price-per-vcpu",

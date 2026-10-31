@@ -120,3 +120,34 @@
 | Hetzner EU 机型含 20TB，超额单价写在机型卡下方 | `hetzner.com/cloud/cost-optimized/` CX23 段：「Traffic inclusive 20 TB」「For each additional TB at EU-Central locations we charge € 1.00 per hour, excl. VAT.」 | **这句措辞要先复核**：写的是 per TB **per hour**，与「per month」不符，可能是页面文案错误；明天回原页确认后再决定能不能用，不许照抄当结论 |
 | DO 每档 Basic 的 included transfer 是 500GiB–6,000GiB 递增 | `digitalocean.com/pricing/droplets` Basic 表 Transfer 列（2026-10-31 抓）：512MiB=500GiB、1GiB=1,000GiB、2GiB=2,000GiB、2GiB/2vCPU=3,000GiB、4GiB=4,000GiB、8GiB=5,000GiB、16GiB=6,000GiB | 已核实的一半；**超额单价本次没抓到**，明天去 `docs.digitalocean.com` 的 bandwidth/transfer 定价页补 |
 | OVH VPS 页的流量口径本次未取 | 今天只读了 `/vps/options/`，没读 `/vps/` 的流量段 | 明天第一件事：`us.ovhcloud.com/vps/` 抓 unmetered / fair-use 的原文，抓不到就在正文写明「该页当天未取到」 |
+
+## 2026-11-01 追加（明天 = 缺口 #7 `vps-price-per-vcpu`：按每 vCPU 单价排序，而不是按套餐价）
+
+> 本班不跑 SERP。下面每条都写清在哪个页面看到的，抓取日期 2026-11-01，全部 HTTP 200。
+
+| 线索 | 在哪看到的（2026-11-01 实抓，逐字） | 明天怎么用 |
+|---|---|---|
+| DO Basic 七档的 vCPU 与月价齐了，可直接做分母 | `digitalocean.com/pricing/droplets` Basic 表：512MiB/1 vCPU $4.00、1GiB/1 $6.00、2GiB/1 $12.00、2GiB/2 $18.00、4GiB/2 $24.00、8GiB/4 $48.00、16GiB/8 $96.00 | 主梯子之一。注意 vCPU 列只有 1/2/4/8 四个值，$12.00 与 $18.00 同为 2 vCPU —— 这正好是「每 vCPU 单价」出现平台期的位置 |
+| Hetzner 两类机型的 vCPU 与价 | `hetzner.com/cloud/cost-optimized/` CX23 2 vCPU €5.99；`hetzner.com/cloud/general-purpose/` CCX13 2 vCPU €43.49（EU，20TB） | 第二家。CCX13 是专用 vCPU、CX23 是共享，写的时候必须把「专用/共享」分开排，不能混进同一张榜 |
+| OVH VPS 四档 vCore 与起步价 | `us.ovhcloud.com/vps/`：VPS-1 2 vCore $4.54、VPS-2 4 vCore $8.50、VPS-3 6 vCore $12.32、VPS-4 8 vCore $23.37 | 第三家。注意 OVH 写的是 vCore 不是 vCPU，正文要照抄原词并说明是页面自己的写法 |
+| 还缺第 4 家 | 本次未抓 Vultr / Linode 官方价目页 | 明天第一件事：抓 `vultr.com/pricing/` 与 `linode.com/pricing/` 的 vCPU+月价，四家齐了再做榜；抓不到就在正文写明「该页当天无法抓取」，不许用记忆补 |
+
+### 今天这篇用掉的料（来自 2026-10-31 清单）
+
+| 用料 | 出处 | 怎么用的 |
+|---|---|---|
+| Hetzner 超额按 100MB 块计、不足一块向上取整 | 2026-10-31 清单第 1 行，本次回 `docs.hetzner.com/cloud/billing/faq/` 核实 | 原文核实无误，连 20TB / 20.00008TB 的算例一起引用 |
+| Hetzner 75% / 100% 两次告警但不封顶 | 2026-10-31 清单第 2 行，本次核实 | 原文核实无误，整段引用（含「告警迟到或没到也照常计费」） |
+| 「€1.00 per hour」措辞要先复核 | 2026-10-31 清单第 3 行，本次复核结论 | 英文版与德文版（1,19 € pro Stunde, inkl. 19 % MwSt.）都写「每小时」，且 EU / US 两种机房句式一致 ⇒ 不是偶发笔误，是模板。正文照抄原文、把「按月读」与「按小时读」两个算例并列，明确写我们无法判定哪个成立，不替它下结论 |
+| DO 各档 included transfer 已核 | 2026-10-31 清单第 5 行 | 已核，七档 500–6,000 GiB 全部对上；超额单价本次补齐：`docs.digitalocean.com/products/billing/bandwidth/`「Additional outbound transfer is billed at $0.01 per GiB」 |
+| OVH 流量口径未取 | 2026-10-31 清单第 6 行 | 本次取到：US 站每个套餐卡写「Unlimited traffic」；页脚星号注明亚太（Mumbai / Singapore / Sydney）月配额 1TB/3TB/4TB，超额后限速 10 Mbps |
+
+### 今天新抓到的、可复用的料
+
+| 线索 | 在哪看到的 | 能怎么用 |
+|---|---|---|
+| DO 的流量额度是「按秒累积」：每存在一秒累积 1/2,419,200，且团队级共享、不跨月结转 | `docs.digitalocean.com/products/billing/bandwidth/` | 已用。这条能解释「只开了半个月也超额」的常见困惑，也是以后写「最小计费单位」「关机计费」时的共用证据 |
+| DO 明确不向被防火墙规则丢弃的出站流量收费 | 同上页「We do not bill for outbound data transfer that we determine is dropped by a DigitalOcean firewall rule.」 | 已用。写「防火墙能不能省钱」时是硬料 |
+| Hetzner 同一台 CCX13：EU €43.49 含 20TB，us-west/us-east €43.99 含 1TB | `hetzner.com/cloud/general-purpose/` 三张套餐卡（HIL1 / ASH1 各一张） | 已用。同机型跨区域「价差 0.50 欧、流量差 19TB」是很少被写的对照 |
+| OVH FAQ 把「带宽」定义成下限：「The bandwidth listed on our VPS web page is guaranteed. It is the minimum amount allocated to your service.」 | `docs.ovhcloud.com/en/guides/bare-metal-cloud/virtual-private-servers/vps-faq.md`（llms.txt 路线，200） | 已用。这句比「不限流量」更有信息量，以后写 SLA / 带宽承诺可复用 |
+| OVH 亚太机房那句脚注还带一条：美国区以外下单的 VPS「cannot be modified or upgraded after delivery」 | `us.ovhcloud.com/vps/` 同一条脚注 | 留给 `vps-price-region-spread` 与 `vps-price-downgrade-credit`：买错机房连升级都不行 |

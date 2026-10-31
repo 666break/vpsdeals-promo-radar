@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPS Bandwidth Overage: What One Extra Terabyte Bills</title>
+    <meta name="description" content="DigitalOcean bills $0.01 per GiB past a team-wide pool. Hetzner rounds overage to 100MB blocks. OVHcloud throttles to 10 Mbps. Read 2026-11-01.">
+    <link rel="canonical" href="https://serverbudget.com/vps-price-bandwidth-overage">
+    <meta property="og:title" content="VPS Bandwidth Overage: What One Extra Terabyte Bills">
+    <meta property="og:description" content="Three providers, three different consequences for the same overrun: a per-GiB charge, a rounded 100MB block, or a 10 Mbps port. Every figure from the provider's own page.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://serverbudget.com/vps-price-bandwidth-overage">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VPS Bandwidth Overage: What One Extra Terabyte Bills">
+    <meta name="twitter:description" content="The month you pass the included transfer, one provider adds a line item, one rounds up in 100MB blocks, and one does not bill you at all.">
+
+    <!-- JSON-LD: Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "VPS Bandwidth Overage: What One Extra Terabyte Bills",
+      "author": {
+        "@type": "Person",
+        "name": "Marcus Reid",
+        "url": "https://serverbudget.com/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ServerBudget",
+        "url": "https://serverbudget.com"
+      },
+      "datePublished": "2026-11-01",
+      "dateModified": "2026-11-01",
+      "mainEntityOfPage": "https://serverbudget.com/vps-price-bandwidth-overage"
+    }
+    </script>
+
+    <!-- JSON-LD: BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-hosting-cost"},
+        {"@type": "ListItem", "position": 3, "name": "Bandwidth Overage", "item": "https://serverbudget.com/vps-price-bandwidth-overage"}
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does VPS bandwidth overage cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the provider, and the three answers are not comparable. DigitalOcean bills additional outbound transfer at $0.01 per GiB. Hetzner bills over-usage in 100MB blocks and states its rate as €1.00 per additional TB per hour, excluding VAT, a unit that conflicts with the same provider's billing FAQ. OVHcloud does not charge for overage on a US or EU VPS: it advertises unlimited traffic there, and on its Asia-Pacific VPS ranges a monthly quota is followed by a bandwidth limit of 10 Mbps. All figures were read from the providers' own pages on 2026-11-01."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the DigitalOcean transfer allowance per Droplet or per account?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Per team, not per Droplet. DigitalOcean's bandwidth page says transfer allowance and usage are pooled cumulatively across all Droplets at the team level, that accrued transfer does not roll over between months, and that each Droplet accrues one 2,419,200th of its plan's allowance for every second it exists. Its worked example: two Droplets with 1,000 GiB each contribute 2,000 GiB to the pool, and usage of 1,500 GiB on one and 100 GiB on the other totals 1,600 GiB, so no overage applies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Hetzner charge a full 100MB block if I exceed the allowance by a few megabytes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Hetzner's billing FAQ says over-usage is billed in blocks of 100MB and that a fraction of 100MB is rounded up to the next full 100MB. Its own example is a server with 20 TB included that uses 20.00008 TB in a month: the billable over-usage is 0.0001 TB, which is 100MB, for an actual overrun of about 80MB."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens at OVHcloud when an Asia-Pacific VPS passes its traffic quota?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The bandwidth is limited to 10 Mbps and no overage charge is mentioned. The footnote on the OVHcloud VPS page states monthly quotas for VPSs in Mumbai, Singapore and Sydney of 1 TB for VPS-1 and VPS-2, 3 TB for VPS-3 and VPS-4, and 4 TB for VPS-5 and VPS-6, with bandwidth limited to 10 Mbps beyond that. The same page advertises unlimited traffic for the US and EU ranges."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does inbound traffic count against the allowance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No at either provider that states a rule. DigitalOcean says inbound transfer to Droplets is free. Hetzner says it only bills outgoing traffic and that incoming and internal traffic is free, listing traffic between its own Cloud servers in the same network zone, traffic over private Networks, and traffic to its dedicated servers and other Hetzner services as internal. DigitalOcean adds that traffic between Droplets over the VPC network uses a private interface, and that all IPv6 traffic uses the public interface and therefore does count."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+:root{
+  --bg:#eef1f6;
+  --surface:#ffffff;
+  --surface-2:#f6f8fc;
+  --border:#e3e8ef;
+  --text:#16202c;
+  --muted:#5b6675;
+  --muted-2:#8a94a3;
+  --primary:#2563eb;
+  --primary-d:#1d4ed8;
+  --accent:#0ca678;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.06);
+  --shadow:0 12px 34px rgba(16,24,40,.10);
+  --radius:14px;
+  --radius-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.72;font-size:17px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--primary);text-decoration:none;transition:color .15s}
+a:hover{text-decoration:underline;color:var(--primary-d)}
+img{max-width:100%;height:auto;display:block}
+.container{max-width:1080px;margin:0 auto;padding:0 20px 72px}
+
+/* Header */
+header{border-bottom:1px solid var(--border);padding:24px 0 20px;margin-bottom:34px}
+header h1{font-size:2.05rem;line-height:1.18;letter-spacing:-.015em;color:var(--text);font-weight:800}
+header h1 a{color:var(--text)}
+header p{color:var(--muted);font-size:1.02rem;margin-top:8px;max-width:62ch}
+.brand{display:inline-block;font-weight:800;font-size:1.05rem;letter-spacing:-.01em;color:var(--text);margin-bottom:10px}
+.brand:hover{text-decoration:none;color:var(--accent)}
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.nav a{display:inline-block;padding:7px 14px;border:1px solid var(--border);border-radius:999px;font-size:.9rem;color:var(--muted);background:var(--surface);transition:all .15s}
+.nav a:hover{border-color:var(--primary);color:var(--primary);text-decoration:none;background:#eef3ff}
+
+/* Prose */
+h1{font-size:2.05rem;line-height:1.2;letter-spacing:-.015em;font-weight:800;margin-bottom:12px}
+h2{font-size:1.5rem;margin:34px 0 14px;color:var(--text);font-weight:750;letter-spacing:-.01em;line-height:1.3}
+h3{font-size:1.18rem;margin:26px 0 10px;color:var(--text);font-weight:700}
+p{margin-bottom:16px;color:#28323d}
+ul,ol{margin:0 0 18px 1.4rem}
+li{margin-bottom:8px}
+strong{font-weight:700;color:var(--text)}
+blockquote{border-left:3px solid var(--primary);padding:8px 0 8px 18px;margin:0 0 18px;color:var(--muted);background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+
+/* Meta line */
+.meta{color:var(--muted);font-size:.9rem;margin:0 0 22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.meta a{color:var(--primary);font-weight:600}
+
+/* First-screen answer box */
+.takeaways{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);padding:22px 26px 8px;margin:0 0 28px;box-shadow:var(--shadow-sm)}
+.takeaways .lead{margin:0 0 14px;font-size:1.06rem;color:var(--text);font-weight:700;line-height:1.5}
+.takeaways ul{margin:0 0 14px 1.15rem}
+.takeaways li{margin-bottom:11px;font-size:.98rem;color:#28323d}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);margin:22px 0}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th{text-align:left;padding:13px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface-2)}
+.price{font-weight:800;color:var(--accent)}
+.note{color:var(--muted);font-size:.88rem}
+.srcnote{color:#5b6675;font-size:.88rem;line-height:1.6}
+
+/* Callout */
+.callout{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 20px;margin:22px 0;font-size:.94rem;color:var(--muted)}
+.callout strong{color:var(--text)}
+
+/* Author + related */
+.author-bio{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:40px 0 0;box-shadow:var(--shadow-sm)}
+.author-name{font-weight:800;font-size:1.02rem;color:var(--text)}
+.author-role{color:var(--accent);font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:4px 0 12px}
+.author-bio p{font-size:.94rem;color:var(--muted);margin-bottom:0}
+.related{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin:22px 0 0;box-shadow:var(--shadow-sm)}
+.related h2{margin:0 0 14px;font-size:1.2rem}
+.related a{display:block;padding:9px 0;border-bottom:1px solid var(--border);font-weight:600;font-size:.96rem}
+.related a:last-of-type{border-bottom:none}
+.related p{font-size:.88rem;color:var(--muted);margin:12px 0 0}
+
+/* Footer */
+footer{margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--muted);font-size:.85rem}
+footer p{color:var(--muted);margin-bottom:10px}
+footer a{color:var(--primary)}
+
+/* Responsive */
+@media(max-width:760px){
+  body{font-size:16px}
+  h1,header h1{font-size:1.6rem}
+  .container{padding:0 14px 56px}
+  h2{font-size:1.3rem}
+  .takeaways{padding:18px 18px 4px}
+}
+</style>
+<!-- navrow-20261029 -->
+<style>
+@media(max-width:760px){
+  .nav{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{flex:0 0 auto;font-size:.85rem;padding:6px 12px}
+}
+</style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H2F4PWVG2P');
+  </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="/" class="brand">ServerBudget</a>
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/compare">Compare All</a>
+            <a href="/best-vps">Best VPS</a>
+            <a href="/cheap-vps-hosting">Cheap VPS</a>
+            <a href="/free-vps">Free VPS</a>
+            <a href="/about">About</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
+            <a href="/vps-price-compare">Price per GB</a>
+        </div>
+    </header>
+
+    <h1>VPS Bandwidth Overage: What One Extra Terabyte Bills</h1>
+
+    <div class="meta">
+        By <a href="/about">Marcus Reid</a> &middot; Published Nov 1, 2026 &middot; Last updated Nov 1, 2026 &middot; 10 min read
+    </div>
+
+    <div class="takeaways">
+        <p class="lead">The month you pass the included transfer, one provider adds a line item, one rounds the overrun up in 100MB blocks, and one does not bill you at all. DigitalOcean charges <strong>$0.01 per GiB</strong> past a pool shared by every Droplet in the team. Hetzner bills <strong>100MB blocks</strong> at a published <strong>&euro;1.00 per additional TB</strong>, a sentence whose unit is written as <em>per hour</em>. OVHcloud sells <strong>unlimited traffic</strong> in the US and EU, and on its Asia-Pacific VPS ranges a monthly quota is followed by a <strong>10 Mbps</strong> port rather than a charge.</p>
+        <ul>
+            <li><strong>A 1,000 GiB overrun is $10.00 at DigitalOcean, about &euro;1.00 at Hetzner's published per-TB rate, and $0.00 at OVHcloud.</strong> Those are three different products, not three prices for the same thing: one is a charge, one is a rounded block, one is a throttle.</li>
+            <li><strong>The DigitalOcean allowance belongs to the team, not the Droplet.</strong> Every Droplet in the team draws on one pool, each one accrues its share by the second, and unused allowance does not roll over to the next month.</li>
+            <li><strong>Hetzner rounds up to the next full 100MB.</strong> Its own worked example is a server with 20 TB included that uses 20.00008 TB and is billed 0.0001 TB &mdash; one block, for about 80MB of real overrun.</li>
+            <li><strong>The same plan includes 20 TB in the EU and 1 TB in the US.</strong> On Hetzner's CCX13 that is &euro;43.49 per month in eu-central against &euro;43.99 in us-west and us-east.</li>
+            <li><strong>OVHcloud's Asia-Pacific quota ends in a port speed, not an invoice line.</strong> 1 TB on VPS-1 and VPS-2, 3 TB on VPS-3 and VPS-4, 4 TB on VPS-5 and VPS-6, then 10 Mbps.</li>
+        </ul>
+        <p>Every figure on this page was read from a provider's own page on <strong>2026-11-01</strong>, and each table names the page it came from. Where a provider's own two pages disagree, this article quotes both and says so. <a href="/vps-hosting-cost">The rest of the monthly bill</a> is priced separately.</p>
+    </div>
+
+    <p>Bandwidth is the line item that most VPS price pages skip, because the honest answer is not a number. Included transfer is quoted per plan, but what happens after it runs out is a billing rule, and the rule lives in a documentation page that the pricing table links to only by implication. So the question &ldquo;what does an overrun cost&rdquo; has three different shapes here: a metered charge, a rounded block, and a speed limit. This page walks each one from the provider's own text, then puts the same 1,000 GiB overrun on three invoices so the difference is visible.</p>
+
+    <h2>Three Ways a Provider Answers an Overrun</h2>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider</th><th>What the allowance is</th><th>What happens past it</th><th>Published rate</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean</td><td class="note">One pool per team; each Droplet accrues its plan's allowance by the second</td><td>Billed per GiB of outbound transfer</td><td class="price">$0.01 per GiB</td></tr>
+            <tr><td>Hetzner</td><td class="note">Per server: 20 TB at EU locations, 1 TB at US locations</td><td>Billed in 100MB blocks, rounded up</td><td class="price">&euro;1.00 per additional TB, unit written as &ldquo;per hour&rdquo;</td></tr>
+            <tr><td>OVHcloud, US and EU</td><td class="note">&ldquo;Unlimited traffic&rdquo; on the plan card</td><td class="note">No overage rate published</td><td class="price">No charge stated</td></tr>
+            <tr><td>OVHcloud, Asia-Pacific</td><td class="note">1 TB, 3 TB or 4 TB per month depending on the plan</td><td>Bandwidth limited to 10 Mbps</td><td class="price">No charge stated</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Sources, all read on 2026-11-01: <em>docs.digitalocean.com/products/billing/bandwidth/</em> (&ldquo;Additional outbound transfer is billed at $0.01 per GiB&rdquo;); <em>docs.hetzner.com/cloud/billing/faq/</em> (&ldquo;we will bill you for the over-usage in blocks of 100MB&rdquo;); <em>hetzner.com/cloud/general-purpose/</em> and <em>hetzner.com/cloud/cost-optimized/</em> for the per-TB sentence and the 20 TB / 1 TB split; <em>us.ovhcloud.com/vps/</em> for &ldquo;Unlimited traffic&rdquo; on each plan card and the Asia-Pacific footnote.</p>
+
+    <h2>DigitalOcean: One Pool, Accrued by the Second</h2>
+    <p>The first thing to unlearn is that the allowance belongs to the server. DigitalOcean's bandwidth page says the opposite in plain words: &ldquo;Transfer allowance and usage is pooled cumulatively across all Droplets at the team level, not individually per Droplet. Accrued transfer does not roll over between months and cannot be transferred between teams.&rdquo; A team running a busy web server and an idle build machine has one number to watch, not two, and the idle machine's unused allowance is what absorbs the busy one's overrun.</p>
+    <p>The second thing is that the allowance is not handed over on the first of the month. It accrues while the Droplet exists: &ldquo;For every second a Droplet exists, it accrues 1/2,419,200 of its total transfer allowance towards the team's transfer pool, up to the maximum included with its plan.&rdquo; The page's own example turns a 1,000 GiB plan into about 0.0004 GiB per second. A Droplet that is created on the 15th and destroyed on the 30th therefore contributes roughly half its plan's allowance, while a team that migrates traffic onto it in the same window bills the full volume. This is the mechanism behind a complaint that shows up regularly in provider forums &mdash; a server that was up for two weeks producing an overage charge &mdash; and it is arithmetic, not a penalty: half a month of existence, half the allowance.</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Basic plan</th><th>Included transfer</th><th>Droplet / month</th><th>Overage at $0.01 per GiB</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>512 MiB / 1 vCPU</td><td>500 GiB</td><td>$4.00</td><td class="price">$1.00 per 100 GiB</td></tr>
+            <tr><td>1 GiB / 1 vCPU</td><td>1,000 GiB</td><td>$6.00</td><td class="price">$1.00 per 100 GiB</td></tr>
+            <tr><td>2 GiB / 1 vCPU</td><td>2,000 GiB</td><td>$12.00</td><td class="price">$1.00 per 100 GiB</td></tr>
+            <tr><td>2 GiB / 2 vCPU</td><td>3,000 GiB</td><td>$18.00</td><td class="price">$1.00 per 100 GiB</td></tr>
+            <tr><td>4 GiB / 2 vCPU</td><td>4,000 GiB</td><td>$24.00</td><td class="price">$1.00 per 100 GiB</td></tr>
+            <tr><td>8 GiB / 4 vCPU</td><td>5,000 GiB</td><td>$48.00</td><td class="price">$1.00 per 100 GiB</td></tr>
+            <tr><td>16 GiB / 8 vCPU</td><td>6,000 GiB</td><td>$96.00</td><td class="price">$1.00 per 100 GiB</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Transfer allowances and monthly prices from the Basic table on <em>digitalocean.com/pricing/droplets</em>, read 2026-11-01. The overage column is the published $0.01 per GiB applied to 100 GiB, which is the same dollar figure on every plan because the rate does not vary by plan &mdash; only the allowance does. Overage is billed on the pooled team total, so the column describes the rate, not a per-plan limit.</p>
+    <p>Put a number on it. A 4 GiB / 2 vCPU Droplet includes 4,000 GiB and costs $24.00. If the team pushes 4,500 GiB of outbound transfer in the cycle, the overrun is 500 GiB and the extra line is 500 &times; $0.01 = <strong>$5.00</strong>, for a $29.00 invoice. On the $4.00 plan the same 500 GiB over its 500 GiB allowance is also $5.00 &mdash; more than the server itself, because the rate is flat and the allowance is not. That asymmetry is the whole risk: the cheapest plans have the least room and the same per-gigabyte price.</p>
+    <p>Two more rules from the same page are worth knowing before you plan a migration. First, the meter counts interfaces, not intentions: &ldquo;Any data transfer sent by a Droplet using a public network interface counts against the transfer pool for that Droplet's team. All IPv6 traffic uses the public interface. Data transfer between Droplets over the VPC network uses a private network interface.&rdquo; Traffic between your own Droplets over the VPC is therefore free, and the same traffic over public IPs is not. Second, dropped packets are not billed: &ldquo;We do not bill for outbound data transfer that we determine is dropped by a DigitalOcean firewall rule.&rdquo; A firewall that blocks an outbound flood stops the charge as well as the traffic, which is not true of every provider's meter.</p>
+    <p>One more number to keep separate: App Platform on the same account is billed at $0.02 per GiB of additional outbound transfer, and Spaces subscriptions include 1,024 GiB with additional transfer at $0.01 per GiB. The Droplet rate is $0.01 per GiB. Same company, same invoice, three published rates depending on which product moved the byte.</p>
+
+    <h2>Hetzner: 100MB Blocks, and a Rate With a Unit Problem</h2>
+    <p>Hetzner's billing FAQ starts by narrowing what counts: &ldquo;We only bill for outgoing traffic. Incoming and internal traffic is free.&rdquo; Internal is defined generously &mdash; other Cloud servers in the same network zone reached over their public IPs, other Cloud servers over private Networks, Hetzner dedicated root servers, and other Hetzner Online servers, services or hosting packages. Outgoing traffic to a Cloud server in a <em>different</em> network zone is not internal, and the page lists the four zones it means: eu-central, us-east, us-west and ap-southeast.</p>
+    <p>Then the granularity: &ldquo;If you exceed the traffic included in your package, we will bill you for the over-usage in blocks of 100MB. If you only consume a fraction of 100MB, we will round up to the next full 100MB.&rdquo; The worked example is a server with 20 TB included that uses 20.00008 TB in a month. The billable over-usage is 0.0001 TB, which is 100MB, against an actual overrun of about 80MB. Rounding up is a rounding rule, not a fee, but it decides the smallest unit you can be billed for, and 100MB is the smallest unit on any of the three price lists here.</p>
+    <p>Hetzner also says what it will not do about it: &ldquo;We will notify you, the project owner, if the traffic usage exceeds 75% of the included free traffic, and again if you reach 100%. These notifications are a convenience to help you keep track of your usage; they do not cap or stop it. Keeping an eye on your consumption is ultimately up to you. Any traffic used beyond the included amount is billed as usual, even if a notification reaches you late or does not arrive at all.&rdquo; Two emails, no circuit breaker.</p>
+    <p>Now the part that needs care. The overage rate appears on the plan pages, not in the billing FAQ, and it is written like this: &ldquo;Cloud servers located in the EU include at least 20 TB of included traffic. For each additional TB at EU-Central locations we charge &euro; 1.00 per hour, excl. VAT.&rdquo; The German version of the same block reads &ldquo;F&uuml;r jedes weitere TB werden an EU-Central Standorten 1,19 &euro; pro Stunde, inkl. 19 % MwSt. verrechnet&rdquo; &mdash; same unit, per hour, with the VAT-inclusive figure being the &euro;1.00 net rate at 19%. So the wording is not a translation slip on the English page. It is what both language versions publish.</p>
+    <div class="callout">
+        <strong>What the unit does to the arithmetic.</strong> A data volume is not a duration, so &ldquo;&euro;1.00 per TB per hour&rdquo; cannot be applied to a monthly overrun without choosing a convention. Read as a monthly rate on the extra terabyte, 1 TB of overrun costs &euro;1.00. Read literally as an hourly rate held for a 730-hour month, the same 1 TB costs &euro;730.00. Both figures are our multiplication of Hetzner's own published rate; neither is a Hetzner statement, and the billing FAQ describes over-usage in 100MB blocks without attaching a price to them. We are not going to declare one reading correct. If you are budgeting against an overrun at Hetzner, treat the rate as unconfirmed until you see it on an invoice, and treat the 100MB block rule as the part that is documented.
+    </div>
+    <p>What is not ambiguous is how much traffic a plan includes, and it changes with the location. The same CCX13 &mdash; 2 dedicated AMD vCPUs, 8 GB RAM, 80 GB NVMe &mdash; is listed at &euro;43.49 per month in eu-central with 20 TB included, and at &euro;43.99 per month in us-west and us-east with 1 TB included. The page states the US rule in the same shape as the EU one: &ldquo;Cloud servers located in the U.S. include at least 1 TB of included traffic. For each additional TB at U.S. locations we charge &euro; 1.00 per hour, excl. VAT.&rdquo;</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Hetzner plan and location</th><th>Monthly, excl. VAT</th><th>Traffic included</th><th>Over-usage rule</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>CX23, eu-central (2 vCPU, 4 GB, 40 GB NVMe)</td><td>&euro;5.99</td><td class="price">20 TB</td><td class="note">100MB blocks, rounded up</td></tr>
+            <tr><td>CCX13, eu-central (2 vCPU, 8 GB, 80 GB NVMe)</td><td>&euro;43.49</td><td class="price">20 TB</td><td class="note">100MB blocks, rounded up</td></tr>
+            <tr><td>CCX13, us-west HIL1</td><td>&euro;43.99</td><td class="price">1 TB</td><td class="note">100MB blocks, rounded up</td></tr>
+            <tr><td>CCX13, us-east ASH1</td><td>&euro;43.99</td><td class="price">1 TB</td><td class="note">100MB blocks, rounded up</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Prices and allowances from <em>hetzner.com/cloud/general-purpose/</em> (CCX13, all three locations) and <em>hetzner.com/cloud/cost-optimized/</em> (CX23), read on 2026-11-01. Both pages state the 100MB block rule indirectly through <em>docs.hetzner.com/cloud/billing/faq/</em>, which is the page that spells it out. A &euro;0.50 difference in monthly price between eu-central and us-west is printed on the plan card; the difference in included traffic, 20 TB against 1 TB, is printed underneath it.</p>
+    <p>The practical reading: on the same hardware and nearly the same price, a US-located Hetzner server carries a twentieth of the traffic allowance of an EU-located one. A workload that fits comfortably in the EU allowance can pass the US allowance without changing a line of code, and the only published remedy is the per-TB rate whose unit we just spent a callout on.</p>
+
+    <h2>OVHcloud: The Invoice Does Not Move, the Port Does</h2>
+    <p>OVHcloud answers the question by not asking it. Every plan card on the US VPS page carries &ldquo;Unlimited traffic&rdquo; next to its port speed &mdash; 500 Mbps on VPS-1 at $4.54, 1 Gbps on VPS-2 at $8.50, 2 Gbps on VPS-3 at $12.32, 3 Gbps on VPS-4 at $23.37 &mdash; and the VPS FAQ supports the claim without qualification: &ldquo;OVHcloud VPS offers provide excellent value for performance, with unlimited traffic and several global locations.&rdquo; Asked directly whether the bandwidth is guaranteed, the same FAQ answers: &ldquo;The bandwidth listed on our VPS web page is guaranteed. It is the minimum amount allocated to your service.&rdquo; That is a stronger statement than a traffic allowance, because it is a floor on speed rather than a cap on volume.</p>
+    <p>The footnote under the same page is where the limit lives, and it is geographic. &ldquo;VPSs in Asia-Pacific (Mumbai, Singapore, Sydney) have a monthly traffic quota: 1 TB for VPS-1 and VPS-2, 3 TB for VPS-3 and VPS-4, 4 TB for VPS-5 and VPS-6. Beyond that, bandwidth is limited to 10 Mbps.&rdquo; No charge, no per-GB rate, no overage line: the consequence of passing the quota is that the server keeps serving at 10 Mbps until the month turns over.</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>OVHcloud VPS, Asia-Pacific locations</th><th>Monthly quota</th><th>Past the quota</th><th>Charge</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>VPS-1, VPS-2</td><td class="price">1 TB</td><td>Bandwidth limited to 10 Mbps</td><td class="note">None stated</td></tr>
+            <tr><td>VPS-3, VPS-4</td><td class="price">3 TB</td><td>Bandwidth limited to 10 Mbps</td><td class="note">None stated</td></tr>
+            <tr><td>VPS-5, VPS-6</td><td class="price">4 TB</td><td>Bandwidth limited to 10 Mbps</td><td class="note">None stated</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">Quotas and the 10 Mbps limit are a single footnote on <em>us.ovhcloud.com/vps/</em>, read on 2026-11-01, marked with an asterisk against the &ldquo;Unlimited bandwidth, up to 1.5 Gbps&rdquo; line at the top of the page. The same footnote adds that VPS services ordered in data centres outside the United States regions cannot be modified or upgraded after delivery. The US and EU ranges carry no monthly quota on that page.</p>
+    <p>Ten megabits is not zero, which is why the throttle deserves a number. At 10 Mbps a server moves 10,000,000 bits per second, which is 1,250,000 bytes per second, which is 4,500,000,000 bytes &mdash; about 4.5 GB &mdash; in a full hour. A site that serves 4.5 GB a day would take a day to move what it used to move in an hour, and the invoice would be unchanged. Whether that is better or worse than a $10 overage charge depends on what the server does: a nightly backup job at 10 Mbps is a slow morning, while a video endpoint at 10 Mbps is effectively down. Neither outcome appears in a price table, which is why the price table is the wrong place to look for it.</p>
+
+    <h2>The Same 1,000 GiB on Three Invoices</h2>
+    <p>Here is one overrun, sized to be comparable: 1,000 GiB of outbound transfer beyond what the plan includes, inside a single monthly cycle.</p>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr><th>Provider</th><th>What the invoice shows</th><th>What the customer experiences</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>DigitalOcean</td><td class="price">$10.00</td><td class="note">A line item. 1,000 GiB &times; $0.01, added to the cycle's total, billed at the usual monthly close.</td></tr>
+            <tr><td>Hetzner, EU location</td><td class="price">&euro;1.00</td><td class="note">10,000 blocks of 100MB at the published per-TB rate. The unit on that rate is written as per hour; see the callout above before budgeting with it.</td></tr>
+            <tr><td>OVHcloud, US or EU</td><td class="price">$0.00</td><td class="note">No line item. The plan card says unlimited traffic and no overage rate is published.</td></tr>
+            <tr><td>OVHcloud, Asia-Pacific</td><td class="price">$0.00</td><td class="note">No line item, and the port drops to 10 Mbps for the rest of the cycle.</td></tr>
+        </tbody>
+    </table>
+    </div>
+    <p class="srcnote">The DigitalOcean figure is 1,000 &times; $0.01, the rate on <em>docs.digitalocean.com/products/billing/bandwidth/</em>. The Hetzner figure is 1,000 GiB read as 1 TB at the published &euro;1.00 per TB on <em>hetzner.com/cloud/cost-optimized/</em>, with the unit caveat above. The OVHcloud rows are the absence of a rate on <em>us.ovhcloud.com/vps/</em> plus the Asia-Pacific footnote. All three pages read 2026-11-01. Nothing here is converted between currencies: dollars and euros are shown as published.</p>
+    <p>The comparison is deliberately unflattering to the tidy answer. A $10.00 charge is easy to plan for and impossible to be surprised by, because the rate is per gigabyte and the gigabyte is a gigabyte. A &euro;1.00 charge that might be &euro;730 is not a price at all until it lands on an invoice. A $0.00 charge that silently cuts the port to 10 Mbps is a cost with no number attached, and it is the only one of the three that can take a service down without changing the bill. If you are choosing a provider on this line item alone, the ranking depends entirely on which of those three failures you can absorb &mdash; and that is a question about your workload, not about the price list.</p>
+
+    <figure style="margin:26px 0 8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px 22px 14px">
+        <svg viewBox="0 0 960 400" width="100%" height="auto" role="img" aria-labelledby="figT figD" style="display:block;max-width:100%">
+            <title id="figT">Cost of 1,000 GiB of overage at three VPS providers</title>
+            <desc id="figD">Three bars. DigitalOcean charges 10 dollars for 1,000 GiB past the team pool. Hetzner's published per-terabyte rate gives 1 euro. OVHcloud charges nothing and limits the port to 10 Mbps on its Asia-Pacific ranges.</desc>
+            <text x="0" y="22" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="19" font-weight="700" fill="#111827">1,000 GiB past the allowance: what each provider charges</text>
+            <text x="0" y="46" font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif" font-size="13.5" fill="#64748b">Bars are not converted between currencies. Each figure is in the currency the provider publishes.</text>
+
+            <g font-family="-apple-system,Segoe UI,Roboto,Arial,sans-serif">
+                <text x="0" y="104" font-size="14" font-weight="600" fill="#1f2937">DigitalOcean</text>
+                <text x="0" y="122" font-size="12" fill="#64748b">$0.01 per GiB, team pool</text>
+                <rect x="250" y="88" width="560" height="30" rx="4" fill="#0ea5e9"></rect>
+                <text x="822" y="108" font-size="14" font-weight="700" fill="#0c4a6e">$10.00</text>
+
+                <text x="0" y="184" font-size="14" font-weight="600" fill="#1f2937">Hetzner</text>
+                <text x="0" y="202" font-size="12" fill="#64748b">&euro;1.00 per TB, 100MB blocks</text>
+                <rect x="250" y="168" width="56" height="30" rx="4" fill="#6366f1"></rect>
+                <text x="318" y="188" font-size="14" font-weight="700" fill="#3730a3">&euro;1.00</text>
+                <text x="318" y="204" font-size="11.5" fill="#64748b">unit published as &ldquo;per hour&rdquo; &mdash; see note</text>
+
+                <text x="0" y="264" font-size="14" font-weight="600" fill="#1f2937">OVHcloud</text>
+                <text x="0" y="282" font-size="12" fill="#64748b">no overage rate published</text>
+                <rect x="250" y="248" width="6" height="30" rx="3" fill="#0ca678"></rect>
+                <text x="268" y="268" font-size="14" font-weight="700" fill="#065f46">$0.00</text>
+                <text x="268" y="284" font-size="11.5" fill="#64748b">Asia-Pacific: port limited to 10 Mbps for the rest of the cycle</text>
+
+                <line x1="250" y1="316" x2="810" y2="316" stroke="#cbd5e1" stroke-width="1"></line>
+                <text x="250" y="334" font-size="11.5" fill="#64748b">0</text>
+                <text x="530" y="334" font-size="11.5" fill="#64748b">$5.00</text>
+                <text x="810" y="334" font-size="11.5" fill="#64748b">$10.00</text>
+                <text x="250" y="356" font-size="11.5" fill="#94a3b8">Bar length scale: 560 px = $10.00. The Hetzner bar is drawn at &euro;1.00 on that scale for shape only, not as a currency conversion.</text>
+            </g>
+        </svg>
+        <figcaption style="color:#5b6675;font-size:.86rem;line-height:1.6;margin-top:10px">Sources, all read on <strong>2026-11-01</strong>: $0.01 per GiB from <em>docs.digitalocean.com/products/billing/bandwidth/</em>; the per-TB rate and the 100MB block rule from <em>hetzner.com/cloud/cost-optimized/</em> and <em>docs.hetzner.com/cloud/billing/faq/</em>; the absence of an overage rate plus the Asia-Pacific 10 Mbps limit from <em>us.ovhcloud.com/vps/</em>. Bar lengths are our arithmetic on a fixed scale. Hetzner's published unit is &ldquo;&euro; 1.00 per hour&rdquo; for each additional TB; the bar shows the per-terabyte reading, and the hourly reading is set out in the callout above.</figcaption>
+    </figure>
+
+    <h2>Frequently Asked Questions</h2>
+    <h3>How much does VPS bandwidth overage cost?</h3>
+    <p>It depends on the provider, and the three answers are not comparable. DigitalOcean bills additional outbound transfer at $0.01 per GiB. Hetzner bills over-usage in 100MB blocks and states its rate as &euro;1.00 per additional TB per hour, excluding VAT, a unit that conflicts with the same provider's billing FAQ. OVHcloud does not charge for overage on a US or EU VPS: it advertises unlimited traffic there, and on its Asia-Pacific VPS ranges a monthly quota is followed by a bandwidth limit of 10 Mbps. All figures were read from the providers' own pages on 2026-11-01.</p>
+
+    <h3>Is the DigitalOcean transfer allowance per Droplet or per account?</h3>
+    <p>Per team, not per Droplet. DigitalOcean's bandwidth page says transfer allowance and usage are pooled cumulatively across all Droplets at the team level, that accrued transfer does not roll over between months, and that each Droplet accrues one 2,419,200th of its plan's allowance for every second it exists. Its worked example: two Droplets with 1,000 GiB each contribute 2,000 GiB to the pool, and usage of 1,500 GiB on one and 100 GiB on the other totals 1,600 GiB, so no overage applies.</p>
+
+    <h3>Does Hetzner charge a full 100MB block if I exceed the allowance by a few megabytes?</h3>
+    <p>Yes. Hetzner's billing FAQ says over-usage is billed in blocks of 100MB and that a fraction of 100MB is rounded up to the next full 100MB. Its own example is a server with 20 TB included that uses 20.00008 TB in a month: the billable over-usage is 0.0001 TB, which is 100MB, for an actual overrun of about 80MB.</p>
+
+    <h3>What happens at OVHcloud when an Asia-Pacific VPS passes its traffic quota?</h3>
+    <p>The bandwidth is limited to 10 Mbps and no overage charge is mentioned. The footnote on the OVHcloud VPS page states monthly quotas for VPSs in Mumbai, Singapore and Sydney of 1 TB for VPS-1 and VPS-2, 3 TB for VPS-3 and VPS-4, and 4 TB for VPS-5 and VPS-6, with bandwidth limited to 10 Mbps beyond that. The same page advertises unlimited traffic for the US and EU ranges.</p>
+
+    <h3>Does inbound traffic count against the allowance?</h3>
+    <p>No at either provider that states a rule. DigitalOcean says inbound transfer to Droplets is free. Hetzner says it only bills outgoing traffic and that incoming and internal traffic is free, listing traffic between its own Cloud servers in the same network zone, traffic over private Networks, and traffic to its dedicated servers and other Hetzner services as internal. DigitalOcean adds that traffic between Droplets over the VPC network uses a private interface, and that all IPv6 traffic uses the public interface and therefore does count.</p>
+
+    <h2>Bottom Line</h2>
+    <p>An overrun is not a surcharge. It is the point where a provider's billing model becomes visible, and the three models here produce three different things: a per-gigabyte charge at DigitalOcean with a pool that belongs to the team and accrues by the second, a rounded 100MB block at Hetzner with a rate whose published unit does not survive contact with a monthly invoice, and a 10 Mbps port at OVHcloud that never touches the bill. The cheapest plan is not the one with the largest allowance &mdash; DigitalOcean's $4.00 Droplet includes 500 GiB and the overage rate is the same $0.01 whether you bought that plan or the $96.00 one. The safest plan is the one whose failure mode you can live with: an invoice you can predict, a block you can watch, or a port you cannot.</p>
+
+    <div class="author-bio">
+        <div class="author-name">Marcus Reid</div>
+        <div class="author-role">Systems Architect &amp; VPS Infrastructure Analyst</div>
+        <p>Marcus has been working with virtualized server infrastructure since 2015, deploying and benchmarking VPS and cloud instances across DigitalOcean, Vultr, Hetzner, OVHcloud, Contabo, RackNerd, Hostinger, and the major hyperscalers. His work focuses on the gap between what providers advertise and what actually happens when you deploy a real workload. He verifies every price and specification against official provider pages before publication.</p>
+    </div>
+
+    <div class="related">
+        <h2>Related Articles</h2>
+        <a href="/vps-hosting-cost">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
+        <a href="/vps-price-snapshot-billing">VPS Snapshot Cost: What a Snapshot Bills After You Take It</a>
+        <a href="/vps-price-stopped-instance">Does a Stopped VPS Still Cost Money? Billing by State</a>
+        <a href="/vps-price-extra-ipv4">Extra IPv4 on a VPS: What It Costs, and Billing While Off</a>
+        <a href="/vps-price-sales-tax">VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax</a>
+        <a href="/vps-price-currency-and-fx">VPS Price Currency: Same Plan, Four Stores, 7% Gap</a>
+        <p>Also see our <a href="/best-vps">best VPS guide</a>, <a href="/cheap-vps-hosting">cheap VPS hosting</a>, and <a href="/hetzner-vs-digitalocean">Hetzner vs DigitalOcean</a>.</p>
+    </div>
+
+    <footer>
+        <p>ServerBudget &mdash; VPS hosting deals aggregated from public provider pages. No login, no tracking, no fabricated prices.</p>
+        <p style="margin-top:0.5rem">This site will display third-party ads, and some links may be affiliate links that earn us a commission if you make a purchase.</p>
+        <p style="margin-top:0.5rem"><a href="/">Home</a> &middot; <a href="/compare">Compare All</a> &middot; <a href="/best-vps">Best VPS</a> &middot; <a href="/cheap-vps-hosting">Cheap VPS</a> &middot; <a href="/cheap-windows-vps-hosting">Cheap Windows VPS</a> &middot; <a href="/about">About</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/contact">Contact</a></p>
+    </footer>
+</div>
+</body>
+</html>

@@ -287,6 +287,166 @@ def load_generated_manifest(site_dir, manifest_path=None):
     return allowed, path
 
 
+CANONICAL_RE = re.compile(r'<link\b[^>]*\brel\s*=\s*["\']canonical["\'][^>]*>', re.I)
+HREF_RE = re.compile(r'\bhref\s*=\s*["\']([^"\']+)["\']', re.I)
+LOC_RE = re.compile(r'<loc>\s*([^<\s]+)\s*</loc>', re.I)
+
+
+def clean_path(rel):
+    """The one public URL path for a page file, relative to the deploy dir root."""
+    rel = rel[:-5] if rel.endswith('.html') else rel
+    return '/' if rel == 'index' else '/' + rel
+
+
+def sync_redirect_rules(site_dir):
+    """Give every .html file its own exact 301 to the extensionless twin.
+
+    Cloudflare Pages answers a bare /page.html with a 308 of its own when no rule
+    matches. A 308 is permanent but it is not the 301 this site promises, and it
+    means the rule set — not the redirect table — is deciding the address. So the
+    table is kept complete here, in sorted position inside the existing block, and
+    only rules that are missing are added: an existing line is never rewritten.
+    """
+    root = Path(site_dir)
+    path = root / '_redirects'
+    if not path.is_file():
+        print('  redirects: no _redirects file, nothing to sync')
+        return 0
+    text = path.read_bytes().decode('utf-8')
+    eol = '\r\n' if '\r\n' in text else '\n'
+    lines = text.split(eol)
+
+    have = set()
+    for line in lines:
+        s = line.strip()
+        if not s or s.startswith('#'):
+            continue
+        parts = s.split()
+        if len(parts) >= 3 and parts[0].startswith('/'):
+            have.add(parts[0])
+
+    is_rule = lambda s: bool(re.match(r'^/\S+\.html\s+/\S*\s+301\s*$', s.strip()))
+    block = [i for i, line in enumerate(lines) if is_rule(line)]
+    if not block:
+        print('  redirects: no .html block found, nothing to sync')
+        return 0
+    # Only the FIRST contiguous run is the .html twin block; later .html rules
+    # belong to page merges and point somewhere else, so never insert among them.
+    lo = block[0]
+    hi = lo
+    while hi + 1 < len(lines) and is_rule(lines[hi + 1]):
+        hi += 1
+
+    wanted = []
+    for page in sorted(root.rglob('*.html')):
+        rel = page.relative_to(root).as_posix()
+        src_path = '/' + rel
+        if src_path in have:
+            continue
+        wanted.append(f'{src_path}  {clean_path(rel)}  301')
+    if not wanted:
+        print(f'  redirects: all {len(have)} rule(s) present, nothing added')
+        return 0
+
+    for rule in wanted:
+        src_path = rule.split()[0]
+        pos = hi
+        for i in range(lo, hi + 1):
+            parts = lines[i].strip().split()
+            if parts and parts[0] > src_path:
+                pos = i - 1
+                break
+        lines.insert(pos + 1, rule)
+        lo, hi = min(lo, pos + 1), max(hi, pos + 1)
+
+    path.write_bytes(eol.join(lines).encode('utf-8'))
+    for rule in wanted:
+        print(f'  redirects: added {rule}')
+    return len(wanted)
+
+
+def verify_one_url_per_page(site_dir):
+    """One page, one address. Every other form of that address must 301 to it.
+
+    Four separate places can hand a reader (or Google) a second address for the
+    same page, so all four are checked before upload, and any hit is a SystemExit:
+
+      1. sitemap.xml    — a <loc> ending in .html publishes the wrong form
+      2. canonical      — exactly one per page, never .html, pointing at that page
+      3. internal links — href="/x.html" keeps the old form alive in the crawl
+      4. _redirects     — every .html file needs its exact 301; without one Pages
+                          answers with its own 308 and the second form survives
+
+    A missing sitemap, a missing _redirects, or a page with no canonical is a
+    failure, never a warning: "cannot check" is not "fine".
+    """
+    root = Path(site_dir)
+    problems = []
+
+    sitemap = root / 'sitemap.xml'
+    if not sitemap.is_file():
+        problems.append('sitemap.xml is missing — the URL forms cannot be checked')
+    else:
+        text = sitemap.read_text(encoding='utf-8', errors='ignore')
+        locs = LOC_RE.findall(text)
+        if not locs:
+            problems.append('sitemap.xml lists no <loc> — an empty sitemap is not a pass')
+        for url in locs:
+            if url.split('?')[0].split('#')[0].lower().endswith('.html'):
+                problems.append(f'sitemap.xml lists the .html form: {url}  [file: sitemap.xml]')
+
+    pages = sorted(root.rglob('*.html'))
+    for page in pages:
+        rel = page.relative_to(root).as_posix()
+        text = page.read_text(encoding='utf-8', errors='ignore')
+        tags = CANONICAL_RE.findall(text)
+        want = clean_path(rel)
+        if not tags:
+            problems.append(f'no canonical link  [file: {rel}]')
+        elif len(tags) > 1:
+            problems.append(f'{len(tags)} canonical links, must be exactly one  [file: {rel}]')
+        else:
+            href = HREF_RE.search(tags[0])
+            href = href.group(1) if href else ''
+            if '.html' in href.split('?')[0].lower():
+                problems.append(f'canonical points at the .html form: {href}  [file: {rel}]')
+            else:
+                path = re.sub(r'^https?://[^/]+', '', href).split('?')[0].split('#')[0]
+                if path.rstrip('/') != want.rstrip('/'):
+                    problems.append(f'canonical points at {path}, not at its own {want}  [file: {rel}]')
+        for href in HREF_RE.findall(text):
+            if href.startswith('/') and '.html' in href.split('?')[0].split('#')[0].lower():
+                problems.append(f'internal link to the .html form: {href}  [file: {rel}]')
+
+    redirects = root / '_redirects'
+    if not redirects.is_file():
+        problems.append('_redirects is missing — every .html address would fall back to a 308')
+    else:
+        have = set()
+        for line in redirects.read_text(encoding='utf-8', errors='ignore').splitlines():
+            s = line.strip()
+            if not s or s.startswith('#'):
+                continue
+            parts = s.split()
+            if len(parts) >= 3 and parts[0].startswith('/') and parts[2] == '301':
+                have.add(parts[0])
+        for page in pages:
+            rel = page.relative_to(root).as_posix()
+            if '/' + rel not in have:
+                problems.append(f'no exact 301 for /{rel} in _redirects  [file: _redirects]')
+
+    if problems:
+        raise SystemExit(
+            'DEPLOY BLOCKED: one page must have one address, and these break that:\n  '
+            + '\n  '.join(problems[:20])
+            + (f'\n  ... and {len(problems) - 20} more' if len(problems) > 20 else ''))
+    print(f'  one-url gate: {len(pages)} page(s), sitemap {len(LOC_RE.findall(sitemap.read_text(encoding="utf-8", errors="ignore")))} '
+          f'loc(s) with 0 .html, 1 canonical each, 0 internal .html link, '
+          f'{len(have)} exact 301 rule(s)')
+    return True
+
+
+
 def verify_deploy_dir(site_dir, manifest_path=None):
     """Deploy gate: no page may ship with an add-on price as its "from" price.
 
@@ -313,6 +473,7 @@ def verify_deploy_dir(site_dir, manifest_path=None):
     if not pages:
         raise SystemExit(f'DEPLOY BLOCKED: {site_dir} holds no .html pages — an empty scan is '
                          f'not a pass.')
+    verify_one_url_per_page(root)
     allowed, manifest_file = load_generated_manifest(root, manifest_path)
     verified = []
     for page in pages:
@@ -1299,7 +1460,7 @@ def main():
         print(f'Generating provider/{slug(prov["name"])}.html ...')
         html_out = gen_provider_page(brand, niche, domain, prov, offers)
         (site_dir / 'provider' / f'{slug(prov["name"])}.html').write_text(html_out, encoding='utf-8')
-        sitemap_pages.append((f'https://{domain}/provider/{slug(prov["name"])}.html', ts))
+        sitemap_pages.append((f'https://{domain}/provider/{slug(prov["name"])}', ts))
 
     # 2b. OVHcloud page — generated from data/offers.json, written into the deploy source
     #     (live-site/) as well as site/, so the published page cannot drift from the data.
@@ -1333,6 +1494,10 @@ def main():
     # 2e. Homepage stats bar — counted from offers.json, aborts if the page disagrees.
     refresh_home_stats(live_dir, offers)
 
+    # 2f. One page, one address: every .html file gets its exact 301 to the
+    #     extensionless twin, added in sorted position if it is not already there.
+    sync_redirect_rules(live_dir)
+
     manifest_path = write_generated_manifest(script_dir, generated)
     print(f'  generated {len(generated)} page(s); manifest: '
           f'{manifest_path.relative_to(script_dir).as_posix()}')
@@ -1348,32 +1513,32 @@ def main():
         print(f'Generating deal/{p_slug}-{d_slug}.html ...')
         html_out = gen_deal_page(brand, niche, domain, offer, prov_dict)
         (site_dir / 'deal' / f'{p_slug}-{d_slug}.html').write_text(html_out, encoding='utf-8')
-        sitemap_pages.append((f'https://{domain}/deal/{p_slug}-{d_slug}.html', ts))
+        sitemap_pages.append((f'https://{domain}/deal/{p_slug}-{d_slug}', ts))
 
     # 4. Compare page
     print('Generating compare.html ...')
     html_out = gen_compare_page(brand, niche, domain, offers, providers)
     (site_dir / 'compare.html').write_text(html_out, encoding='utf-8')
-    sitemap_pages.append((f'https://{domain}/compare.html', ts))
+    sitemap_pages.append((f'https://{domain}/compare', ts))
 
     # 5. About page
     print('Generating about.html ...')
     html_out = gen_about(brand, domain)
     (site_dir / 'about.html').write_text(html_out, encoding='utf-8')
-    sitemap_pages.append((f'https://{domain}/about.html', ts))
+    sitemap_pages.append((f'https://{domain}/about', ts))
 
     # 6. Privacy page
     print('Generating privacy.html ...')
     html_out = gen_privacy(brand, domain)
     (site_dir / 'privacy.html').write_text(html_out, encoding='utf-8')
-    sitemap_pages.append((f'https://{domain}/privacy.html', ts))
+    sitemap_pages.append((f'https://{domain}/privacy', ts))
 
     # 7. Contact page
     contact_email = os.environ.get('CONTACT_EMAIL', '')
     print(f'Generating contact.html ... (email: {"set" if contact_email else "NOT SET"})')
     html_out = gen_contact(brand, domain, contact_email)
     (site_dir / 'contact.html').write_text(html_out, encoding='utf-8')
-    sitemap_pages.append((f'https://{domain}/contact.html', ts))
+    sitemap_pages.append((f'https://{domain}/contact', ts))
 
     # 8. sitemap.xml
     print('Generating sitemap.xml ...')

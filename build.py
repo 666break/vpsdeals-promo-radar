@@ -11,6 +11,7 @@ import re
 import sys
 import html
 from datetime import datetime, timezone
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
 # ─── GENERATED-PAGE MANIFEST ─────────────────────────────────────────────────
@@ -569,6 +570,234 @@ def write_generated_manifest(repo_dir, pages):
     return path
 
 
+# ─── PRICE-PER-GB COMPARE PAGE ───────────────────────────────────────────────
+# One page, three providers, the same 2 vCPU / 4 GB tier. Every number is either
+# read from data/offers.json or divided out of two numbers that are, and every cell
+# keeps the page and the read date it came from. Nothing here is typed by hand.
+
+COMPARE_PAGE = 'vps-price-compare.html'
+COMPARE_URL_PATH = '/vps-price-compare'
+COMPARE_TIER = (2, 4)  # vCPU, RAM in GB — the tier every provider is normalised to
+
+
+def _d(value):
+    return Decimal(str(value))
+
+
+def _q2(value):
+    return _d(value).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+
+def _unit(value):
+    """Exact quotient, at least two decimals, trailing zeros trimmed.
+
+    Displayed so a reader can redo the division: 4.54 / 4 shows as 1.135, not 1.14.
+    """
+    s = f'{_d(value):.4f}'.rstrip('0')
+    if s.endswith('.'):
+        s += '00'
+    else:
+        frac = s.split('.')[1]
+        if len(frac) < 2:
+            s += '0' * (2 - len(frac))
+    return s
+
+
+def tier_offers(offers, tier=COMPARE_TIER):
+    """One plan per provider whose vCPU and RAM match the tier exactly.
+
+    A provider without an exact match simply does not appear — a neighbouring tier
+    is never bent into the comparison and called close enough.
+    """
+    vcpu, ram_gb = tier
+    picked = {}
+    for o in offers:
+        if o.get('vcpu') != vcpu or o.get('ram_gb') != ram_gb:
+            continue
+        if offer_kind(o) != 'plan' or o.get('price') is None:
+            continue
+        prov = o['provider']
+        if prov not in picked or _d(o['price']) < _d(picked[prov]['price']):
+            picked[prov] = o
+    return [picked[k] for k in sorted(picked)]
+
+
+def unit_costs(offer):
+    """$/GB RAM, $/vCPU, $/GB storage — one division each, no weighting."""
+    price = _d(offer['price'])
+    return {
+        'ram': price / _d(offer['ram_gb']),
+        'vcpu': price / _d(offer['vcpu']),
+        'disk': price / _d(offer['disk_gb']),
+    }
+
+
+def _spread(values):
+    lo, hi = min(values), max(values)
+    return (lo, hi, _q2(hi / lo)) if lo else (lo, hi, None)
+
+
+def gen_price_compare_page(offers, hidden, domain):
+    """Render /vps-price-compare from offers.json + data/vps_compare.json."""
+    vcpu, ram_gb = COMPARE_TIER
+    rows = tier_offers(offers)
+    if len(rows) < 2:
+        raise SystemExit(
+            f'BUILD ABORTED: only {len(rows)} provider(s) publish an exact '
+            f'{vcpu} vCPU / {ram_gb} GB tier — a comparison page needs at least two, '
+            f'and inventing the missing one is not an option.')
+
+    costs = {o['provider']: unit_costs(o) for o in rows}
+    p_lo, p_hi, p_spread = _spread([_d(o['price']) for o in rows])
+    r_lo, r_hi, r_spread = _spread([c['ram'] for c in costs.values()])
+    d_lo, d_hi, d_spread = _spread([c['disk'] for c in costs.values()])
+    cheap = next(o for o in rows if _d(o['price']) == p_lo)
+    dear = next(o for o in rows if _d(o['price']) == p_hi)
+    read_date = max(str(o.get('fetched_at') or '')[:10] for o in rows)
+
+    lead = (
+        f'At the same {vcpu} vCPU / {ram_gb} GB tier the monthly price runs from '
+        f'${_q2(p_lo):.2f} at {esc(cheap["provider"])} to ${_q2(p_hi):.2f} at '
+        f'{esc(dear["provider"])} — a {p_spread:.2f}x spread. Per GB of RAM that is '
+        f'${_unit(r_lo)} against ${_unit(r_hi)}, {r_spread:.2f}x; per GB of storage '
+        f'${_unit(d_lo)} against ${_unit(d_hi)}, a {d_spread:.2f}x spread.')
+
+    # tier table
+    tier_rows = []
+    for o in rows:
+        c = costs[o['provider']]
+        note = ''
+        if o.get('billing_term_months'):
+            note = (f'<span class="cell-note">billed {o["billing_term_months"]} months up front; '
+                    f'renews ${_q2(o["renewal_price"]):.2f}/mo</span>')
+        src = (f'<a href="{esc(o["source_url"])}">official page</a>'
+               f'<br><span class="src">read {esc(str(o.get("fetched_at") or "")[:10])}</span>')
+        tier_rows.append(
+            '        <tr>\n'
+            f'          <td><strong>{esc(o["provider"])}</strong></td>\n'
+            f'          <td>{esc(o["title"])}{note}</td>\n'
+            f'          <td>{o["vcpu"]}</td>\n'
+            f'          <td>{o["ram_gb"]} GB</td>\n'
+            f'          <td>{o["disk_gb"]} GB</td>\n'
+            f'          <td class="price">${_q2(o["price"]):.2f}</td>\n'
+            f'          <td class="unit">${_unit(c["ram"])}</td>\n'
+            f'          <td class="unit">${_unit(c["vcpu"])}</td>\n'
+            f'          <td class="unit">${_unit(c["disk"])}</td>\n'
+            f'          <td>{src}</td>\n'
+            '        </tr>')
+
+    # hidden-cost matrix
+    items = hidden.get('items') or []
+    head = ''.join(f'<th>{esc(o["provider"])}</th>' for o in rows)
+    hrows = []
+    for item in items:
+        cells = [f'          <td><strong>{esc(item["label"])}</strong></td>']
+        for o in rows:
+            block = (hidden.get('providers') or {}).get(o['provider']) or {}
+            cell = (block.get('cells') or {}).get(item['key']) or {}
+            value = cell.get('value') or 'none listed on official page'
+            url = cell.get('source_url') or block.get('source_url') or o.get('source_url', '')
+            cells.append(f'          <td>{esc(value)}<br><a class="src" href="{esc(url)}">source</a></td>')
+        hrows.append('        <tr>\n' + '\n'.join(cells) + '\n        </tr>')
+
+    # the sentences the numbers came from
+    evidence = []
+    for o in rows:
+        block = (hidden.get('providers') or {}).get(o['provider']) or {}
+        quotes = ''.join(
+            f'<p class="quote"><b>{esc(item["label"])}:</b> '
+            f'{esc(((block.get("cells") or {}).get(item["key"]) or {}).get("quote", "none listed on official page"))}</p>'
+            for item in items)
+        evidence.append(
+            f'<h3>{esc(o["provider"])} — <a href="{esc(block.get("source_url") or o["source_url"])}">'
+            f'{esc(block.get("source_url") or o["source_url"])}</a>, read {esc(block.get("read_at") or read_date)}</h3>\n'
+            + quotes)
+
+    title = (f'VPS price per GB of RAM: {vcpu} vCPU / {ram_gb} GB compared across '
+             f'{len(rows)} providers | ServerBudget')
+    desc = (f'The same {vcpu} vCPU / {ram_gb} GB tier at '
+            + ', '.join(o['provider'] for o in rows)
+            + f': ${_q2(p_lo):.2f} to ${_q2(p_hi):.2f} per month, {p_spread:.2f}x apart.')
+
+    jsonld = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": title,
+        "url": f"https://{domain}{COMPARE_URL_PATH}",
+        "dateModified": read_date,
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": f"https://{domain}/"},
+                {"@type": "ListItem", "position": 2, "name": "Price per GB",
+                 "item": f"https://{domain}{COMPARE_URL_PATH}"},
+            ],
+        },
+    }
+
+    tpl = load_template('vps-price-compare.html')
+    return render(tpl, {
+        'DOMAIN': domain,
+        'TITLE': esc(title),
+        'DESCRIPTION': esc(desc),
+        'H1': esc(f'VPS price per GB of RAM — the same {vcpu} vCPU / {ram_gb} GB tier at '
+                  + ', '.join(o['provider'] for o in rows)),
+        'LEAD': lead,
+        'TIER_ROWS': '\n'.join(tier_rows),
+        'HIDDEN_HEAD': head,
+        'HIDDEN_ROWS': '\n'.join(hrows),
+        'EVIDENCE': '\n'.join(evidence),
+        'READ_DATE': read_date,
+        'JSONLD': json.dumps(jsonld, indent=2),
+    })
+
+
+def ensure_nav_link(live_dir, href, label):
+    """Add one nav link to every page that carries the shared nav block.
+
+    Done here rather than by hand so a new page cannot be published unlinked, and
+    idempotent so the six-hourly build does not keep re-adding it.
+    """
+    changed = skipped = 0
+    for page in sorted(Path(live_dir).glob('*.html')):
+        text = page.read_bytes().decode('utf-8', 'ignore')
+        m = re.search(r'(<div class="nav">)(.*?)(</div>)', text, re.S)
+        if not m:
+            continue
+        inner = m.group(2)
+        if href in inner:
+            skipped += 1
+            continue
+        indent_m = re.search(r'\n([ \t]*)<a ', inner)
+        indent = indent_m.group(1) if indent_m else '            '
+        trailing = re.search(r'\s*$', inner).group(0)
+        body = inner[:len(inner) - len(trailing)] if trailing else inner
+        eol = '\r\n' if '\r\n' in text else '\n'
+        new_inner = body + eol + indent + f'<a href="{href}">{label}</a>' + trailing
+        page.write_bytes((text[:m.start()] + m.group(1) + new_inner + m.group(3)
+                          + text[m.end():]).encode('utf-8'))
+        changed += 1
+    print(f'  nav: {href} added to {changed} page(s), already present on {skipped}')
+    return changed
+
+
+def ensure_sitemap_url(live_dir, url, lastmod):
+    """Add one <url> to live-site/sitemap.xml if it is not already listed."""
+    path = Path(live_dir) / 'sitemap.xml'
+    if not path.is_file():
+        return False
+    text = path.read_bytes().decode('utf-8')
+    if f'<loc>{url}</loc>' in text:
+        print(f'  sitemap: {url} already listed')
+        return False
+    eol = '\r\n' if '\r\n' in text else '\n'
+    entry = f'  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod></url>'
+    text = text.replace('</urlset>', entry + eol + '</urlset>', 1)
+    path.write_bytes(text.encode('utf-8'))
+    print(f'  sitemap: added {url}')
+    return True
+
+
 def gen_deal_page(brand, niche, domain, offer, provider):
     """One page per deal: details + JSON-LD Offer."""
     p_slug = slug(offer['provider'])
@@ -787,6 +1016,7 @@ def main():
     script_dir = Path(__file__).parent
     ilang_path = script_dir / '.ilang' / 'site.ilang'
     offers_path = script_dir / 'data' / 'offers.json'
+    hidden_path = script_dir / 'data' / 'vps_compare.json'
     site_dir = script_dir / 'site'
 
     if not ilang_path.exists():
@@ -847,6 +1077,25 @@ def main():
     for target_dir in (live_dir, site_dir):
         target_dir.mkdir(exist_ok=True)
         (target_dir / 'provider-ovhcloud.html').write_bytes(ovh_html)
+
+    # 2c. Price-per-GB comparison page — same rule: generated, never typed.
+    print('Generating vps-price-compare.html from data/offers.json + data/vps_compare.json ...')
+    hidden = {}
+    if hidden_path.exists():
+        hidden = json.loads(hidden_path.read_text(encoding='utf-8'))
+    else:
+        print(f'WARNING: {hidden_path.name} missing — hidden-cost cells will read "none listed"',
+              file=sys.stderr)
+    cmp_html = gen_price_compare_page(offers, hidden, domain).replace('\n', '\r\n').encode('utf-8')
+    for target_dir in (live_dir, site_dir):
+        (target_dir / COMPARE_PAGE).write_bytes(cmp_html)
+    generated.add(COMPARE_PAGE)
+
+    # 2d. Publish plumbing for generated pages: nav link on every page, sitemap entry.
+    ensure_nav_link(live_dir, COMPARE_URL_PATH, 'Price per GB')
+    ensure_sitemap_url(live_dir, f'https://{domain}{COMPARE_URL_PATH}',
+                       max(str(o.get('fetched_at') or '')[:10] for o in tier_offers(offers)))
+
     manifest_path = write_generated_manifest(script_dir, generated)
     print(f'  generated {len(generated)} page(s); manifest: '
           f'{manifest_path.relative_to(script_dir).as_posix()}')

@@ -1,6 +1,7 @@
 {
   "note": "Pages build.py generates from data/offers.json. verify_deploy_dir() blocks any page that carries an AggregateOffer without being listed here.",
   "pages": [
-    "provider-ovhcloud.html"
+    "provider-ovhcloud.html",
+    "vps-price-compare.html"
   ]
 }

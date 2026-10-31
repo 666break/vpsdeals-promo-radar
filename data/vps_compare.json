@@ -1,0 +1,95 @@
+{
+  "note": "Hidden-cost cells are transcribed from the provider's own pricing page on the date shown. Each cell carries the exact sentence it came from. Where a page does not price an item, the cell says 'none listed on official page' instead of estimating one.",
+  "tier": {
+    "vcpu": 2,
+    "ram_gb": 4,
+    "label": "2 vCPU / 4 GB"
+  },
+  "items": [
+    { "key": "backup", "label": "Backup" },
+    { "key": "snapshot", "label": "Snapshots" },
+    { "key": "ipv4", "label": "Dedicated IPv4" },
+    { "key": "bandwidth", "label": "Bandwidth overage" },
+    { "key": "term", "label": "Billing term" }
+  ],
+  "providers": {
+    "OVHcloud": {
+      "source_url": "https://www.ovhcloud.com/en/vps/",
+      "read_at": "2026-10-31",
+      "cells": {
+        "backup": {
+          "value": "$1.40/mo for Premium; 24-hour daily backup included free",
+          "quote": "Premium automatic backup — Your custom backup, with a rolling 7-day restore. From $1.40 /month"
+        },
+        "snapshot": {
+          "value": "$0.40/mo",
+          "quote": "Snapshots — Easily back up and restore your data at any time. From $0.40 /month"
+        },
+        "ipv4": {
+          "value": "Included — one dedicated IPv4",
+          "quote": "Dedicated IPv4 — Get a unique IPv4 address, for more flexibility and network compatibility. Included"
+        },
+        "bandwidth": {
+          "value": "Unlimited traffic included; no overage price listed",
+          "quote": "Unlimited traffic — Tap into unlimited network traffic* to ensure your services run smoothly and quickly. Included (VPS-1 card: \"500 Mbps public bandwidth\")"
+        },
+        "term": {
+          "value": "12 months paid upfront",
+          "quote": "The Configure link on the VPS-1 card carries pricing=upfront12, i.e. the $4.54 rate is the 12-month-upfront price."
+        }
+      }
+    },
+    "DigitalOcean": {
+      "source_url": "https://www.digitalocean.com/pricing/droplets",
+      "read_at": "2026-10-31",
+      "cells": {
+        "backup": {
+          "value": "+20%/mo weekly or +30%/mo daily of the Droplet price; usage-based from $0.01/GiB",
+          "quote": "Backup — Choose between: Percentage-based Backups, set at 20 % (Weekly) or 30 % (Daily) of Droplet cost. Usage-based plans start at $0.01/GiB per month"
+        },
+        "snapshot": {
+          "value": "$0.06/GB per month",
+          "quote": "Droplet Snapshots $0.06/GB per month"
+        },
+        "ipv4": {
+          "value": "Included — one public IPv4 per Droplet",
+          "quote": "By default, each Droplet you create comes with its own public IPv4 address. […] For Bundled Plans, a public IPv4 is included at no extra cost."
+        },
+        "bandwidth": {
+          "value": "4,000 GiB outbound included on this tier; overage rate none listed on official page",
+          "quote": "Each Droplet includes a generous amount of free outbound data transfer. […] starting from 500 GiB/month. Inbound bandwidth is always free."
+        },
+        "term": {
+          "value": "Per-second billing, no annual commitment listed",
+          "quote": "Bundled Plan and v5 Droplets are both billed on a per-second basis"
+        }
+      }
+    },
+    "ScalaHosting": {
+      "source_url": "https://www.scalahosting.com/vps-hosting",
+      "read_at": "2026-10-31",
+      "cells": {
+        "backup": {
+          "value": "Listed as a core feature, no separate price on the page",
+          "quote": "Automatic Offsite Backups (Core Features list on the Build #1 card)"
+        },
+        "snapshot": {
+          "value": "Listed as a premium feature, no separate price on the page",
+          "quote": "On-demand Backup Copies (Premium Features list)"
+        },
+        "ipv4": {
+          "value": "Listed as a core feature, no separate price on the page",
+          "quote": "Dedicated IP Address (Core Features list)"
+        },
+        "bandwidth": {
+          "value": "Unmetered, listed as a core feature; no overage price listed",
+          "quote": "Unmetered Bandwidth (Core Features list)"
+        },
+        "term": {
+          "value": "12 months prepaid; renews at $54.95/mo",
+          "quote": "Build #1 — $ 22.46 /mo … $ 54.95 /mo when you renew (billing toggle shown as 12 M)"
+        }
+      }
+    }
+  }
+}

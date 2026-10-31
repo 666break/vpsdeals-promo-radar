@@ -263,8 +263,8 @@ def _ovh_specs(chunk):
     text = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', chunk))
     cores, ram, disk = OVH_CORE_RE.search(text), OVH_RAM_RE.search(text), OVH_DISK_RE.search(text)
     if not (cores and ram and disk):
-        return ''
-    return f'{cores.group(1)} vCores / {ram.group(1)} GB RAM / {disk.group(1)} GB SSD NVMe'
+        return None
+    return (int(cores.group(1)), int(ram.group(1)), int(disk.group(1)))
 
 
 def scrape_ovhcloud(offer_url, provider_name, previous):
@@ -290,13 +290,22 @@ def scrape_ovhcloud(offer_url, provider_name, previous):
             print(f'  [{provider_name}] no price inside the {name} card — keeping previous data',
                   file=sys.stderr)
             return keep
+        spec = _ovh_specs(chunk)
+        if spec is None:
+            print(f'  [{provider_name}] no vCPU/RAM/disk inside the {name} card — keeping previous data',
+                  file=sys.stderr)
+            return keep
+        cores, ram, disk = spec
         offers.append({
             'provider': provider_name,
             'title': name,
             'kind': 'plan',
             'price': float(m.group(1)),
             'currency': 'USD',
-            'specs': _ovh_specs(chunk),
+            'vcpu': cores,
+            'ram_gb': ram,
+            'disk_gb': disk,
+            'specs': f'{cores} vCores / {ram} GB RAM / {disk} GB SSD NVMe',
             'order': order,
             'deal_url': f'/deal-{order}',
             'offer_url': offer_url,
@@ -325,6 +334,153 @@ def scrape_ovhcloud(offer_url, provider_name, previous):
             'specs': 'VPS option / requires a VPS plan',
             'order': order,
             'deal_url': f'/deal-{order}',
+            'offer_url': offer_url,
+            'valid_until': None,
+            'source_url': offer_url,
+            'fetched_at': now,
+        })
+    return offers
+
+
+# ─── DIGITALOCEAN ────────────────────────────────────────────────────────────
+# /pricing/droplets renders every plan as a six-cell row (RAM, vCPUs, transfer,
+# SSD, hourly, monthly). A row counts only when all six cells parse; if fewer than
+# three rows survive, the provider keeps its previous data instead of a fragment.
+
+DO_SRC = 'https://www.digitalocean.com/pricing/droplets'
+DO_GB = re.compile(r'^([\d,]+)\s*GiB$')
+DO_CPU = re.compile(r'^(\d+)\s*vCPUs?$')
+DO_USD = re.compile(r'^\$\s*([\d.]+)$')
+
+
+def _cells(row):
+    out = []
+    for td in re.findall(r'<td[^>]*>(.*?)</td>', row, re.S):
+        txt = re.sub(r'<!--.*?-->', '', td)
+        txt = re.sub(r'<[^>]+>', ' ', txt)
+        out.append(re.sub(r'\s+', ' ', txt).strip())
+    return out
+
+
+def scrape_digitalocean(provider_name, previous):
+    keep = [o for o in previous if o.get('provider') == provider_name]
+    html, err = fetch(DO_SRC)
+    if html is None:
+        print(f'  [{provider_name}] Fetch error: {err} — keeping {len(keep)} previous offer(s)',
+              file=sys.stderr)
+        return keep
+
+    now = datetime.now(timezone.utc).isoformat()
+    rows = []
+    for row in re.split(r'<tr', html):
+        c = _cells(row)
+        if len(c) != 6:
+            continue
+        ram, cpu, xfer, disk, hourly, monthly = c
+        m_ram, m_cpu, m_disk = DO_GB.match(ram), DO_CPU.match(cpu), DO_GB.match(disk)
+        m_price, m_hour = DO_USD.match(monthly), DO_USD.match(hourly)
+        if not (m_ram and m_cpu and m_disk and m_price and m_hour):
+            continue
+        rows.append({
+            'ram': int(m_ram.group(1).replace(',', '')),
+            'vcpu': int(m_cpu.group(1)),
+            'disk': int(m_disk.group(1).replace(',', '')),
+            'xfer': xfer,
+            'price': float(m_price.group(1)),
+            'hourly': float(m_hour.group(1)),
+        })
+
+    if len(rows) < 3:
+        print(f'  [{provider_name}] only {len(rows)} plan row(s) parsed — keeping previous data',
+              file=sys.stderr)
+        return keep
+
+    rows.sort(key=lambda r: r['price'])
+    offers = []
+    for order, r in enumerate(rows, 1):
+        offers.append({
+            'provider': provider_name,
+            'title': f'Basic {r["vcpu"]} vCPU / {r["ram"]} GiB',
+            'kind': 'plan',
+            'price': r['price'],
+            'currency': 'USD',
+            'vcpu': r['vcpu'],
+            'ram_gb': r['ram'],
+            'disk_gb': r['disk'],
+            'specs': f'{r["vcpu"]} vCPU / {r["ram"]} GiB RAM / {r["disk"]} GiB SSD / {r["xfer"]} transfer',
+            'hourly_usd': r['hourly'],
+            'order': order,
+            'offer_url': DO_SRC,
+            'valid_until': None,
+            'source_url': DO_SRC,
+            'fetched_at': now,
+        })
+    return offers
+
+
+# ─── SCALAHOSTING ────────────────────────────────────────────────────────────
+# The four Build presets carry their specs in the page's own config JSON
+# (183 = CPU cores, 184 = GB RAM, 182 = GB NVMe) and their prices in the rendered
+# card ("$ 22.46 /mo … $ 54.95 /mo when you renew"). Both halves must resolve for
+# all four builds, otherwise the previous data stays.
+
+SC_PRESET_RE = re.compile(
+    r'"presets":\{"183":\{"value":(\d+)[^}]*\},"184":\{"value":(\d+)[^}]*\},"182":\{"value":(\d+)[^}]*\}\},'
+    r'"title":"(Build #\d)"')
+
+
+def scrape_scalahosting(offer_url, provider_name, previous):
+    keep = [o for o in previous if o.get('provider') == provider_name]
+    html, err = fetch(offer_url)
+    if html is None:
+        print(f'  [{provider_name}] Fetch error: {err} — keeping {len(keep)} previous offer(s)',
+              file=sys.stderr)
+        return keep
+
+    presets = {name: (int(c), int(r), int(d))
+               for c, r, d, name in SC_PRESET_RE.findall(html)}
+
+    visible = re.sub(r'<script.*?</script>', ' ', html, flags=re.S)
+    visible = re.sub(r'<style.*?</style>', ' ', visible, flags=re.S)
+    visible = re.sub(r'<[^>]+>', ' ', visible)
+    visible = re.sub(r'\s+', ' ', visible)
+    prices = {}
+    for chunk in re.split(r'(?=Build #\d)', visible):
+        m = re.match(r'(Build #\d)', chunk)
+        if not m:
+            continue
+        pm = re.search(r'\$\s*([\d.]+)\s*/mo', chunk)
+        rm = re.search(r'\$\s*([\d.]+)\s*/mo when you renew', chunk)
+        # first card that carries both prices wins; later mentions of the same build
+        # (the builder UI, the "starting from" banner) must not overwrite it
+        if pm and rm and m.group(1) not in prices:
+            prices[m.group(1)] = (float(pm.group(1)), float(rm.group(1)))
+
+    wanted = ['Build #%d' % i for i in (1, 2, 3, 4)]
+    missing = [n for n in wanted if n not in presets or n not in prices]
+    if missing:
+        print(f'  [{provider_name}] could not read {", ".join(missing)} — keeping previous data',
+              file=sys.stderr)
+        return keep
+
+    now = datetime.now(timezone.utc).isoformat()
+    offers = []
+    for order, name in enumerate(wanted, 1):
+        cores, ram, disk = presets[name]
+        price, renew = prices[name]
+        offers.append({
+            'provider': provider_name,
+            'title': name,
+            'kind': 'plan',
+            'price': price,
+            'currency': 'USD',
+            'vcpu': cores,
+            'ram_gb': ram,
+            'disk_gb': disk,
+            'specs': f'{cores} CPU cores / {ram} GB RAM / {disk} GB NVMe SSD',
+            'renewal_price': renew,
+            'billing_term_months': 12,
+            'order': order,
             'offer_url': offer_url,
             'valid_until': None,
             'source_url': offer_url,
@@ -372,10 +528,14 @@ def main():
         print(f'Scraping {name} ...')
         print(f'  URL: {offer_url}')
 
-        # OVHcloud and Hetzner have their own readers — the generic card scan would
-        # read a price out of the page at large and call it a plan.
+        # OVHcloud, DigitalOcean and ScalaHosting have their own readers — the generic
+        # card scan would read a price out of the page at large and call it a plan.
         if 'ovhcloud.com' in offer_url:
             offers = scrape_ovhcloud(offer_url, name, previous)
+        elif 'digitalocean.com' in offer_url:
+            offers = scrape_digitalocean(name, previous)
+        elif 'scalahosting.com' in offer_url:
+            offers = scrape_scalahosting(offer_url, name, previous)
         elif 'api.hetzner.com' in offer_url:
             offers = scrape_hetzner_api(offer_url, name, website)
         else:

@@ -65,3 +65,9 @@ live-site/_verify_*.html
 /_verify_desktop.png
 /_verify_mobile.png
 /close_old.js
+
+# === Local secrets — never commit (2026-10-30) ===
+# Credentials live in .env on this machine only; scripts read them via process.env / os.environ.
+.env
+.env.*
+!.env.example

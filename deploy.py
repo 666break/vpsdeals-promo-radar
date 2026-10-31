@@ -5,7 +5,7 @@ Project: serverbudget-site (direct-upload, NOT git-connected)
 Site dir: live-site/
 After deploy: adds custom domain serverbudget.com + updates DNS CNAME
 """
-import hashlib, os, sys, json, mimetypes, urllib.request, urllib.error, urllib.parse
+import hashlib, os, sys, json, mimetypes, base64, urllib.request, urllib.error, urllib.parse
 
 # --- Config: read stored Bearer token ---
 HOME = os.path.expanduser("~")
@@ -34,12 +34,13 @@ def cf_request(method, path, data=None):
         except Exception:
             return {"success": False, "errors": [{"message": body[:500]}]}
 
-def upload_file(jwt, url_path, content, mime):
+def upload_file(jwt, ns, url_path, content, mime):
     """Upload a single file using the upload JWT."""
     upload_url = f"{API}/pages/assets/upload"
     headers = {
         "Authorization": f"Bearer {jwt}",
         "Content-Type": mime,
+        "assetNamespace": ns,
     }
     # Use query param for file name
     full_url = f"{upload_url}?fileName={urllib.parse.quote(url_path)}"
@@ -72,12 +73,21 @@ else:
 
 # === Step 2: Get upload JWT ===
 print("\n=== [2] Get upload JWT ===", flush=True)
-r = cf_request("POST", f"/accounts/{ACCT}/pages/projects/{PROJECT}/upload-token")
+r = cf_request("GET", f"/accounts/{ACCT}/pages/projects/{PROJECT}/upload-token")
 if not r.get("success"):
     print(f"  Upload token FAILED: {r.get('errors')}", file=sys.stderr)
     sys.exit(1)
 jwt = r["result"]["jwt"]
-print(f"  JWT obtained (len={len(jwt)})")
+# decode JWT payload to extract assetNamespace (projectNamescape)
+try:
+    _pay = jwt.split('.')[1]
+    _pay += '=' * (-len(_pay) % 4)
+    _pld = json.loads(base64.urlsafe_b64decode(_pay))
+    ns = _pld.get("projectNamespace", "")
+except Exception as e:
+    ns = ""
+    print(f"  (warn) could not decode namespace: {e}", file=sys.stderr)
+print(f"  JWT obtained (len={len(jwt)}) namespace={ns}")
 
 # === Step 3: Upload each file ===
 print("\n=== [3] Upload files ===", flush=True)
@@ -97,7 +107,7 @@ for fname in files:
 
     manifest[url_path] = {"hash": file_hash, "size": size, "contentType": mime}
 
-    code, body = upload_file(jwt, url_path, content, mime)
+    code, body = upload_file(jwt, ns, url_path, content, mime)
     ok = code in (200, 201)
     if not ok:
         # Retry with X-File-Name header instead of query param
@@ -105,6 +115,7 @@ for fname in files:
         headers = {
             "Authorization": f"Bearer {jwt}",
             "Content-Type": mime,
+            "assetNamespace": ns,
             "X-File-Name": url_path,
         }
         req = urllib.request.Request(upload_url, data=content, headers=headers, method="PUT")

@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/666break/vpsdeals-promo-radar#readme",
   "dependencies": {
+    "blake3-wasm": "^2.1.5",
     "wrangler": "^4.135.0"
   }
 }

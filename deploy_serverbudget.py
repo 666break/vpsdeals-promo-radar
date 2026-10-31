@@ -67,7 +67,55 @@ def stamp_footer():
         f.write(new_data)
 
 
+# --- Post-deploy verification -------------------------------------------------
+# A "Verify:" line that only PRINTS a URL proves nothing: on 2026-10-30 two
+# consecutive runs printed https://serverbudget.com/a2-hosting-coupon-not-working.html
+# as "verified" while that page did not exist in live-site/ and returned 404.
+# So the check below actually requests the URL and reports the real status code,
+# and a non-200 makes the run fail instead of silently printing a dead link.
+VERIFY_ORIGIN = "https://serverbudget.com"
+VERIFY_PATH = "/vps-price"
+# VERIFY_URL may be overridden to re-check some other path (used to prove the
+# check actually fails on a dead link, e.g. the old /a2-hosting-coupon-not-working.html).
+VERIFY_URL = os.environ.get("VERIFY_URL") or (VERIFY_ORIGIN + VERIFY_PATH)
+
+
+def verify_live(attempts=5, delay=3):
+    """GET VERIFY_URL and return True only on a real HTTP 200.
+
+    Cloudflare Pages needs a few seconds to serve a fresh deployment, so retry
+    briefly before declaring failure. Never raises: the status is the result.
+    """
+    import time, urllib.request, urllib.error
+    last = "no attempt made"
+    for i in range(attempts):
+        try:
+            req = urllib.request.Request(
+                VERIFY_URL,
+                method="GET",
+                headers={"User-Agent": "serverbudget-deploy-verify/1.0"},
+            )
+            with urllib.request.urlopen(req, timeout=20) as r:
+                last = f"HTTP {r.status}"
+                if r.status == 200:
+                    print(f"  Verify: {VERIFY_URL} -> HTTP {r.status} OK")
+                    return True
+        except urllib.error.HTTPError as e:
+            last = f"HTTP {e.code}"
+        except Exception as e:  # network/DNS/timeout: report, do not traceback
+            last = f"error {type(e).__name__}: {e}"
+        if i < attempts - 1:
+            time.sleep(delay)
+    print(f"  Verify: {VERIFY_URL} -> {last} (NOT 200 after {attempts} attempts)", file=sys.stderr)
+    return False
+
+
 CHECK_ONLY = "--check" in sys.argv
+VERIFY_ONLY = "--verify-only" in sys.argv
+
+if VERIFY_ONLY:
+    # Re-check the live page without deploying anything.
+    sys.exit(0 if verify_live() else 1)
 
 if CHECK_ONLY:
     # Verify wrangler is present and token reads; do not deploy.
@@ -109,8 +157,10 @@ if r.returncode != 0:
     print(f"DEPLOY FAILED (exit {r.returncode})", file=sys.stderr)
     sys.exit(r.returncode)
 print("\n=== DEPLOY COMPLETE ===")
-# Point the operator at a page that actually exists in live-site/. The old line
-# named /a2-hosting-coupon-not-working.html, which is not in the repo and returns
-# 404 on the live site, so it could never confirm a deploy.
-VERIFY_PATH = "/vps-price"
-print(f"  Verify: https://serverbudget.com{VERIFY_PATH}")
+# Point the operator at a page that actually exists in live-site/ AND confirm it
+# answers 200. /vps-price is live-site/vps-price.html (Cloudflare Pages serves it
+# extensionless). The old line named /a2-hosting-coupon-not-working.html, which is
+# not in the repo and returns 404 -- and because it was only ever printed, never
+# requested, two runs in a row reported that dead link as verified.
+if not verify_live():
+    sys.exit(1)

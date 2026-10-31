@@ -14,7 +14,7 @@
     "offer_url": "https://www.digitalocean.com/pricing/droplets",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing/droplets",
-    "fetched_at": "2026-10-31T12:57:33.930583+00:00"
+    "fetched_at": "2026-10-31T13:54:05.710782+00:00"
   },
   {
     "provider": "DigitalOcean",
@@ -31,7 +31,7 @@
     "offer_url": "https://www.digitalocean.com/pricing/droplets",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing/droplets",
-    "fetched_at": "2026-10-31T12:57:33.930583+00:00"
+    "fetched_at": "2026-10-31T13:54:05.710782+00:00"
   },
   {
     "provider": "DigitalOcean",
@@ -48,7 +48,7 @@
     "offer_url": "https://www.digitalocean.com/pricing/droplets",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing/droplets",
-    "fetched_at": "2026-10-31T12:57:33.930583+00:00"
+    "fetched_at": "2026-10-31T13:54:05.710782+00:00"
   },
   {
     "provider": "DigitalOcean",
@@ -65,7 +65,7 @@
     "offer_url": "https://www.digitalocean.com/pricing/droplets",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing/droplets",
-    "fetched_at": "2026-10-31T12:57:33.930583+00:00"
+    "fetched_at": "2026-10-31T13:54:05.710782+00:00"
   },
   {
     "provider": "DigitalOcean",
@@ -82,7 +82,7 @@
     "offer_url": "https://www.digitalocean.com/pricing/droplets",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing/droplets",
-    "fetched_at": "2026-10-31T12:57:33.930583+00:00"
+    "fetched_at": "2026-10-31T13:54:05.710782+00:00"
   },
   {
     "provider": "DigitalOcean",
@@ -99,7 +99,7 @@
     "offer_url": "https://www.digitalocean.com/pricing/droplets",
     "valid_until": null,
     "source_url": "https://www.digitalocean.com/pricing/droplets",
-    "fetched_at": "2026-10-31T12:57:33.930583+00:00"
+    "fetched_at": "2026-10-31T13:54:05.710782+00:00"
   },
   {
     "provider": "Hostinger",
@@ -109,7 +109,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.575406+00:00"
+    "fetched_at": "2026-10-31T13:54:07.721363+00:00"
   },
   {
     "provider": "Hostinger",
@@ -119,7 +119,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.575436+00:00"
+    "fetched_at": "2026-10-31T13:54:07.721400+00:00"
   },
   {
     "provider": "Hostinger",
@@ -129,7 +129,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.575450+00:00"
+    "fetched_at": "2026-10-31T13:54:07.721418+00:00"
   },
   {
     "provider": "Hostinger",
@@ -139,7 +139,7 @@
     "offer_url": "https://www.hostinger.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.hostinger.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.575461+00:00"
+    "fetched_at": "2026-10-31T13:54:07.721435+00:00"
   },
   {
     "provider": "ScalaHosting",
@@ -157,7 +157,7 @@
     "offer_url": "https://www.scalahosting.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.scalahosting.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.798615+00:00"
+    "fetched_at": "2026-10-31T13:54:07.937551+00:00"
   },
   {
     "provider": "ScalaHosting",
@@ -175,7 +175,7 @@
     "offer_url": "https://www.scalahosting.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.scalahosting.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.798615+00:00"
+    "fetched_at": "2026-10-31T13:54:07.937551+00:00"
   },
   {
     "provider": "ScalaHosting",
@@ -193,7 +193,7 @@
     "offer_url": "https://www.scalahosting.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.scalahosting.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.798615+00:00"
+    "fetched_at": "2026-10-31T13:54:07.937551+00:00"
   },
   {
     "provider": "ScalaHosting",
@@ -211,7 +211,7 @@
     "offer_url": "https://www.scalahosting.com/vps-hosting",
     "valid_until": null,
     "source_url": "https://www.scalahosting.com/vps-hosting",
-    "fetched_at": "2026-10-31T12:57:35.798615+00:00"
+    "fetched_at": "2026-10-31T13:54:07.937551+00:00"
   },
   {
     "provider": "OVHcloud",
@@ -228,7 +228,7 @@
     "offer_url": "https://www.ovhcloud.com/en/vps/",
     "valid_until": null,
     "source_url": "https://www.ovhcloud.com/en/vps/",
-    "fetched_at": "2026-10-31T12:57:36.192487+00:00"
+    "fetched_at": "2026-10-31T13:54:08.345860+00:00"
   },
   {
     "provider": "OVHcloud",
@@ -245,7 +245,7 @@
     "offer_url": "https://www.ovhcloud.com/en/vps/",
     "valid_until": null,
     "source_url": "https://www.ovhcloud.com/en/vps/",
-    "fetched_at": "2026-10-31T12:57:36.192487+00:00"
+    "fetched_at": "2026-10-31T13:54:08.345860+00:00"
   },
   {
     "provider": "OVHcloud",
@@ -262,7 +262,7 @@
     "offer_url": "https://www.ovhcloud.com/en/vps/",
     "valid_until": null,
     "source_url": "https://www.ovhcloud.com/en/vps/",
-    "fetched_at": "2026-10-31T12:57:36.192487+00:00"
+    "fetched_at": "2026-10-31T13:54:08.345860+00:00"
   },
   {
     "provider": "OVHcloud",
@@ -279,7 +279,7 @@
     "offer_url": "https://www.ovhcloud.com/en/vps/",
     "valid_until": null,
     "source_url": "https://www.ovhcloud.com/en/vps/",
-    "fetched_at": "2026-10-31T12:57:36.192487+00:00"
+    "fetched_at": "2026-10-31T13:54:08.345860+00:00"
   },
   {
     "provider": "OVHcloud",
@@ -293,7 +293,7 @@
     "offer_url": "https://www.ovhcloud.com/en/vps/",
     "valid_until": null,
     "source_url": "https://www.ovhcloud.com/en/vps/",
-    "fetched_at": "2026-10-31T12:57:36.192487+00:00"
+    "fetched_at": "2026-10-31T13:54:08.345860+00:00"
   },
   {
     "provider": "OVHcloud",
@@ -307,6 +307,6 @@
     "offer_url": "https://www.ovhcloud.com/en/vps/",
     "valid_until": null,
     "source_url": "https://www.ovhcloud.com/en/vps/",
-    "fetched_at": "2026-10-31T12:57:36.192487+00:00"
+    "fetched_at": "2026-10-31T13:54:08.345860+00:00"
   }
 ]

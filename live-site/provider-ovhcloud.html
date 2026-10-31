@@ -16,14 +16,30 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "OVHcloud VPS plans and VPS add-ons",
-  "offers": {
-    "@type": "AggregateOffer",
-    "lowPrice": "0.4",
-    "highPrice": "23.37",
-    "offerCount": 6,
-    "priceCurrency": "USD",
-    "description": "Six prices read from OVHcloud's VPS page: four VPS plans (from $4.54 per month) and two VPS add-ons (Premium automatic backup from $1.40 per month, Snapshots from $0.40 per month). The lowest figure is an add-on, not a server; add-ons are billed on top of a VPS plan and need one to be ordered first."
-  }
+  "offers": [
+    {
+      "@type": "AggregateOffer",
+      "lowPrice": "4.54",
+      "highPrice": "23.37",
+      "offerCount": 4,
+      "priceCurrency": "USD",
+      "description": "Four OVHcloud VPS plans, each priced per month: VPS-1 $4.54, VPS-2 $8.50, VPS-3 $12.32, VPS-4 $23.37. VPS add-ons are listed as separate offers below and are not part of this price range."
+    },
+    {
+      "@type": "Offer",
+      "name": "OVHcloud add-on - Premium automatic backup",
+      "price": "1.40",
+      "priceCurrency": "USD",
+      "description": "VPS add-on billed on top of a VPS plan, from $1.40 per month. It needs a VPS plan to be ordered first and is not a server, so it is not counted in the plan price range."
+    },
+    {
+      "@type": "Offer",
+      "name": "OVHcloud add-on - Snapshots",
+      "price": "0.40",
+      "priceCurrency": "USD",
+      "description": "VPS add-on billed on top of a VPS plan, from $0.40 per month. It needs a VPS plan to be ordered first and is not a server, so it is not counted in the plan price range."
+    }
+  ]
 }</script>
     <script type="application/ld+json">{
   "@context": "https://schema.org",

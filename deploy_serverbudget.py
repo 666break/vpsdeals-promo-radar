@@ -133,8 +133,8 @@ if CHECK_ONLY:
 
 # ── DEPLOY GATE (2026-10-31) ─────────────────────────────────────────────────
 # No page may go up with an add-on price as its "from" price. This reads the files
-# in SITE_DIR that are about to be uploaded -- including the hand-maintained
-# provider-ovhcloud.html, which build.py never generates -- and reuses build.py's
+# in SITE_DIR that are about to be uploaded -- including provider-ovhcloud.html, which
+# build.py now generates from data/offers.json -- and reuses build.py's
 # offer_kind()/check_aggregate(), so there is one rule, not two.
 # It raises SystemExit, so the deploy dies here, before wrangler is invoked.
 if REPO not in sys.path:

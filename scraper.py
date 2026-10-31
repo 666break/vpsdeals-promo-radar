@@ -240,6 +240,99 @@ def scrape_hetzner_api(offer_url, provider_name, website):
     return offers
 
 
+# ─── OVHCLOUD ────────────────────────────────────────────────────────────────
+# OVHcloud renders its plan cards server-side, so a plain GET is enough — but it is a
+# marketing page, not a feed: a price only counts when it sits inside the card of a
+# named plan. Anything less certain than "all four plans and both add-ons resolved"
+# keeps the previous data untouched rather than publishing a half-read page.
+
+OVH_PLANS = ('VPS-1', 'VPS-2', 'VPS-3', 'VPS-4')
+OVH_ADDONS = ('Premium automatic backup', 'Snapshots')
+OVH_PRICE_RE = re.compile(r'<span class="price-value">\s*\$?\s*([0-9]+(?:\.[0-9]+)?)')
+OVH_CORE_RE = re.compile(r'(\d+)\s*vCores?')
+OVH_RAM_RE = re.compile(r'(\d+)\s*GB\s*RAM')
+OVH_DISK_RE = re.compile(r'(\d+)\s*GB\s*SSD\s*NVMe')
+
+
+def _ovh_chunk(html, start, end):
+    """The slice that belongs to one card; a card is short, so cap it anyway."""
+    return html[start:end] if end > start else html[start:start + 4000]
+
+
+def _ovh_specs(chunk):
+    text = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', chunk))
+    cores, ram, disk = OVH_CORE_RE.search(text), OVH_RAM_RE.search(text), OVH_DISK_RE.search(text)
+    if not (cores and ram and disk):
+        return ''
+    return f'{cores.group(1)} vCores / {ram.group(1)} GB RAM / {disk.group(1)} GB SSD NVMe'
+
+
+def scrape_ovhcloud(offer_url, provider_name, previous):
+    """Read OVHcloud's VPS page; keep the previous numbers if anything is uncertain."""
+    keep = [o for o in previous if o.get('provider') == provider_name]
+    html, err = fetch(offer_url)
+    if html is None:
+        print(f'  [{provider_name}] Fetch error: {err} — keeping {len(keep)} previous offer(s)',
+              file=sys.stderr)
+        return keep
+
+    now = datetime.now(timezone.utc).isoformat()
+    offers = []
+    for order, name in enumerate(OVH_PLANS, 1):
+        i = html.find(f'data-qa="{name}"')
+        if i < 0:
+            print(f'  [{provider_name}] plan card {name} not found — keeping previous data',
+                  file=sys.stderr)
+            return keep
+        chunk = _ovh_chunk(html, i, html.find('data-qa="', i + 10))
+        m = OVH_PRICE_RE.search(chunk)
+        if not m:
+            print(f'  [{provider_name}] no price inside the {name} card — keeping previous data',
+                  file=sys.stderr)
+            return keep
+        offers.append({
+            'provider': provider_name,
+            'title': name,
+            'kind': 'plan',
+            'price': float(m.group(1)),
+            'currency': 'USD',
+            'specs': _ovh_specs(chunk),
+            'order': order,
+            'deal_url': f'/deal-{order}',
+            'offer_url': offer_url,
+            'valid_until': None,
+            'source_url': offer_url,
+            'fetched_at': now,
+        })
+
+    for order, name in enumerate(OVH_ADDONS, len(OVH_PLANS) + 1):
+        m = re.search(r'<H3[^>]*>\s*' + re.escape(name) + r'\s*</H3>', html)
+        if not m:
+            print(f'  [{provider_name}] add-on "{name}" not found — keeping previous data',
+                  file=sys.stderr)
+            return keep
+        pm = OVH_PRICE_RE.search(_ovh_chunk(html, m.start(), m.start() + 2500))
+        if not pm:
+            print(f'  [{provider_name}] no price for add-on "{name}" — keeping previous data',
+                  file=sys.stderr)
+            return keep
+        offers.append({
+            'provider': provider_name,
+            'title': name,
+            'kind': 'addon',
+            'price': float(pm.group(1)),
+            'currency': 'USD',
+            'specs': 'VPS option / requires a VPS plan',
+            'order': order,
+            'deal_url': f'/deal-{order}',
+            'offer_url': offer_url,
+            'valid_until': None,
+            'source_url': offer_url,
+            'fetched_at': now,
+        })
+    return offers
+
+
 # ─── MAIN ────────────────────────────────────────────────────────────────────
 
 def main():
@@ -261,6 +354,16 @@ def main():
 
     all_offers = []
 
+    # Carry-forward source: the data already on disk. A provider whose page cannot be
+    # parsed keeps its last verified numbers instead of silently vanishing from the site.
+    prev_path = script_dir / 'data' / 'offers.json'
+    previous = []
+    if prev_path.exists():
+        try:
+            previous = json.loads(prev_path.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            previous = []
+
     for prov in config['providers']:
         name = prov['name']
         offer_url = prov['offer_url']
@@ -269,8 +372,11 @@ def main():
         print(f'Scraping {name} ...')
         print(f'  URL: {offer_url}')
 
-        # Hetzner uses a JSON API — special handler
-        if 'api.hetzner.com' in offer_url:
+        # OVHcloud and Hetzner have their own readers — the generic card scan would
+        # read a price out of the page at large and call it a plan.
+        if 'ovhcloud.com' in offer_url:
+            offers = scrape_ovhcloud(offer_url, name, previous)
+        elif 'api.hetzner.com' in offer_url:
             offers = scrape_hetzner_api(offer_url, name, website)
         else:
             html, err = fetch(offer_url)

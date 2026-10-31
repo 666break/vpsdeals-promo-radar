@@ -13,6 +13,14 @@ import html
 from datetime import datetime, timezone
 from pathlib import Path
 
+# ─── GENERATED-PAGE MANIFEST ─────────────────────────────────────────────────
+# Pages build.py produces from data/offers.json and writes straight into the deploy
+# source (live-site/). verify_deploy_dir() whitelists exactly these: a page carrying
+# an AggregateOffer that is NOT listed here did not come from the data, so the deploy
+# is blocked instead of publishing a hand-written price range.
+# Lives in data/ (tracked, not gitignored) so CI reads the same list the build wrote.
+GENERATED_MANIFEST = Path('data') / 'generated_pages.json'
+
 # ─── ILANG PARSER (same logic as scraper.py — kept self-contained) ──────────
 
 def parse_ilang(filepath):
@@ -254,8 +262,7 @@ def verify_deploy_dir(site_dir):
     """Deploy gate: no page may ship with an add-on price as its "from" price.
 
     Scans the files that are actually about to be uploaded (live-site/), not build
-    output: the OVHcloud page is hand-maintained and copied in, never generated, so a
-    build-time check alone never sees it.
+    output: prices that matter are the ones in the directory wrangler uploads.
 
     Plan evidence, in this order:
       1. sibling Offer entries in the same JSON-LD (plans = what offer_kind() calls plan)
@@ -398,6 +405,127 @@ def gen_provider_page(brand, niche, domain, provider, offers):
         'DEAL_COUNT': len(prov_offers),
         'JSONLD': ',\n'.join(jsonld_parts) if jsonld_parts else '',
     })
+
+
+# ─── OVHCLOUD PAGE — GENERATED FROM DATA ─────────────────────────────────────
+# This page used to be hand-written and copied into the build; its "from" price could
+# therefore drift from offers.json and no build assertion ever saw it. It is now
+# rendered from the same data as every other page. Layout, prose, table structure and
+# the add-on markers are reproduced verbatim — only the source of the numbers changed.
+
+NUM_WORDS = {1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five', 6: 'Six'}
+
+
+def _ovh_offers(offers):
+    """(plans, addons) for OVHcloud, ordered by the data's own 'order' field."""
+    ovh = [o for o in offers
+           if o.get('provider') == 'OVHcloud' and o.get('price') is not None]
+
+    def key(o):
+        order = o.get('order')
+        return (order if isinstance(order, int) else 999, float(o['price']))
+
+    plans = sorted([o for o in ovh if offer_kind(o) == 'plan'], key=key)
+    addons = sorted([o for o in ovh if offer_kind(o) == 'addon'], key=key)
+    return plans, addons
+
+
+def gen_ovhcloud_page(offers, domain):
+    """Render provider-ovhcloud.html from data/offers.json."""
+    plans, addons = _ovh_offers(offers)
+    if not plans:
+        raise SystemExit(
+            'BUILD ABORTED: data/offers.json holds no OVHcloud plan offers — the generated '
+            'OVHcloud page would ship with no server rows. Check scraper.py\'s OVHcloud handler '
+            'and the carried-forward data.')
+
+    # Price table: every row in price order. Add-ons carry the visible marker that tells
+    # a reader the row is not a server.
+    rows = []
+    for o in sorted(plans + addons, key=lambda x: float(x['price'])):
+        price = fmt_price(o['price'], o.get('currency', 'USD'))
+        if offer_kind(o) == 'addon':
+            label = f'OVHcloud add-on — {esc(o["title"])}'
+            marker = '<br><span class="addon-tag">Add-on — needs a VPS plan</span>'
+        else:
+            label = f'From {price} /month'
+            marker = ''
+        rows.append(
+            '        <tr>\n'
+            f'          <td><a href="{esc(o.get("deal_url", "#"))}">{label}</a>{marker}</td>\n'
+            f'          <td class="price">{price}</td>\n'
+            f'          <td>{esc(o.get("currency", "USD"))}</td>\n'
+            '        </tr>')
+
+    # Structured data: the AggregateOffer covers the plans and only the plans.
+    prices = [float(o['price']) for o in plans]
+    agg = {
+        "@type": "AggregateOffer",
+        "lowPrice": f'{min(prices):.2f}',
+        "highPrice": f'{max(prices):.2f}',
+        "offerCount": len(plans),
+        "priceCurrency": plans[0].get('currency', 'USD'),
+        "description": (
+            f'{NUM_WORDS.get(len(plans), str(len(plans)))} OVHcloud VPS plans, each priced per '
+            'month: '
+            + ', '.join(f'{o["title"]} ${float(o["price"]):.2f}' for o in plans)
+            + '. VPS add-ons are listed as separate offers below and are not part of this price range.'),
+    }
+    check_aggregate(agg, plans, 'OVHcloud')
+
+    offer_list = [agg]
+    for o in addons:
+        offer_list.append({
+            "@type": "Offer",
+            "name": f'OVHcloud add-on - {o["title"]}',
+            "price": f'{float(o["price"]):.2f}',
+            "priceCurrency": o.get('currency', 'USD'),
+            "description": (
+                f'VPS add-on billed on top of a VPS plan, from ${float(o["price"]):.2f} per month. '
+                'It needs a VPS plan to be ordered first and is not a server, so it is not '
+                'counted in the plan price range.'),
+        })
+
+    product = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "OVHcloud VPS plans and VPS add-ons",
+        "offers": offer_list,
+    }
+    breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"https://{domain}/"},
+            {"@type": "ListItem", "position": 2, "name": "OVHcloud",
+             "item": f"https://{domain}/provider-ovhcloud"},
+        ],
+    }
+
+    tpl = load_template('provider-ovhcloud.html')
+    return render(tpl, {
+        'JSONLD_PRODUCT': json.dumps(product, indent=2),
+        'JSONLD_BREADCRUMB': json.dumps(breadcrumb, indent=2),
+        'ROWS': '\n'.join(rows),
+    })
+
+
+def write_generated_manifest(repo_dir, pages):
+    """Write the whitelist of data-generated pages.
+
+    Deterministic on purpose — no timestamp, sorted list — so an unchanged data set
+    produces a byte-identical file and CI does not commit noise every six hours.
+    """
+    path = Path(repo_dir) / GENERATED_MANIFEST
+    path.parent.mkdir(parents=True, exist_ok=True)
+    doc = {
+        'note': ('Pages build.py generates from data/offers.json. verify_deploy_dir() blocks any '
+                 'page that carries an AggregateOffer without being listed here.'),
+        'pages': sorted(pages),
+    }
+    text = json.dumps(doc, indent=2, ensure_ascii=False) + '\n'
+    path.write_bytes(text.replace('\n', '\r\n').encode('utf-8'))
+    return path
 
 
 def gen_deal_page(brand, niche, domain, offer, provider):
@@ -668,6 +796,20 @@ def main():
         (site_dir / 'provider' / f'{slug(prov["name"])}.html').write_text(html_out, encoding='utf-8')
         sitemap_pages.append((f'https://{domain}/provider/{slug(prov["name"])}.html', ts))
 
+    # 2b. OVHcloud page — generated from data/offers.json, written into the deploy source
+    #     (live-site/) as well as site/, so the published page cannot drift from the data.
+    #     Its name goes into the generated-page manifest that the deploy gate whitelists.
+    print('Generating provider-ovhcloud.html from data/offers.json ...')
+    live_dir = script_dir / 'live-site'
+    generated = {'provider-ovhcloud.html'}
+    ovh_html = gen_ovhcloud_page(offers, domain).replace('\n', '\r\n').encode('utf-8')
+    for target_dir in (live_dir, site_dir):
+        target_dir.mkdir(exist_ok=True)
+        (target_dir / 'provider-ovhcloud.html').write_bytes(ovh_html)
+    manifest_path = write_generated_manifest(script_dir, generated)
+    print(f'  generated {len(generated)} page(s); manifest: '
+          f'{manifest_path.relative_to(script_dir).as_posix()}')
+
     # 3. Deal pages
     for offer in offers:
         if offer.get('price') is None:
@@ -718,6 +860,8 @@ def main():
 
     # 10. Copy live-site/ files (manually crafted pages, articles, 404, sitemap)
     #     These override the build-generated versions with production-curated content.
+    #     Exception: pages in `generated` are written by the build itself (step 2b), so they
+    #     are NOT copied — copying them was the path that let a hand-written page survive.
     print('Copying live-site/ files to site/ ...')
     import shutil
     live_dir = script_dir / 'live-site'
@@ -736,6 +880,9 @@ def main():
         copied = 0
         for item in live_dir.iterdir():
             if item.is_file():
+                if item.name in generated:
+                    print(f'  Skipped {item.name} (generated from data, never copied)')
+                    continue
                 dest = site_dir / item.name
                 shutil.copy2(str(item), str(dest))
                 print(f'  Copied {item.name}')

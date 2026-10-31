@@ -8,6 +8,7 @@
   Vultr | https://www.vultr.com | https://www.vultr.com/pricing |
   Hostinger | https://www.hostinger.com | https://www.hostinger.com/vps-hosting |
   ScalaHosting | https://www.scalahosting.com | https://www.scalahosting.com/vps-hosting |
+  OVHcloud | https://www.ovhcloud.com | https://www.ovhcloud.com/en/vps/ |
 
 ::MODULE{FIELDS|title:每条优惠提取什么}
   title price currency offer_url valid_until source_url fetched_at

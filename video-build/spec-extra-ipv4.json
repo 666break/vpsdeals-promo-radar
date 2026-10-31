@@ -1,0 +1,66 @@
+{
+  "slug": "vps-price-extra-ipv4",
+  "brand": "SERVERBUDGET",
+  "source_page": "https://serverbudget.com/vps-price-extra-ipv4",
+  "slides": [
+    {
+      "kicker": "VPS PRICE · PART 4",
+      "headline": "What an extra IPv4 costs",
+      "small": false,
+      "caption": "One extra IPv4 is its own line item: sixty cents a month at Hetzner, two dollars forty at OVHcloud, five dollars at DigitalOcean."
+    },
+    {
+      "kicker": "SECOND ADDRESS ONWARD",
+      "headline": "Three published prices",
+      "small": true,
+      "stats": [
+        { "value": "$0.60", "label": "Hetzner", "sub": "Primary IPv4, excl. VAT" },
+        { "value": "$2.40", "label": "OVHcloud", "sub": "per IP, Additional IPv4" },
+        { "value": "$5.00", "label": "DigitalOcean", "sub": "unassigned only" }
+      ],
+      "caption": "All three include the first address with the server. Between sixty cents and five dollars the spread is eight point three times."
+    },
+    {
+      "kicker": "DIGITALOCEAN",
+      "headline": "Assigned is free, parked is $5.00",
+      "small": true,
+      "stats": [
+        { "value": "$0.00", "label": "assigned", "sub": "attached to a Droplet" },
+        { "value": "$0.01", "label": "per hour", "sub": "while unassigned" },
+        { "value": "$5.00", "label": "monthly cap", "sub": "at 500 hours" }
+      ],
+      "caption": "DigitalOcean's five dollars applies only when the address is unassigned. Attached to a Droplet it costs nothing; parked, a penny an hour up to five dollars."
+    },
+    {
+      "kicker": "THE MONTHLY PRICE IS NOT A MONTH",
+      "headline": "500, 600 and 625 hours",
+      "small": true,
+      "stats": [
+        { "value": "500 h", "label": "DigitalOcean", "sub": "$5.00 / $0.01 = 20.8 days" },
+        { "value": "600 h", "label": "Hetzner USD", "sub": "$0.60 / $0.0010 = 25.0 days" },
+        { "value": "625 h", "label": "Hetzner EUR", "sub": "€0.50 / €0.0008 = 26.0 days" }
+      ],
+      "caption": "Divide monthly by hourly and the caps land at five hundred hours at DigitalOcean, six hundred at Hetzner in dollars, six hundred twenty-five in euros."
+    },
+    {
+      "kicker": "ONE ADDRESS AS A SHARE OF THE SERVER",
+      "headline": "125% and 52.9%",
+      "small": true,
+      "stats": [
+        { "value": "125%", "label": "DigitalOcean", "sub": "$5.00 against a $4.00 Droplet" },
+        { "value": "52.9%", "label": "OVHcloud", "sub": "$2.40 against VPS-1 at $4.54" }
+      ],
+      "caption": "A parked address is one hundred twenty-five percent of DigitalOcean's four-dollar Droplet; OVHcloud's two forty is fifty-two point nine percent of a four fifty-four server."
+    },
+    {
+      "kicker": "THE CEILING",
+      "headline": "16 addresses, $38.40, 8.46x",
+      "small": true,
+      "stats": [
+        { "value": "$38.40", "label": "16 × $2.40", "sub": "OVHcloud's per-VPS maximum" },
+        { "value": "8.46x", "label": "against $4.54", "sub": "the VPS-1 server price" }
+      ],
+      "caption": "Sixteen addresses at OVHcloud is thirty-eight forty a month, eight point four six times the server. Powering off changes none of it."
+    }
+  ]
+}

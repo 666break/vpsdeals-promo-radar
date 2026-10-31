@@ -136,6 +136,8 @@ if CHECK_ONLY:
 # in SITE_DIR that are about to be uploaded -- including provider-ovhcloud.html, which
 # build.py now generates from data/offers.json -- and reuses build.py's
 # offer_kind()/check_aggregate(), so there is one rule, not two.
+# It also refuses any page that carries an AggregateOffer without being listed in
+# data/generated_pages.json: a page nobody generates has no data behind its prices.
 # It raises SystemExit, so the deploy dies here, before wrangler is invoked.
 if REPO not in sys.path:
     sys.path.insert(0, REPO)

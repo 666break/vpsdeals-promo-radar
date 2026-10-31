@@ -258,18 +258,51 @@ def _page_price_rows(html_text):
     return rows
 
 
-def verify_deploy_dir(site_dir):
+def load_generated_manifest(site_dir, manifest_path=None):
+    """Read the whitelist of pages build.py generated from data/offers.json.
+
+    A missing or malformed manifest is a hard failure, never a warning: without the
+    list the gate cannot tell a generated page from a hand-written one, and "cannot
+    tell" must never be treated as "fine". An empty list is legitimate — it means no
+    page is data-generated, so every AggregateOffer page gets blocked, which is the
+    safe direction.
+    """
+    root = Path(site_dir)
+    path = Path(manifest_path) if manifest_path else root.parent / GENERATED_MANIFEST
+    if not path.is_file():
+        raise SystemExit(
+            f'DEPLOY BLOCKED: generated-page manifest not found at {path}. Run build.py first — '
+            f'the deploy gate refuses to run without its whitelist.')
+    try:
+        data = json.loads(path.read_text(encoding='utf-8'))
+    except (OSError, ValueError) as e:
+        raise SystemExit(f'DEPLOY BLOCKED: generated-page manifest {path} is unreadable ({e}).')
+    pages = data.get('pages') if isinstance(data, dict) else None
+    if not isinstance(pages, list):
+        raise SystemExit(
+            f'DEPLOY BLOCKED: generated-page manifest {path} has no "pages" list — the whitelist '
+            f'is what makes the check meaningful, so a manifest without it is broken, not empty.')
+    allowed = {str(p).replace('\\', '/').lstrip('/') for p in pages}
+    return allowed, path
+
+
+def verify_deploy_dir(site_dir, manifest_path=None):
     """Deploy gate: no page may ship with an add-on price as its "from" price.
 
     Scans the files that are actually about to be uploaded (live-site/), not build
     output: prices that matter are the ones in the directory wrangler uploads.
 
-    Plan evidence, in this order:
-      1. sibling Offer entries in the same JSON-LD (plans = what offer_kind() calls plan)
-      2. the page's own price table (plans = rows without the visible add-on marker)
-    Both feed the SAME check_aggregate() the generator calls — there is no second copy
-    of the rule. No evidence, or any mismatch, raises SystemExit: the deploy fails, it
-    never warns and continues.
+    Two things are enforced, in this order:
+      0. whitelist — a page carrying an AggregateOffer must be listed in the
+         generated-page manifest. Pages outside it were not built from the data, so
+         nothing guarantees their price range is a server price; the deploy stops.
+      1. numbers — plan evidence comes from sibling Offer entries in the same JSON-LD,
+         else from the page's own price table (plans = rows without the visible add-on
+         marker). Both feed the SAME check_aggregate() the generator calls — there is
+         no second copy of the rule.
+
+    No evidence, an unlisted page, or any mismatch raises SystemExit: the deploy
+    fails, it never warns and continues.
     """
     root = Path(site_dir)
     if not root.is_dir():
@@ -279,12 +312,19 @@ def verify_deploy_dir(site_dir):
     if not pages:
         raise SystemExit(f'DEPLOY BLOCKED: {site_dir} holds no .html pages — an empty scan is '
                          f'not a pass.')
+    allowed, manifest_file = load_generated_manifest(root, manifest_path)
     verified = []
     for page in pages:
         text = page.read_text(encoding='utf-8', errors='ignore')
         if 'AggregateOffer' not in text:
             continue
         rel = page.relative_to(root).as_posix()
+        if rel not in allowed:
+            raise SystemExit(
+                f'DEPLOY BLOCKED: {rel} carries an AggregateOffer but is not in the generated-page '
+                f'manifest ({manifest_file.name}). Only pages build.py generates from '
+                f'data/offers.json may publish structured pricing — give this page a generator, '
+                f'or drop its AggregateOffer.  [file: {rel}]')
         rows = _page_price_rows(text)
         table_plans = [{'price': p} for p, is_addon in rows if not is_addon]
         table_addons = [{'price': p} for p, is_addon in rows if is_addon]
@@ -312,7 +352,8 @@ def verify_deploy_dir(site_dir):
                 verified.append((rel, agg.get('lowPrice'), agg.get('offerCount'),
                                  'json' if json_plans else 'table'))
     print(f'  deploy gate: scanned {len(pages)} html page(s) under {root.name}/, '
-          f'verified {len(verified)} AggregateOffer(s)')
+          f'verified {len(verified)} AggregateOffer(s), '
+          f'whitelist {len(allowed)} generated page(s) from {manifest_file.name}')
     for rel, low, count, src in verified:
         print(f'    {rel}: lowPrice={low} offerCount={count} (plans from {src})')
     return verified

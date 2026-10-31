@@ -151,6 +151,57 @@ def gen_index(brand, niche, domain, offers, providers):
     })
 
 
+# ─── OFFER CLASSIFICATION: plan vs add-on ───────────────────────────────────
+# Some scraped prices are VPS *add-ons* (automatic backup, snapshots), not servers:
+# they are billed on top of a plan and cannot be bought on their own, so they must
+# never set a provider page's "from" price. Two sources of truth, in this order:
+#   1. an explicit `kind` field on the offer ("plan" / "addon"); legacy `type` works too
+#   2. the offer title: words that only ever describe an option, never a server
+# Deliberately NOT a price threshold: an add-on is not "anything cheaper than the
+# cheapest plan", and a cheap plan is still a plan.
+# Titles that only ever describe a VPS option, never a server. Kept narrow on
+# purpose: a bare "backup" is ambiguous — DigitalOcean sells "Database & Backups"
+# as its own product — so "backup" only counts when the title also says
+# automatic / premium / manual / option.
+ADDON_TITLE_WORDS = ('add-on', 'addon', 'snapshot')
+ADDON_BACKUP_WORDS = ('automatic', 'premium', 'manual', 'option')
+
+
+def offer_kind(offer):
+    """Return 'plan' or 'addon' for one offer from offers.json."""
+    explicit = str(offer.get('kind') or offer.get('type') or '').strip().lower()
+    if explicit in ('plan', 'vps', 'server'):
+        return 'plan'
+    if explicit in ('addon', 'add-on', 'option'):
+        return 'addon'
+    title = str(offer.get('title') or '').lower()
+    if any(w in title for w in ADDON_TITLE_WORDS):
+        return 'addon'
+    if 'backup' in title and any(w in title for w in ADDON_BACKUP_WORDS):
+        return 'addon'
+    return 'plan'
+
+
+def check_aggregate(agg_offer, plan_offers, provider_name):
+    """Build-time guard: an AggregateOffer may describe the plans and only the plans.
+
+    Raises SystemExit — so the build dies instead of shipping a page whose "from"
+    price is an add-on — when lowPrice or offerCount disagrees with the plan list.
+    """
+    expected_low = round(min(o['price'] for o in plan_offers), 2)
+    got_low = round(float(agg_offer['lowPrice']), 2)
+    if got_low != expected_low:
+        raise SystemExit(
+            f'BUILD ABORTED: {provider_name} AggregateOffer.lowPrice={got_low:.2f} but the '
+            f'cheapest plan is {expected_low:.2f}. An add-on price is leaking into the plan '
+            f'range — check offer_kind() and the offers.json data.')
+    if int(agg_offer['offerCount']) != len(plan_offers):
+        raise SystemExit(
+            f'BUILD ABORTED: {provider_name} AggregateOffer.offerCount={agg_offer["offerCount"]} '
+            f'but there are {len(plan_offers)} plans. Add-ons must be separate Offer entries, '
+            f'not counted in the plan aggregate.')
+
+
 def gen_provider_page(brand, niche, domain, provider, offers):
     """One page per provider: their deals + AggregateOffer."""
     p_slug = slug(provider['name'])
@@ -168,22 +219,42 @@ def gen_provider_page(brand, niche, domain, provider, offers):
           <div class="card-price">{fmt_price(o.get("price"), o.get("currency","USD"))}<span class="per">/mo</span></div>
         </a>''')
 
-    # JSON-LD: Service with AggregateOffer
+    # JSON-LD: Service whose AggregateOffer covers the PLANS only; add-ons are
+    # separate Offer entries, never folded into lowPrice/highPrice/offerCount.
+    plan_offers = [o for o in prov_offers if offer_kind(o) == 'plan']
+    addon_offers = [o for o in prov_offers if offer_kind(o) == 'addon']
+
     jsonld_parts = []
     if prov_offers:
-        prices = [o['price'] for o in prov_offers]
+        offers_jsonld = []
+        if plan_offers:
+            prices = [o['price'] for o in plan_offers]
+            agg_offer = {
+                "@type": "AggregateOffer",
+                "lowPrice": f'{min(prices):.2f}',
+                "highPrice": f'{max(prices):.2f}',
+                "priceCurrency": plan_offers[0].get('currency', 'USD'),
+                "offerCount": len(plan_offers),
+            }
+            check_aggregate(agg_offer, plan_offers, provider['name'])
+            offers_jsonld.append(agg_offer)
+        for o in addon_offers:
+            offers_jsonld.append({
+                "@type": "Offer",
+                "name": f'{provider["name"]} add-on - {o["title"]}',
+                "price": f'{o["price"]:.2f}',
+                "priceCurrency": o.get('currency', 'USD'),
+                "description": ('VPS add-on billed on top of a VPS plan; it needs a plan to be '
+                                'ordered first and is not a server, so it is not counted in the '
+                                'plan price range.'),
+            })
         agg = {
             "@context": "https://schema.org",
             "@type": "Service",
             "name": f'{provider["name"]} VPS Hosting',
             "url": provider['website'],
-            "offers": {
-                "@type": "AggregateOffer",
-                "lowPrice": f'{min(prices):.2f}',
-                "highPrice": f'{max(prices):.2f}',
-                "priceCurrency": prov_offers[0].get('currency', 'USD'),
-                "offerCount": len(prov_offers),
-            }
+            # one aggregate keeps the old single-object shape; with add-ons it is a list
+            "offers": offers_jsonld[0] if len(offers_jsonld) == 1 else offers_jsonld,
         }
         jsonld_parts.append(json.dumps(agg, indent=2))
 
@@ -199,7 +270,8 @@ def gen_provider_page(brand, niche, domain, provider, offers):
     jsonld_parts.append(breadcrumb)
 
     title = f'{provider["name"]} VPS Pricing & Deals ({month_name()}) | {brand.capitalize()}'
-    desc = f'{provider["name"]} VPS plans from {fmt_price(prov_offers[0].get("price"), prov_offers[0].get("currency","USD")) if prov_offers else "N/A"}/mo. {len(prov_offers)} live plans with real prices.'
+    headline_offer = plan_offers[0] if plan_offers else (prov_offers[0] if prov_offers else None)
+    desc = f'{provider["name"]} VPS plans from {fmt_price(headline_offer.get("price"), headline_offer.get("currency","USD")) if headline_offer else "N/A"}/mo. {len(prov_offers)} live plans with real prices.'
 
     tpl = load_template('provider.html')
     return render(tpl, {

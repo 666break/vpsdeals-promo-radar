@@ -131,6 +131,16 @@ footer a{color:var(--primary)}
 .quote{margin:0 0 14px;padding:10px 16px;background:var(--surface-2);border-left:3px solid var(--border);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.9rem;color:var(--muted)}
 .quote b{color:var(--text)}
 .method li{margin-bottom:10px}
+/* Three-tier compare */
+.count{display:inline-block;vertical-align:middle;margin-left:10px;padding:3px 10px;border-radius:999px;background:#eef3ff;color:var(--primary);font-size:.8rem;font-weight:700;letter-spacing:.02em}
+.basis{color:var(--muted);font-size:.92rem;margin:-6px 0 14px}
+.conclusion{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 18px;margin:0 0 18px;font-size:.97rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.excluded{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;margin:0 0 8px;font-size:.9rem;color:var(--muted)}
+.excluded p{margin-bottom:8px;color:var(--muted)}
+.excluded ul{margin:0 0 0 1.2rem}
+.excluded li{margin-bottom:6px}
+.stats-note{font-size:.86rem;color:var(--muted);margin:-18px 0 30px;max-width:78ch}
+.stats-note code{background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:.86em}
 </style>
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
@@ -158,24 +168,28 @@ footer a{color:var(--primary)}
 
     <p class="lead">{{LEAD}}</p>
 
-    <h2>The same tier, priced three ways</h2>
-    <p>Same 2 vCPU and same 4 GB of memory in all three rows. Only the storage and the billing term differ, and both are stated instead of smoothed away.</p>
-    <div class="table-wrap">
-    <table>
-        <thead><tr><th>Provider</th><th>Plan</th><th>vCPU</th><th>RAM</th><th>Storage</th><th>$/mo</th><th>$/GB RAM</th><th>$/vCPU</th><th>$/GB storage</th><th>Source</th></tr></thead>
-        <tbody>
-{{TIER_ROWS}}
-        </tbody>
-    </table>
-    </div>
+    <h2>Three tiers, and who takes part in each</h2>
+    <p>Entry is the cheapest plan a provider sells with a published spec, mid is an exact 2 vCPU / 4 GB match, high is the most expensive plan it sells with a published spec. A provider that cannot enter a tier is named under the table with the reason, so no row disappears quietly. Participant counts, spreads and the cheapest-per-GB name are all computed from <code>data/offers.json</code> on each build.</p>
+{{TIER_SECTIONS}}
 
-    <h2>What the headline price does not include</h2>
-    <p>Read down a column to see what one provider charges on top of the plan price. Where a page does not price something, the cell says so instead of guessing.</p>
+    <h2 id="entry-hidden">Entry tier: what the headline price does not include</h2>
+    <p>The entry plan is the one most likely to be bought on impulse, so it gets the full hidden-cost treatment. Read down a column to see what one provider charges on top of the plan price; where a page does not price something, the cell says so instead of guessing.</p>
     <div class="table-wrap">
     <table>
         <thead><tr><th>Cost</th>{{HIDDEN_HEAD}}</tr></thead>
         <tbody>
 {{HIDDEN_ROWS}}
+        </tbody>
+    </table>
+    </div>
+
+    <h3>The renewal gap on the entry plan</h3>
+    <p>A low entry price is often a first-term price. This table divides the published renewal rate by the published first-term rate; where the page publishes no renewal rate, the cell says <em>cannot compute</em> rather than assuming the price holds.</p>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Provider</th><th>Plan</th><th>Price now</th><th>Renewal</th><th>Renewal gap</th><th>How it is billed</th></tr></thead>
+        <tbody>
+{{RENEWAL_ROWS}}
         </tbody>
     </table>
     </div>
@@ -186,14 +200,14 @@ footer a{color:var(--primary)}
         <li><strong>$/vCPU</strong> = monthly price &divide; vCPU count.</li>
         <li><strong>$/GB storage</strong> = monthly price &divide; included NVMe/SSD in GB.</li>
     </ul>
-    <p>Nothing is weighted, averaged or normalised beyond that division. Unit costs are rounded half-up to two decimals for display; the spreads in the sentence above are computed from the unrounded values.</p>
+    <p>Nothing is weighted, averaged or normalised beyond that division. Each unit cost is printed as the exact quotient wherever it terminates &mdash; $1.135 is 4.54 &divide; 4, $0.97375 is 23.37 &divide; 24 &mdash; and rounded half-up to four decimals only where it never terminates. The spreads are computed from the unrounded values.</p>
 
     <h2>What each official page says, word for word</h2>
     <p>The numbers above are only as good as the pages they came from, so here are the sentences they came from.</p>
 {{EVIDENCE}}
 
     <h2>One caveat that changes the ranking</h2>
-    <p>The three prices are not billed the same way. OVHcloud's figure is the 12-month-upfront rate on its configurator, ScalaHosting's is a 12-month-prepaid rate that renews higher, and DigitalOcean bills per second. A headline that is cheap because it locks in a year is not the same offer as one you can leave next month &mdash; that is why the billing-term row sits in the table above rather than in a footnote.</p>
+    <p>The three providers are not billed the same way, and the gap widens as you climb the tiers. OVHcloud's figures are 12-month-upfront rates on its own configurator, ScalaHosting's are 12-month-prepaid rates that renew higher, and DigitalOcean bills per second. A headline that is cheap because it locks in a year is not the same offer as one you can leave next month &mdash; that is why the billing-term row and the renewal gap sit in the tables above rather than in a footnote.</p>
 
     <div class="generated">Prices read from the official pages on {{READ_DATE}}</div>
 

@@ -1,10 +1,7 @@
 {
   "note": "Hidden-cost cells are transcribed from the provider's own pricing page on the date shown. Each cell carries the exact sentence it came from. Where a page does not price an item, the cell says 'none listed on official page' instead of estimating one.",
-  "tier": {
-    "vcpu": 2,
-    "ram_gb": 4,
-    "label": "2 vCPU / 4 GB"
-  },
+  "matrix_tier": "entry",
+  "matrix_note": "Cells are provider-level facts, not plan-level ones, so they apply to every tier except bandwidth, which is quoted for the entry plan with the mid-tier figure alongside.",
   "items": [
     { "key": "backup", "label": "Backup" },
     { "key": "snapshot", "label": "Snapshots" },
@@ -56,8 +53,8 @@
           "quote": "By default, each Droplet you create comes with its own public IPv4 address. […] For Bundled Plans, a public IPv4 is included at no extra cost."
         },
         "bandwidth": {
-          "value": "4,000 GiB outbound included on this tier; overage rate none listed on official page",
-          "quote": "Each Droplet includes a generous amount of free outbound data transfer. […] starting from 500 GiB/month. Inbound bandwidth is always free."
+          "value": "1,000 GiB outbound on the $6 / 1 GiB Droplet; the $24 / 4 GiB Droplet on the same table carries 4,000 GiB. Overage rate none listed on official page",
+          "quote": "Memory vCPU Transfer SSD $/hr $/mo — 1 GiB 1 vCPU 1,000 GiB 25 GiB $0.00893 $ 6.00 … 4 GiB 2 vCPUs 4,000 GiB 80 GiB $0.03571 $ 24.00 (Droplets pricing table, Regular CPU)"
         },
         "term": {
           "value": "Per-second billing, no annual commitment listed",

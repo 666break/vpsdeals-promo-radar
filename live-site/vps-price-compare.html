@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VPS price per GB of RAM: 2 vCPU / 4 GB compared across 3 providers | ServerBudget</title>
-    <meta name="description" content="The same 2 vCPU / 4 GB tier at DigitalOcean, OVHcloud, ScalaHosting: $4.54 to $24.00 per month, 5.29x apart.">
+    <title>VPS price per GB: entry, 2 vCPU / 4 GB and high tiers at 3 providers | ServerBudget</title>
+    <meta name="description" content="Three tiers priced across DigitalOcean, OVHcloud, ScalaHosting: entry $4.54-$22.46, 2 vCPU / 4 GB $4.54-$24.00, high $23.37-$96.00 per month.">
     <link rel="canonical" href="https://serverbudget.com/vps-price-compare">
 
-    <meta property="og:title" content="VPS price per GB of RAM: 2 vCPU / 4 GB compared across 3 providers | ServerBudget">
+    <meta property="og:title" content="VPS price per GB: entry, 2 vCPU / 4 GB and high tiers at 3 providers | ServerBudget">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://serverbudget.com/vps-price-compare">
     <meta name="twitter:card" content="summary">
@@ -15,7 +15,7 @@
     <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "VPS price per GB of RAM: 2 vCPU / 4 GB compared across 3 providers | ServerBudget",
+  "name": "VPS price per GB: entry, 2 vCPU / 4 GB and high tiers at 3 providers | ServerBudget",
   "url": "https://serverbudget.com/vps-price-compare",
   "dateModified": "2026-10-31",
   "breadcrumb": {
@@ -154,6 +154,16 @@ footer a{color:var(--primary)}
 .quote{margin:0 0 14px;padding:10px 16px;background:var(--surface-2);border-left:3px solid var(--border);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.9rem;color:var(--muted)}
 .quote b{color:var(--text)}
 .method li{margin-bottom:10px}
+/* Three-tier compare */
+.count{display:inline-block;vertical-align:middle;margin-left:10px;padding:3px 10px;border-radius:999px;background:#eef3ff;color:var(--primary);font-size:.8rem;font-weight:700;letter-spacing:.02em}
+.basis{color:var(--muted);font-size:.92rem;margin:-6px 0 14px}
+.conclusion{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--primary);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 18px;margin:0 0 18px;font-size:.97rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.excluded{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 20px;margin:0 0 8px;font-size:.9rem;color:var(--muted)}
+.excluded p{margin-bottom:8px;color:var(--muted)}
+.excluded ul{margin:0 0 0 1.2rem}
+.excluded li{margin-bottom:6px}
+.stats-note{font-size:.86rem;color:var(--muted);margin:-18px 0 30px;max-width:78ch}
+.stats-note code{background:var(--surface-2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;font-size:.86em}
 </style>
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2F4PWVG2P"></script>
@@ -168,7 +178,7 @@ footer a{color:var(--primary)}
 <div class="container">
     <header>
         <div class="breadcrumb"><a href="/">Home</a> / Price per GB</div>
-        <h1>VPS price per GB of RAM — the same 2 vCPU / 4 GB tier at DigitalOcean, OVHcloud, ScalaHosting</h1>
+        <h1>VPS price per GB of RAM — three tiers, 3 providers, one division per number</h1>
         <div class="nav">
             <a href="/">All Deals</a>
             <a href="/compare">Compare</a>
@@ -179,14 +189,64 @@ footer a{color:var(--primary)}
         </div>
     </header>
 
-    <p class="lead">At the same 2 vCPU / 4 GB tier the monthly price runs from $4.54 at OVHcloud to $24.00 at DigitalOcean — a 5.29x spread. Per GB of RAM that is $1.135 against $6.00, 5.29x; per GB of storage $0.1135 against $0.4492, a 3.96x spread.</p>
+    <p class="lead">Three tiers, 4 providers priced in data/offers.json, 3 of them with a published spec. The entry tier runs $4.54 to $22.46 a month (4.95× apart) and $1.135 to $6.00 per GB of RAM (5.29×); the 2 vCPU / 4 GB tier $4.54 to $24.00 (5.29×) and $1.135 to $6.00 per GB (5.29×); the high tier $23.37 to $96.00 (4.11×) and $0.97375 to $6.00 per GB (6.16×). Every figure is a published price divided by a published spec.</p>
 
-    <h2>The same tier, priced three ways</h2>
-    <p>Same 2 vCPU and same 4 GB of memory in all three rows. Only the storage and the billing term differ, and both are stated instead of smoothed away.</p>
-    <div class="table-wrap">
-    <table>
-        <thead><tr><th>Provider</th><th>Plan</th><th>vCPU</th><th>RAM</th><th>Storage</th><th>$/mo</th><th>$/GB RAM</th><th>$/vCPU</th><th>$/GB storage</th><th>Source</th></tr></thead>
-        <tbody>
+    <h2>Three tiers, and who takes part in each</h2>
+    <p>Entry is the cheapest plan a provider sells with a published spec, mid is an exact 2 vCPU / 4 GB match, high is the most expensive plan it sells with a published spec. A provider that cannot enter a tier is named under the table with the reason, so no row disappears quietly. Participant counts, spreads and the cheapest-per-GB name are all computed from <code>data/offers.json</code> on each build.</p>
+<h2 id="tier-entry">Entry tier <span class="count">3 providers</span></h2>
+<p class="basis">Tier definition: the cheapest plan each provider sells with a published spec.</p>
+<p class="conclusion">Entry tier — <strong>3 of 4</strong> priced providers take part. Monthly price $4.54 to $22.46, a <strong>4.95×</strong> spread; per GB of RAM $1.135 to $6.00, 5.29×; per vCPU $2.27 to $11.23, 4.95×; per GB of storage $0.1135 to $0.4492, 3.96×. Cheapest per GB of RAM: OVHcloud at $1.135.</p>
+<div class="table-wrap">
+<table>
+    <thead><tr><th>Provider</th><th>Plan</th><th>vCPU</th><th>RAM</th><th>Storage</th><th>$/mo</th><th>$/GB RAM</th><th>$/vCPU</th><th>$/GB storage</th><th>Source</th></tr></thead>
+    <tbody>
+        <tr>
+          <td><strong>DigitalOcean</strong></td>
+          <td>Basic 1 vCPU / 1 GiB</td>
+          <td>1</td>
+          <td>1 GB</td>
+          <td>25 GB</td>
+          <td class="price">$6.00</td>
+          <td class="unit">$6.00</td>
+          <td class="unit">$6.00</td>
+          <td class="unit">$0.24</td>
+          <td><a href="https://www.digitalocean.com/pricing/droplets">official page</a><br><span class="src">read 2026-10-31</span></td>
+        </tr>
+        <tr>
+          <td><strong>OVHcloud</strong></td>
+          <td>VPS-1</td>
+          <td>2</td>
+          <td>4 GB</td>
+          <td>40 GB</td>
+          <td class="price">$4.54</td>
+          <td class="unit best">$1.135</td>
+          <td class="unit">$2.27</td>
+          <td class="unit">$0.1135</td>
+          <td><a href="https://www.ovhcloud.com/en/vps/">official page</a><br><span class="src">read 2026-10-31</span></td>
+        </tr>
+        <tr>
+          <td><strong>ScalaHosting</strong></td>
+          <td>Build #1<span class="cell-note">billed 12 months up front; renews $54.95/mo</span></td>
+          <td>2</td>
+          <td>4 GB</td>
+          <td>50 GB</td>
+          <td class="price">$22.46</td>
+          <td class="unit">$5.615</td>
+          <td class="unit">$11.23</td>
+          <td class="unit">$0.4492</td>
+          <td><a href="https://www.scalahosting.com/vps-hosting">official page</a><br><span class="src">read 2026-10-31</span></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="excluded"><p><strong>Not in this tier, and why:</strong></p><ul><li><strong>Hostinger</strong> — price only — data/offers.json holds a monthly price but no vCPU, RAM or storage for this provider, so it cannot be placed on a tier without inventing the specs</li></ul></div>
+<h2 id="tier-mid">Mid tier — 2 vCPU / 4 GB <span class="count">3 providers</span></h2>
+<p class="basis">Tier definition: an exact 2 vCPU and 4 GB match, nothing bent to the nearest.</p>
+<p class="conclusion">Mid tier — 2 vCPU / 4 GB — <strong>3 of 4</strong> priced providers take part. Monthly price $4.54 to $24.00, a <strong>5.29×</strong> spread; per GB of RAM $1.135 to $6.00, 5.29×; per vCPU $2.27 to $12.00, 5.29×; per GB of storage $0.1135 to $0.4492, 3.96×. Cheapest per GB of RAM: OVHcloud at $1.135.</p>
+<div class="table-wrap">
+<table>
+    <thead><tr><th>Provider</th><th>Plan</th><th>vCPU</th><th>RAM</th><th>Storage</th><th>$/mo</th><th>$/GB RAM</th><th>$/vCPU</th><th>$/GB storage</th><th>Source</th></tr></thead>
+    <tbody>
         <tr>
           <td><strong>DigitalOcean</strong></td>
           <td>Basic 2 vCPU / 4 GiB</td>
@@ -206,7 +266,7 @@ footer a{color:var(--primary)}
           <td>4 GB</td>
           <td>40 GB</td>
           <td class="price">$4.54</td>
-          <td class="unit">$1.135</td>
+          <td class="unit best">$1.135</td>
           <td class="unit">$2.27</td>
           <td class="unit">$0.1135</td>
           <td><a href="https://www.ovhcloud.com/en/vps/">official page</a><br><span class="src">read 2026-10-31</span></td>
@@ -223,12 +283,60 @@ footer a{color:var(--primary)}
           <td class="unit">$0.4492</td>
           <td><a href="https://www.scalahosting.com/vps-hosting">official page</a><br><span class="src">read 2026-10-31</span></td>
         </tr>
-        </tbody>
-    </table>
-    </div>
+    </tbody>
+</table>
+</div>
+<div class="excluded"><p><strong>Not in this tier, and why:</strong></p><ul><li><strong>Hostinger</strong> — price only — data/offers.json holds a monthly price but no vCPU, RAM or storage for this provider, so it cannot be placed on a tier without inventing the specs</li></ul></div>
+<h2 id="tier-high">High tier <span class="count">3 providers</span></h2>
+<p class="basis">Tier definition: the most expensive plan each provider sells with a published spec.</p>
+<p class="conclusion">High tier — <strong>3 of 4</strong> priced providers take part. Monthly price $23.37 to $96.00, a <strong>4.11×</strong> spread; per GB of RAM $0.97375 to $6.00, 6.16×; per vCPU $2.92125 to $12.00, 4.11×; per GB of storage $0.11685 to $0.35605, 3.05×. Cheapest per GB of RAM: OVHcloud at $0.97375.</p>
+<div class="table-wrap">
+<table>
+    <thead><tr><th>Provider</th><th>Plan</th><th>vCPU</th><th>RAM</th><th>Storage</th><th>$/mo</th><th>$/GB RAM</th><th>$/vCPU</th><th>$/GB storage</th><th>Source</th></tr></thead>
+    <tbody>
+        <tr>
+          <td><strong>DigitalOcean</strong></td>
+          <td>Basic 8 vCPU / 16 GiB</td>
+          <td>8</td>
+          <td>16 GB</td>
+          <td>320 GB</td>
+          <td class="price">$96.00</td>
+          <td class="unit">$6.00</td>
+          <td class="unit">$12.00</td>
+          <td class="unit">$0.30</td>
+          <td><a href="https://www.digitalocean.com/pricing/droplets">official page</a><br><span class="src">read 2026-10-31</span></td>
+        </tr>
+        <tr>
+          <td><strong>OVHcloud</strong></td>
+          <td>VPS-4</td>
+          <td>8</td>
+          <td>24 GB</td>
+          <td>200 GB</td>
+          <td class="price">$23.37</td>
+          <td class="unit best">$0.97375</td>
+          <td class="unit">$2.92125</td>
+          <td class="unit">$0.11685</td>
+          <td><a href="https://www.ovhcloud.com/en/vps/">official page</a><br><span class="src">read 2026-10-31</span></td>
+        </tr>
+        <tr>
+          <td><strong>ScalaHosting</strong></td>
+          <td>Build #4<span class="cell-note">billed 12 months up front; renews $244.95/mo</span></td>
+          <td>12</td>
+          <td>24 GB</td>
+          <td>200 GB</td>
+          <td class="price">$71.21</td>
+          <td class="unit">$2.9671</td>
+          <td class="unit">$5.9342</td>
+          <td class="unit">$0.35605</td>
+          <td><a href="https://www.scalahosting.com/vps-hosting">official page</a><br><span class="src">read 2026-10-31</span></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="excluded"><p><strong>Not in this tier, and why:</strong></p><ul><li><strong>Hostinger</strong> — price only — data/offers.json holds a monthly price but no vCPU, RAM or storage for this provider, so it cannot be placed on a tier without inventing the specs</li></ul></div>
 
-    <h2>What the headline price does not include</h2>
-    <p>Read down a column to see what one provider charges on top of the plan price. Where a page does not price something, the cell says so instead of guessing.</p>
+    <h2 id="entry-hidden">Entry tier: what the headline price does not include</h2>
+    <p>The entry plan is the one most likely to be bought on impulse, so it gets the full hidden-cost treatment. Read down a column to see what one provider charges on top of the plan price; where a page does not price something, the cell says so instead of guessing.</p>
     <div class="table-wrap">
     <table>
         <thead><tr><th>Cost</th><th>DigitalOcean</th><th>OVHcloud</th><th>ScalaHosting</th></tr></thead>
@@ -253,7 +361,7 @@ footer a{color:var(--primary)}
         </tr>
         <tr>
           <td><strong>Bandwidth overage</strong></td>
-          <td>4,000 GiB outbound included on this tier; overage rate none listed on official page<br><a class="src" href="https://www.digitalocean.com/pricing/droplets">source</a></td>
+          <td>1,000 GiB outbound on the $6 / 1 GiB Droplet; the $24 / 4 GiB Droplet on the same table carries 4,000 GiB. Overage rate none listed on official page<br><a class="src" href="https://www.digitalocean.com/pricing/droplets">source</a></td>
           <td>Unlimited traffic included; no overage price listed<br><a class="src" href="https://www.ovhcloud.com/en/vps/">source</a></td>
           <td>Unmetered, listed as a core feature; no overage price listed<br><a class="src" href="https://www.scalahosting.com/vps-hosting">source</a></td>
         </tr>
@@ -267,25 +375,59 @@ footer a{color:var(--primary)}
     </table>
     </div>
 
+    <h3>The renewal gap on the entry plan</h3>
+    <p>A low entry price is often a first-term price. This table divides the published renewal rate by the published first-term rate; where the page publishes no renewal rate, the cell says <em>cannot compute</em> rather than assuming the price holds.</p>
+    <div class="table-wrap">
+    <table>
+        <thead><tr><th>Provider</th><th>Plan</th><th>Price now</th><th>Renewal</th><th>Renewal gap</th><th>How it is billed</th></tr></thead>
+        <tbody>
+        <tr>
+          <td><strong>DigitalOcean</strong></td>
+          <td>Basic 1 vCPU / 1 GiB</td>
+          <td class="price">$6.00</td>
+          <td>none published on the official page</td>
+          <td>cannot compute</td>
+          <td>Per-second billing, no annual commitment listed</td>
+        </tr>
+        <tr>
+          <td><strong>OVHcloud</strong></td>
+          <td>VPS-1</td>
+          <td class="price">$4.54</td>
+          <td>none published on the official page</td>
+          <td>cannot compute</td>
+          <td>12 months paid upfront</td>
+        </tr>
+        <tr>
+          <td><strong>ScalaHosting</strong></td>
+          <td>Build #1</td>
+          <td class="price">$22.46</td>
+          <td>$54.95/mo</td>
+          <td><strong>2.45×</strong></td>
+          <td>12 months prepaid; renews at $54.95/mo</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
     <h2>How the unit costs are calculated</h2>
     <ul class="method">
         <li><strong>$/GB RAM</strong> = monthly price &divide; RAM in GB.</li>
         <li><strong>$/vCPU</strong> = monthly price &divide; vCPU count.</li>
         <li><strong>$/GB storage</strong> = monthly price &divide; included NVMe/SSD in GB.</li>
     </ul>
-    <p>Nothing is weighted, averaged or normalised beyond that division. Unit costs are rounded half-up to two decimals for display; the spreads in the sentence above are computed from the unrounded values.</p>
+    <p>Nothing is weighted, averaged or normalised beyond that division. Each unit cost is printed as the exact quotient wherever it terminates &mdash; $1.135 is 4.54 &divide; 4, $0.97375 is 23.37 &divide; 24 &mdash; and rounded half-up to four decimals only where it never terminates. The spreads are computed from the unrounded values.</p>
 
     <h2>What each official page says, word for word</h2>
     <p>The numbers above are only as good as the pages they came from, so here are the sentences they came from.</p>
 <h3>DigitalOcean — <a href="https://www.digitalocean.com/pricing/droplets">https://www.digitalocean.com/pricing/droplets</a>, read 2026-10-31</h3>
-<p class="quote"><b>Backup:</b> Backup — Choose between: Percentage-based Backups, set at 20 % (Weekly) or 30 % (Daily) of Droplet cost. Usage-based plans start at $0.01/GiB per month</p><p class="quote"><b>Snapshots:</b> Droplet Snapshots $0.06/GB per month</p><p class="quote"><b>Dedicated IPv4:</b> By default, each Droplet you create comes with its own public IPv4 address. […] For Bundled Plans, a public IPv4 is included at no extra cost.</p><p class="quote"><b>Bandwidth overage:</b> Each Droplet includes a generous amount of free outbound data transfer. […] starting from 500 GiB/month. Inbound bandwidth is always free.</p><p class="quote"><b>Billing term:</b> Bundled Plan and v5 Droplets are both billed on a per-second basis</p>
+<p class="quote"><b>Backup:</b> Backup — Choose between: Percentage-based Backups, set at 20 % (Weekly) or 30 % (Daily) of Droplet cost. Usage-based plans start at $0.01/GiB per month</p><p class="quote"><b>Snapshots:</b> Droplet Snapshots $0.06/GB per month</p><p class="quote"><b>Dedicated IPv4:</b> By default, each Droplet you create comes with its own public IPv4 address. […] For Bundled Plans, a public IPv4 is included at no extra cost.</p><p class="quote"><b>Bandwidth overage:</b> Memory vCPU Transfer SSD $/hr $/mo — 1 GiB 1 vCPU 1,000 GiB 25 GiB $0.00893 $ 6.00 … 4 GiB 2 vCPUs 4,000 GiB 80 GiB $0.03571 $ 24.00 (Droplets pricing table, Regular CPU)</p><p class="quote"><b>Billing term:</b> Bundled Plan and v5 Droplets are both billed on a per-second basis</p>
 <h3>OVHcloud — <a href="https://www.ovhcloud.com/en/vps/">https://www.ovhcloud.com/en/vps/</a>, read 2026-10-31</h3>
 <p class="quote"><b>Backup:</b> Premium automatic backup — Your custom backup, with a rolling 7-day restore. From $1.40 /month</p><p class="quote"><b>Snapshots:</b> Snapshots — Easily back up and restore your data at any time. From $0.40 /month</p><p class="quote"><b>Dedicated IPv4:</b> Dedicated IPv4 — Get a unique IPv4 address, for more flexibility and network compatibility. Included</p><p class="quote"><b>Bandwidth overage:</b> Unlimited traffic — Tap into unlimited network traffic* to ensure your services run smoothly and quickly. Included (VPS-1 card: &quot;500 Mbps public bandwidth&quot;)</p><p class="quote"><b>Billing term:</b> The Configure link on the VPS-1 card carries pricing=upfront12, i.e. the $4.54 rate is the 12-month-upfront price.</p>
 <h3>ScalaHosting — <a href="https://www.scalahosting.com/vps-hosting">https://www.scalahosting.com/vps-hosting</a>, read 2026-10-31</h3>
 <p class="quote"><b>Backup:</b> Automatic Offsite Backups (Core Features list on the Build #1 card)</p><p class="quote"><b>Snapshots:</b> On-demand Backup Copies (Premium Features list)</p><p class="quote"><b>Dedicated IPv4:</b> Dedicated IP Address (Core Features list)</p><p class="quote"><b>Bandwidth overage:</b> Unmetered Bandwidth (Core Features list)</p><p class="quote"><b>Billing term:</b> Build #1 — $ 22.46 /mo … $ 54.95 /mo when you renew (billing toggle shown as 12 M)</p>
 
     <h2>One caveat that changes the ranking</h2>
-    <p>The three prices are not billed the same way. OVHcloud's figure is the 12-month-upfront rate on its configurator, ScalaHosting's is a 12-month-prepaid rate that renews higher, and DigitalOcean bills per second. A headline that is cheap because it locks in a year is not the same offer as one you can leave next month &mdash; that is why the billing-term row sits in the table above rather than in a footnote.</p>
+    <p>The three providers are not billed the same way, and the gap widens as you climb the tiers. OVHcloud's figures are 12-month-upfront rates on its own configurator, ScalaHosting's are 12-month-prepaid rates that renew higher, and DigitalOcean bills per second. A headline that is cheap because it locks in a year is not the same offer as one you can leave next month &mdash; that is why the billing-term row and the renewal gap sit in the tables above rather than in a footnote.</p>
 
     <div class="generated">Prices read from the official pages on 2026-10-31</div>
 

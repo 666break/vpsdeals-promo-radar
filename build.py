@@ -571,13 +571,23 @@ def write_generated_manifest(repo_dir, pages):
 
 
 # ─── PRICE-PER-GB COMPARE PAGE ───────────────────────────────────────────────
-# One page, three providers, the same 2 vCPU / 4 GB tier. Every number is either
-# read from data/offers.json or divided out of two numbers that are, and every cell
-# keeps the page and the read date it came from. Nothing here is typed by hand.
+# One page, three tiers. Every number is either read from data/offers.json or
+# divided out of two numbers that are, and every cell keeps the page and the read
+# date it came from. Nothing here is typed by hand; a provider that cannot enter a
+# tier is listed with the reason instead of being dropped from the table.
 
 COMPARE_PAGE = 'vps-price-compare.html'
 COMPARE_URL_PATH = '/vps-price-compare'
-COMPARE_TIER = (2, 4)  # vCPU, RAM in GB — the tier every provider is normalised to
+MID_TIER = (2, 4)  # vCPU, RAM in GB — the tier every provider can be normalised to
+
+COMPARE_TIERS = (
+    ('entry', 'Entry tier',
+     'the cheapest plan each provider sells with a published spec'),
+    ('mid', 'Mid tier — 2 vCPU / 4 GB',
+     'an exact 2 vCPU and 4 GB match, nothing bent to the nearest'),
+    ('high', 'High tier',
+     'the most expensive plan each provider sells with a published spec'),
+)
 
 
 def _d(value):
@@ -589,37 +599,72 @@ def _q2(value):
 
 
 def _unit(value):
-    """Exact quotient, at least two decimals, trailing zeros trimmed.
+    """The exact quotient where it terminates, at least two decimals.
 
-    Displayed so a reader can redo the division: 4.54 / 4 shows as 1.135, not 1.14.
+    Displayed so a reader can redo the division and land on the same digits:
+    4.54 / 4 shows as 1.135, 23.37 / 24 as 0.97375. Only a quotient that never
+    terminates (e.g. 71.21 / 24) is rounded, to four decimals.
     """
-    s = f'{_d(value):.4f}'.rstrip('0')
-    if s.endswith('.'):
-        s += '00'
-    else:
-        frac = s.split('.')[1]
-        if len(frac) < 2:
-            s += '0' * (2 - len(frac))
-    return s
+    d = _d(value)
+    for places in range(2, 7):
+        q = d.quantize(Decimal(1).scaleb(-places), rounding=ROUND_HALF_UP)
+        if q == d:
+            return f'{q:.{places}f}'
+    return f'{d:.4f}'
 
 
-def tier_offers(offers, tier=COMPARE_TIER):
-    """One plan per provider whose vCPU and RAM match the tier exactly.
-
-    A provider without an exact match simply does not appear — a neighbouring tier
-    is never bent into the comparison and called close enough.
-    """
-    vcpu, ram_gb = tier
-    picked = {}
+def spec_plans(offers):
+    """Plans that carry a price and all three specs — the only rows a tier can use."""
+    out = []
     for o in offers:
-        if o.get('vcpu') != vcpu or o.get('ram_gb') != ram_gb:
-            continue
         if offer_kind(o) != 'plan' or o.get('price') is None:
             continue
-        prov = o['provider']
-        if prov not in picked or _d(o['price']) < _d(picked[prov]['price']):
-            picked[prov] = o
-    return [picked[k] for k in sorted(picked)]
+        if not (o.get('vcpu') and o.get('ram_gb') and o.get('disk_gb')):
+            continue
+        out.append(o)
+    return out
+
+
+def pick_tier(offers, key):
+    """One plan per provider for one tier. A neighbouring tier is never bent to fit."""
+    by_prov = {}
+    for o in spec_plans(offers):
+        by_prov.setdefault(o['provider'], []).append(o)
+    picked = []
+    for prov in sorted(by_prov):
+        cand = by_prov[prov]
+        if key == 'mid':
+            cand = [o for o in cand if (o['vcpu'], o['ram_gb']) == MID_TIER]
+            if not cand:
+                continue
+            picked.append(min(cand, key=lambda o: (_d(o['price']), o.get('order') or 0)))
+        elif key == 'entry':
+            picked.append(min(cand, key=lambda o: (_d(o['price']), o.get('order') or 0)))
+        else:
+            picked.append(max(cand, key=lambda o: (_d(o['price']), o.get('order') or 0)))
+    return picked
+
+
+def tier_exclusions(offers, key, picked):
+    """Every priced provider that is not in this tier, and why. Never silently dropped."""
+    inside = {o['provider'] for o in picked}
+    priced = sorted({o['provider'] for o in offers if o.get('price') is not None})
+    spec = spec_plans(offers)
+    out = []
+    for prov in priced:
+        if prov in inside:
+            continue
+        mine = [o for o in spec if o['provider'] == prov]
+        if not mine:
+            out.append((prov, 'price only — data/offers.json holds a monthly price but no '
+                              'vCPU, RAM or storage for this provider, so it cannot be placed '
+                              'on a tier without inventing the specs'))
+            continue
+        near = min(mine, key=lambda o: abs(o['vcpu'] - MID_TIER[0]) + abs(o['ram_gb'] - MID_TIER[1]))
+        out.append((prov, f'no exact {MID_TIER[0]} vCPU / {MID_TIER[1]} GB plan; the nearest '
+                          f'published is {near["vcpu"]} vCPU / {near["ram_gb"]} GB at '
+                          f'${_q2(near["price"]):.2f}/mo'))
+    return out
 
 
 def unit_costs(offer):
@@ -637,42 +682,45 @@ def _spread(values):
     return (lo, hi, _q2(hi / lo)) if lo else (lo, hi, None)
 
 
-def gen_price_compare_page(offers, hidden, domain):
-    """Render /vps-price-compare from offers.json + data/vps_compare.json."""
-    vcpu, ram_gb = COMPARE_TIER
-    rows = tier_offers(offers)
+def newest_read(offers):
+    return max(str(o.get('fetched_at') or '')[:10] for o in offers if o.get('fetched_at'))
+
+
+def build_tier(offers, key, label, basis):
+    """Rows, unit costs, spreads and the rendered section for one tier."""
+    rows = pick_tier(offers, key)
     if len(rows) < 2:
         raise SystemExit(
-            f'BUILD ABORTED: only {len(rows)} provider(s) publish an exact '
-            f'{vcpu} vCPU / {ram_gb} GB tier — a comparison page needs at least two, '
-            f'and inventing the missing one is not an option.')
-
+            f'BUILD ABORTED: the {key} tier has only {len(rows)} provider(s) with a published '
+            f'spec — a comparison needs at least two, and inventing the missing one is not '
+            f'an option.')
     costs = {o['provider']: unit_costs(o) for o in rows}
     p_lo, p_hi, p_spread = _spread([_d(o['price']) for o in rows])
     r_lo, r_hi, r_spread = _spread([c['ram'] for c in costs.values()])
+    v_lo, v_hi, v_spread = _spread([c['vcpu'] for c in costs.values()])
     d_lo, d_hi, d_spread = _spread([c['disk'] for c in costs.values()])
-    cheap = next(o for o in rows if _d(o['price']) == p_lo)
-    dear = next(o for o in rows if _d(o['price']) == p_hi)
-    read_date = max(str(o.get('fetched_at') or '')[:10] for o in rows)
+    best_ram = min(costs, key=lambda p: costs[p]['ram'])
+    total_priced = len({o['provider'] for o in offers if o.get('price') is not None})
 
-    lead = (
-        f'At the same {vcpu} vCPU / {ram_gb} GB tier the monthly price runs from '
-        f'${_q2(p_lo):.2f} at {esc(cheap["provider"])} to ${_q2(p_hi):.2f} at '
-        f'{esc(dear["provider"])} — a {p_spread:.2f}x spread. Per GB of RAM that is '
-        f'${_unit(r_lo)} against ${_unit(r_hi)}, {r_spread:.2f}x; per GB of storage '
-        f'${_unit(d_lo)} against ${_unit(d_hi)}, a {d_spread:.2f}x spread.')
+    conclusion = (
+        f'{label} — <strong>{len(rows)} of {total_priced}</strong> priced providers take part. '
+        f'Monthly price ${_q2(p_lo):.2f} to ${_q2(p_hi):.2f}, a <strong>{p_spread:.2f}×</strong> '
+        f'spread; per GB of RAM ${_unit(r_lo)} to ${_unit(r_hi)}, {r_spread:.2f}×; per vCPU '
+        f'${_unit(v_lo)} to ${_unit(v_hi)}, {v_spread:.2f}×; per GB of storage ${_unit(d_lo)} to '
+        f'${_unit(d_hi)}, {d_spread:.2f}×. Cheapest per GB of RAM: {esc(best_ram)} at '
+        f'${_unit(costs[best_ram]["ram"])}.')
 
-    # tier table
-    tier_rows = []
+    body = []
     for o in rows:
         c = costs[o['provider']]
+        mark = ' best' if o['provider'] == best_ram else ''
         note = ''
         if o.get('billing_term_months'):
             note = (f'<span class="cell-note">billed {o["billing_term_months"]} months up front; '
                     f'renews ${_q2(o["renewal_price"]):.2f}/mo</span>')
         src = (f'<a href="{esc(o["source_url"])}">official page</a>'
                f'<br><span class="src">read {esc(str(o.get("fetched_at") or "")[:10])}</span>')
-        tier_rows.append(
+        body.append(
             '        <tr>\n'
             f'          <td><strong>{esc(o["provider"])}</strong></td>\n'
             f'          <td>{esc(o["title"])}{note}</td>\n'
@@ -680,19 +728,97 @@ def gen_price_compare_page(offers, hidden, domain):
             f'          <td>{o["ram_gb"]} GB</td>\n'
             f'          <td>{o["disk_gb"]} GB</td>\n'
             f'          <td class="price">${_q2(o["price"]):.2f}</td>\n'
-            f'          <td class="unit">${_unit(c["ram"])}</td>\n'
+            f'          <td class="unit{mark}">${_unit(c["ram"])}</td>\n'
             f'          <td class="unit">${_unit(c["vcpu"])}</td>\n'
             f'          <td class="unit">${_unit(c["disk"])}</td>\n'
             f'          <td>{src}</td>\n'
             '        </tr>')
 
-    # hidden-cost matrix
+    exc = tier_exclusions(offers, key, rows)
+    if exc:
+        exc_html = ('<div class="excluded"><p><strong>Not in this tier, and why:</strong></p><ul>'
+                    + ''.join(f'<li><strong>{esc(p)}</strong> — {esc(r)}</li>' for p, r in exc)
+                    + '</ul></div>')
+    else:
+        exc_html = ('<div class="excluded"><p>Every priced provider takes part in this tier.</p></div>')
+
+    html = (
+        f'<h2 id="tier-{key}">{esc(label)} '
+        f'<span class="count">{len(rows)} providers</span></h2>\n'
+        f'<p class="basis">Tier definition: {esc(basis)}.</p>\n'
+        f'<p class="conclusion">{conclusion}</p>\n'
+        f'<div class="table-wrap">\n'
+        f'<table>\n'
+        f'    <thead><tr><th>Provider</th><th>Plan</th><th>vCPU</th><th>RAM</th><th>Storage</th>'
+        f'<th>$/mo</th><th>$/GB RAM</th><th>$/vCPU</th><th>$/GB storage</th><th>Source</th></tr></thead>\n'
+        f'    <tbody>\n' + '\n'.join(body) + '\n    </tbody>\n'
+        f'</table>\n'
+        f'</div>\n'
+        + exc_html)
+
+    return {
+        'key': key, 'label': label, 'basis': basis, 'rows': rows, 'costs': costs,
+        'p_lo': p_lo, 'p_hi': p_hi, 'p_spread': p_spread,
+        'r_lo': r_lo, 'r_hi': r_hi, 'r_spread': r_spread,
+        'v_lo': v_lo, 'v_hi': v_hi, 'v_spread': v_spread,
+        'd_lo': d_lo, 'd_hi': d_hi, 'd_spread': d_spread,
+        'best_ram': best_ram, 'html': html,
+    }
+
+
+def _renewal_table(entry_rows, hidden):
+    """What the entry plan renews at, and the size of the gap. Computed, never assumed."""
+    body = []
+    for o in entry_rows:
+        block = (hidden.get('providers') or {}).get(o['provider']) or {}
+        term = ((block.get('cells') or {}).get('term') or {}).get('value') or 'none listed on official page'
+        if o.get('renewal_price'):
+            gap = _q2(_d(o['renewal_price']) / _d(o['price']))
+            renew = f'${_q2(o["renewal_price"]):.2f}/mo'
+            gap_cell = f'<strong>{gap:.2f}×</strong>'
+        else:
+            renew = 'none published on the official page'
+            gap_cell = 'cannot compute'
+        body.append(
+            '        <tr>\n'
+            f'          <td><strong>{esc(o["provider"])}</strong></td>\n'
+            f'          <td>{esc(o["title"])}</td>\n'
+            f'          <td class="price">${_q2(o["price"]):.2f}</td>\n'
+            f'          <td>{esc(renew)}</td>\n'
+            f'          <td>{gap_cell}</td>\n'
+            f'          <td>{esc(term)}</td>\n'
+            '        </tr>')
+    return '\n'.join(body)
+
+
+def gen_price_compare_page(offers, hidden, domain):
+    """Render /vps-price-compare from offers.json + data/vps_compare.json."""
+    tiers = [build_tier(offers, k, label, basis) for k, label, basis in COMPARE_TIERS]
+    entry, mid, high = tiers[0], tiers[1], tiers[2]
+    entry_rows = entry['rows']
+    read_date = newest_read(offers)
+    total_priced = len({o['provider'] for o in offers if o.get('price') is not None})
+
+    lead = (
+        f'Three tiers, {total_priced} providers priced in data/offers.json, '
+        f'{len(entry_rows)} of them with a published spec. The entry tier runs '
+        f'${_q2(entry["p_lo"]):.2f} to ${_q2(entry["p_hi"]):.2f} a month '
+        f'({entry["p_spread"]:.2f}× apart) and ${_unit(entry["r_lo"])} to '
+        f'${_unit(entry["r_hi"])} per GB of RAM ({entry["r_spread"]:.2f}×); the 2 vCPU / 4 GB '
+        f'tier ${_q2(mid["p_lo"]):.2f} to ${_q2(mid["p_hi"]):.2f} '
+        f'({mid["p_spread"]:.2f}×) and ${_unit(mid["r_lo"])} to ${_unit(mid["r_hi"])} per GB '
+        f'({mid["r_spread"]:.2f}×); the high tier ${_q2(high["p_lo"]):.2f} to '
+        f'${_q2(high["p_hi"]):.2f} ({high["p_spread"]:.2f}×) and ${_unit(high["r_lo"])} to '
+        f'${_unit(high["r_hi"])} per GB ({high["r_spread"]:.2f}×). Every figure is a published '
+        f'price divided by a published spec.')
+
+    # hidden-cost matrix — entry tier, because that is the plan a first-time buyer picks
     items = hidden.get('items') or []
-    head = ''.join(f'<th>{esc(o["provider"])}</th>' for o in rows)
+    head = ''.join(f'<th>{esc(o["provider"])}</th>' for o in entry_rows)
     hrows = []
     for item in items:
         cells = [f'          <td><strong>{esc(item["label"])}</strong></td>']
-        for o in rows:
+        for o in entry_rows:
             block = (hidden.get('providers') or {}).get(o['provider']) or {}
             cell = (block.get('cells') or {}).get(item['key']) or {}
             value = cell.get('value') or 'none listed on official page'
@@ -702,7 +828,7 @@ def gen_price_compare_page(offers, hidden, domain):
 
     # the sentences the numbers came from
     evidence = []
-    for o in rows:
+    for o in entry_rows:
         block = (hidden.get('providers') or {}).get(o['provider']) or {}
         quotes = ''.join(
             f'<p class="quote"><b>{esc(item["label"])}:</b> '
@@ -713,11 +839,14 @@ def gen_price_compare_page(offers, hidden, domain):
             f'{esc(block.get("source_url") or o["source_url"])}</a>, read {esc(block.get("read_at") or read_date)}</h3>\n'
             + quotes)
 
-    title = (f'VPS price per GB of RAM: {vcpu} vCPU / {ram_gb} GB compared across '
-             f'{len(rows)} providers | ServerBudget')
-    desc = (f'The same {vcpu} vCPU / {ram_gb} GB tier at '
-            + ', '.join(o['provider'] for o in rows)
-            + f': ${_q2(p_lo):.2f} to ${_q2(p_hi):.2f} per month, {p_spread:.2f}x apart.')
+    renewal_rows = _renewal_table(entry_rows, hidden)
+
+    title = (f'VPS price per GB: entry, 2 vCPU / 4 GB and high tiers at '
+             f'{len(entry_rows)} providers | ServerBudget')
+    desc = (f'Three tiers priced across ' + ', '.join(o['provider'] for o in entry_rows)
+            + f': entry ${_q2(entry["p_lo"]):.2f}-${_q2(entry["p_hi"]):.2f}, 2 vCPU / 4 GB '
+            f'${_q2(mid["p_lo"]):.2f}-${_q2(mid["p_hi"]):.2f}, high '
+            f'${_q2(high["p_lo"]):.2f}-${_q2(high["p_hi"]):.2f} per month.')
 
     jsonld = {
         "@context": "https://schema.org",
@@ -740,16 +869,121 @@ def gen_price_compare_page(offers, hidden, domain):
         'DOMAIN': domain,
         'TITLE': esc(title),
         'DESCRIPTION': esc(desc),
-        'H1': esc(f'VPS price per GB of RAM — the same {vcpu} vCPU / {ram_gb} GB tier at '
-                  + ', '.join(o['provider'] for o in rows)),
+        'H1': esc('VPS price per GB of RAM — three tiers, '
+                  + str(len(entry_rows)) + ' providers, one division per number'),
         'LEAD': lead,
-        'TIER_ROWS': '\n'.join(tier_rows),
+        'TIER_SECTIONS': '\n'.join(t['html'] for t in tiers),
+        'ENTRY_LOW': f'{_q2(entry["p_lo"]):.2f}',
         'HIDDEN_HEAD': head,
         'HIDDEN_ROWS': '\n'.join(hrows),
+        'RENEWAL_ROWS': renewal_rows,
         'EVIDENCE': '\n'.join(evidence),
         'READ_DATE': read_date,
         'JSONLD': json.dumps(jsonld, indent=2),
     })
+
+
+# ─── HOMEPAGE STATS BAR ──────────────────────────────────────────────────────
+# The bar used to carry three typed-in figures: 14, 7 and a date. The 7 counted the
+# providers registered in .ilang/site.ilang, not the ones with a price — four of the
+# seven had no data at all. Now every figure is counted from data/offers.json on
+# every build, and the build refuses to publish if the page and the data disagree.
+
+HOME_PAGE = 'index.html'
+HOME_ADDON_GROUP = 'addons'
+STATS_START = '<!-- STATS:START'
+STATS_END = '<!-- STATS:END -->'
+_GROUP_RE = re.compile(r'<h2 class="group-head" id="([^"]+)">')
+
+
+def home_stats(offers):
+    """What the homepage bar counts, straight out of offers.json.
+
+    A plan only counts if it carries all three specs, because only those become a
+    card on the page — the four Hostinger rows are priced but spec-less, so counting
+    them would print a figure no reader could find by counting.
+    """
+    plans = [o for o in spec_plans(offers)]
+    addons = [o for o in offers if offer_kind(o) == 'addon']
+    spec_provs = sorted({o['provider'] for o in plans})
+    return {
+        'plans': len(plans),
+        'addons': len(addons),
+        'providers': len(spec_provs),
+        'provider_names': spec_provs,
+        'read': newest_read(offers),
+    }
+
+
+def home_page_counts(text):
+    """Count the cards actually rendered on the homepage, per group."""
+    marks = list(_GROUP_RE.finditer(text))
+    counts = {'plans': 0, 'addons': 0, 'providers': 0, 'groups': {}}
+    for i, m in enumerate(marks):
+        end = marks[i + 1].start() if i + 1 < len(marks) else len(text)
+        cards = text[m.end():end].count('class="card"')
+        gid = m.group(1)
+        counts['groups'][gid] = cards
+        if gid == HOME_ADDON_GROUP:
+            counts['addons'] += cards
+        else:
+            counts['providers'] += 1 if cards else 0
+            counts['plans'] += cards
+    return counts
+
+
+def refresh_home_stats(live_dir, offers):
+    """Rewrite the homepage stats bar from offers.json, or abort if the page disagrees."""
+    path = Path(live_dir) / HOME_PAGE
+    raw = path.read_bytes().decode('utf-8')
+    crlf = '\r\n' in raw
+    text = raw.replace('\r\n', '\n')
+    stats = home_stats(offers)
+    page = home_page_counts(text)
+
+    mismatches = [f'{k}: page {page[k]} vs data {stats[k]}'
+                  for k in ('plans', 'addons', 'providers') if page[k] != stats[k]]
+    if mismatches:
+        raise SystemExit(
+            'BUILD ABORTED: the homepage cards and data/offers.json disagree, so any figure '
+            'printed above them would be unbacked — ' + '; '.join(mismatches)
+            + f' (groups seen: {page["groups"]})')
+
+    names = ', '.join(stats['provider_names'])
+    cards = stats['plans'] + stats['addons']
+    block = (
+        f'{STATS_START} — generated by build.py from data/offers.json, do not hand-edit -->\n'
+        f'    <div class="stats">\n'
+        f'        <div class="stat"><div class="stat-num">{stats["plans"]}</div>'
+        f'<div class="stat-label">VPS plans</div></div>\n'
+        f'        <div class="stat"><div class="stat-num">{stats["addons"]}</div>'
+        f'<div class="stat-label">Add-ons</div></div>\n'
+        f'        <div class="stat"><div class="stat-num">{stats["providers"]}</div>'
+        f'<div class="stat-label">Providers with specs</div></div>\n'
+        f'        <div class="stat"><div class="stat-num"><span class="vdate">{stats["read"]}</span></div>'
+        f'<div class="stat-label">Newest read</div></div>\n'
+        f'    </div>\n'
+        f'    <p class="stats-note">Counted at build time from data/offers.json — '
+        f'<strong>{stats["plans"]}</strong> plans that publish a vCPU, RAM and storage spec are '
+        f'the {stats["plans"]} plan cards below, <strong>{stats["addons"]}</strong> add-on offers '
+        f'are the other {stats["addons"]} cards, <strong>{stats["providers"]}</strong> providers '
+        f'({esc(names)}) publish those specs, and the date is the newest '
+        f'<code>fetched_at</code> among them; Hostinger\'s rows carry a monthly price but no '
+        f'spec, so they are not counted as comparable.</p>\n'
+        f'    {STATS_END}')
+
+    start = text.find(STATS_START)
+    end = text.find(STATS_END)
+    if start < 0 or end < 0:
+        raise SystemExit(f'BUILD ABORTED: {HOME_PAGE} has no stats markers '
+                         f'({STATS_START} … {STATS_END}) to fill in.')
+    text = text[:start] + block + text[end + len(STATS_END):]
+    text = re.sub(r'(<span class="vdate">)[^<]*(</span>)',
+                  lambda m: m.group(1) + stats['read'] + m.group(2), text, count=1)
+    path.write_bytes((text.replace('\n', '\r\n') if crlf else text).encode('utf-8'))
+    print(f'  stats: {stats["plans"]} plans, {stats["addons"]} add-ons, '
+          f'{stats["providers"]} providers, read {stats["read"]} — matches the {cards} cards on the page')
+    return stats
 
 
 def ensure_nav_link(live_dir, href, label):
@@ -1094,7 +1328,10 @@ def main():
     # 2d. Publish plumbing for generated pages: nav link on every page, sitemap entry.
     ensure_nav_link(live_dir, COMPARE_URL_PATH, 'Price per GB')
     ensure_sitemap_url(live_dir, f'https://{domain}{COMPARE_URL_PATH}',
-                       max(str(o.get('fetched_at') or '')[:10] for o in tier_offers(offers)))
+                       newest_read(offers))
+
+    # 2e. Homepage stats bar — counted from offers.json, aborts if the page disagrees.
+    refresh_home_stats(live_dir, offers)
 
     manifest_path = write_generated_manifest(script_dir, generated)
     print(f'  generated {len(generated)} page(s); manifest: '

@@ -49,12 +49,72 @@
     {
       "@type": "ListItem",
       "position": 5,
+      "url": "https://www.digitalocean.com/pricing/droplets",
+      "name": "DigitalOcean - Basic 1 vCPU / 1 GiB - $6.00 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "url": "https://www.digitalocean.com/pricing/droplets",
+      "name": "DigitalOcean - Basic 1 vCPU / 2 GiB - $12.00 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "url": "https://www.digitalocean.com/pricing/droplets",
+      "name": "DigitalOcean - Basic 2 vCPU / 2 GiB - $18.00 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "url": "https://www.digitalocean.com/pricing/droplets",
+      "name": "DigitalOcean - Basic 2 vCPU / 4 GiB - $24.00 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 9,
+      "url": "https://www.digitalocean.com/pricing/droplets",
+      "name": "DigitalOcean - Basic 4 vCPU / 8 GiB - $48.00 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 10,
+      "url": "https://www.digitalocean.com/pricing/droplets",
+      "name": "DigitalOcean - Basic 8 vCPU / 16 GiB - $96.00 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 11,
+      "url": "https://www.scalahosting.com/vps-hosting",
+      "name": "ScalaHosting - Build #1 - $22.46 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 12,
+      "url": "https://www.scalahosting.com/vps-hosting",
+      "name": "ScalaHosting - Build #2 - $33.71 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 13,
+      "url": "https://www.scalahosting.com/vps-hosting",
+      "name": "ScalaHosting - Build #3 - $52.46 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 14,
+      "url": "https://www.scalahosting.com/vps-hosting",
+      "name": "ScalaHosting - Build #4 - $71.21 /month"
+    },
+    {
+      "@type": "ListItem",
+      "position": 15,
       "url": "https://serverbudget.com/deal-5",
       "name": "OVHcloud add-on - Premium automatic backup - From $1.40 /month"
     },
     {
       "@type": "ListItem",
-      "position": 6,
+      "position": 16,
       "url": "https://serverbudget.com/deal-6",
       "name": "OVHcloud add-on - Snapshots - From $0.40 /month"
     }
@@ -219,12 +279,13 @@ footer a{color:var(--primary)}
             <a href="/about">About</a>
             <a href="/privacy">Privacy</a>
             <a href="/contact">Contact</a>
+            <a href="/vps-price-compare">Price per GB</a>
         </div>
     </header>
     
     <div class="stats">
         <div class="stat">
-            <div class="stat-num">6</div>
+            <div class="stat-num">14</div>
             <div class="stat-label">Active Deals</div>
         </div>
         <div class="stat">
@@ -237,6 +298,8 @@ footer a{color:var(--primary)}
         </div>
     </div>
     
+    <h2 class="group-head" id="ovhcloud">OVHcloud — 4 VPS plans, 2 vCPU to 8 vCPU</h2>
+    <p class="group-note">The “from” rate is the 12-month-upfront price on OVHcloud’s own configurator. Read from the official page on 2026-10-31.</p>
     <div class="grid">
 <a class="card" href="/deal-1">
   <div class="card-provider">OVHcloud</div>
@@ -260,6 +323,68 @@ footer a{color:var(--primary)}
 </a>
     </div>
 
+    <h2 class="group-head" id="digitalocean">DigitalOcean — 6 Basic droplets, 1 GiB to 16 GiB</h2>
+    <p class="group-note">Billed per second, no commitment. Every row is a Basic shared-CPU droplet with its vCPU, RAM, SSD and transfer published. Read on 2026-10-31.</p>
+    <div class="grid">
+<a class="card" href="https://www.digitalocean.com/pricing/droplets">
+  <div class="card-provider">DigitalOcean</div>
+  <div class="card-title">Basic 1 vCPU / 1 GiB</div>
+  <div class="card-price">$6.00<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.digitalocean.com/pricing/droplets">
+  <div class="card-provider">DigitalOcean</div>
+  <div class="card-title">Basic 1 vCPU / 2 GiB</div>
+  <div class="card-price">$12.00<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.digitalocean.com/pricing/droplets">
+  <div class="card-provider">DigitalOcean</div>
+  <div class="card-title">Basic 2 vCPU / 2 GiB</div>
+  <div class="card-price">$18.00<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.digitalocean.com/pricing/droplets">
+  <div class="card-provider">DigitalOcean</div>
+  <div class="card-title">Basic 2 vCPU / 4 GiB</div>
+  <div class="card-price">$24.00<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.digitalocean.com/pricing/droplets">
+  <div class="card-provider">DigitalOcean</div>
+  <div class="card-title">Basic 4 vCPU / 8 GiB</div>
+  <div class="card-price">$48.00<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.digitalocean.com/pricing/droplets">
+  <div class="card-provider">DigitalOcean</div>
+  <div class="card-title">Basic 8 vCPU / 16 GiB</div>
+  <div class="card-price">$96.00<span class="per">/mo</span></div>
+</a>
+    </div>
+
+    <h2 class="group-head" id="scalahosting">ScalaHosting — 4 cloud VPS builds, 2 to 12 cores</h2>
+    <p class="group-note">Billed 12 months up front, and the headline is not the renewal: Build #1 renews at $54.95/mo. Read from the official page on 2026-10-31.</p>
+    <div class="grid">
+<a class="card" href="https://www.scalahosting.com/vps-hosting">
+  <div class="card-provider">ScalaHosting</div>
+  <div class="card-title">Build #1</div>
+  <div class="card-price">$22.46<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.scalahosting.com/vps-hosting">
+  <div class="card-provider">ScalaHosting</div>
+  <div class="card-title">Build #2</div>
+  <div class="card-price">$33.71<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.scalahosting.com/vps-hosting">
+  <div class="card-provider">ScalaHosting</div>
+  <div class="card-title">Build #3</div>
+  <div class="card-price">$52.46<span class="per">/mo</span></div>
+</a>
+<a class="card" href="https://www.scalahosting.com/vps-hosting">
+  <div class="card-provider">ScalaHosting</div>
+  <div class="card-title">Build #4</div>
+  <div class="card-price">$71.21<span class="per">/mo</span></div>
+</a>
+    </div>
+
+    <p class="group-note">Want them on one axis instead of three lists? The 2 vCPU / 4 GB tier side by side, with the price divided by RAM, by vCPU and by storage — <a href="/vps-price-compare">VPS price per GB</a>.</p>
+
     <h2 class="group-head" id="addons">VPS add-ons from OVHcloud — not servers, and not sold on their own</h2>
     <p class="group-note">These two prices are add-ons billed on top of an OVHcloud VPS: Premium automatic backup and Snapshots. Neither is a plan you can buy by itself — you need a VPS first, then add the option.</p>
     <div class="grid">
@@ -274,6 +399,7 @@ footer a{color:var(--primary)}
   <div class="card-price">$0.40<span class="per">/mo</span></div>
 </a>
     </div>
+
 
     <h2>Every brand coupon page on this site</h2>
     <p>Each provider below has its own page, and every one of them answers the same question the same way: does this brand publish a code at all, and if it doesn't, where does the discount actually sit. Prices and the date each official page was read are on the page itself — nothing here is estimated.</p>

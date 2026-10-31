@@ -20,13 +20,13 @@
       "@type": "ListItem",
       "position": 1,
       "url": "https://serverbudget.com/deal-6",
-      "name": "OVHcloud - From $0.40 /month"
+      "name": "OVHcloud add-on - Snapshots - From $0.40 /month (VPS add-on, needs a VPS plan)"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "url": "https://serverbudget.com/deal-5",
-      "name": "OVHcloud - From $1.40 /month"
+      "name": "OVHcloud add-on - Premium automatic backup - From $1.40 /month (VPS add-on, needs a VPS plan)"
     },
     {
       "@type": "ListItem",
@@ -126,6 +126,8 @@ td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
 tr:last-child td{border-bottom:none}
 tbody tr:hover{background:var(--surface-2)}
 .price{font-weight:800;color:var(--accent)}
+/* 2026-10-31 add-on semantics: two OVHcloud rows are VPS options, not plans. */
+.addon-tag{display:inline-block;margin-top:2px;font-size:.74rem;font-weight:700;color:#b45309;letter-spacing:.02em}
 
 /* Deal detail */
 .deal-info{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:6px 22px;margin:22px 0;box-shadow:var(--shadow-sm)}
@@ -202,14 +204,14 @@ footer a{color:var(--primary)}
         <tbody>
         <tr>
           <td><a href="/provider-ovhcloud">OVHcloud</a></td>
-          <td><a href="/deal-6">From $0.40 /month</a></td>
+          <td><a href="/deal-6">OVHcloud add-on — Snapshots</a><br><span class="addon-tag">Add-on — needs a VPS plan</span></td>
           <td class="price">$0.40</td>
           <td>USD</td>
           <td><a href="/deal-6">View Deal →</a></td>
         </tr>
         <tr>
           <td><a href="/provider-ovhcloud">OVHcloud</a></td>
-          <td><a href="/deal-5">From $1.40 /month</a></td>
+          <td><a href="/deal-5">OVHcloud add-on — Premium automatic backup</a><br><span class="addon-tag">Add-on — needs a VPS plan</span></td>
           <td class="price">$1.40</td>
           <td>USD</td>
           <td><a href="/deal-5">View Deal →</a></td>
@@ -245,6 +247,8 @@ footer a{color:var(--primary)}
         </tbody>
     </table>
     </div>
+
+    <p>Rows marked <strong>Add-on</strong> are OVHcloud VPS options — Premium automatic backup and Snapshots. Both are billed on top of a VPS plan, neither is a server on its own, and neither can be bought without a VPS.</p>
     
     <div class="generated">Last updated: 2026-09-20T00:23:04Z</div>
     

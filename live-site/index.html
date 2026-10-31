@@ -50,13 +50,13 @@
       "@type": "ListItem",
       "position": 5,
       "url": "https://serverbudget.com/deal-5",
-      "name": "OVHcloud - From $1.40 /month"
+      "name": "OVHcloud add-on - Premium automatic backup - From $1.40 /month"
     },
     {
       "@type": "ListItem",
       "position": 6,
       "url": "https://serverbudget.com/deal-6",
-      "name": "OVHcloud - From $0.40 /month"
+      "name": "OVHcloud add-on - Snapshots - From $0.40 /month"
     }
   ]
 }</script>
@@ -123,6 +123,11 @@ blockquote{border-left:3px solid var(--primary);padding:8px 0 8px 18px;margin:0 
 .card-price .per{font-size:.9rem;font-weight:600;color:var(--muted)}
 .card::after{content:"View deal →";position:absolute;right:18px;bottom:16px;font-size:.82rem;font-weight:700;color:var(--primary);opacity:0;transform:translateX(-4px);transition:all .18s}
 .card:hover::after{opacity:1;transform:translateX(0)}
+/* 2026-10-31 add-on semantics: the two OVHcloud backup/snapshot prices are VPS
+   add-ons, not plans. Badge + group heading say so; price digits unchanged. */
+.card-badge{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:#fff4e6;color:#b45309;border:1px solid #fcd9b6;font-size:.62rem;letter-spacing:.09em;font-weight:800;vertical-align:1px}
+.group-note{color:var(--muted);font-size:.95rem;max-width:64ch;margin:-4px 0 14px}
+.group-head{margin-top:38px}
 
 /* Tables */
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);margin:22px 0}
@@ -253,14 +258,19 @@ footer a{color:var(--primary)}
   <div class="card-title">From $23.37 /month</div>
   <div class="card-price">$23.37<span class="per">/mo</span></div>
 </a>
+    </div>
+
+    <h2 class="group-head" id="addons">VPS add-ons from OVHcloud — not servers, and not sold on their own</h2>
+    <p class="group-note">These two prices are add-ons billed on top of an OVHcloud VPS: Premium automatic backup and Snapshots. Neither is a plan you can buy by itself — you need a VPS first, then add the option.</p>
+    <div class="grid">
 <a class="card" href="/deal-5">
-  <div class="card-provider">OVHcloud</div>
-  <div class="card-title">From $1.40 /month</div>
+  <div class="card-provider">OVHcloud <span class="card-badge">Add-on</span></div>
+  <div class="card-title">OVHcloud add-on — Premium automatic backup</div>
   <div class="card-price">$1.40<span class="per">/mo</span></div>
 </a>
 <a class="card" href="/deal-6">
-  <div class="card-provider">OVHcloud</div>
-  <div class="card-title">From $0.40 /month</div>
+  <div class="card-provider">OVHcloud <span class="card-badge">Add-on</span></div>
+  <div class="card-title">OVHcloud add-on — Snapshots</div>
   <div class="card-price">$0.40<span class="per">/mo</span></div>
 </a>
     </div>

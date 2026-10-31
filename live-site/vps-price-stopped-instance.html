@@ -43,7 +43,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
-        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-price"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-hosting-cost"},
         {"@type": "ListItem", "position": 3, "name": "Stopped VPS Billing", "item": "https://serverbudget.com/vps-price-stopped-instance"}
       ]
     }
@@ -237,6 +237,7 @@ footer a{color:var(--primary)}
 
     <div class="answer">
         <p class="lede"><strong>Short answer: yes, in almost every case.</strong> A VPS stops costing money when you <em>destroy</em> it, not when you power it off. The meter is tied to the resource existing, not to the resource working, and all three providers we read on 2026-10-28 say so in their own documentation.</p>
+    <p>Whether the meter runs is one question, the rate it runs at is another &mdash; <a href="/vps-hosting-cost">the monthly cost of a running VPS</a> answers the second.</p>
         <ul>
             <li><strong>Powered off:</strong> still billed at DigitalOcean. Its Droplet pricing doc states that billing begins at creation and ends at destruction, and that powered-off Droplets keep billing &ldquo;because the compute resources stay reserved on the hypervisor.&rdquo; Hetzner bills each server &ldquo;until you choose to delete them.&rdquo; An OVHcloud VPS is a monthly subscription, so the power state never reaches the invoice.</li>
             <li><strong>Suspended:</strong> the provider powers your server down for you and the balance keeps growing. DigitalOcean explicitly says it does not publish fixed timelines for the past due &rarr; suspended &rarr; deleted sequence.</li>
@@ -245,7 +246,7 @@ footer a{color:var(--primary)}
         </ul>
     </div>
 
-    <p>This is the question that decides whether a &ldquo;$4 a month&rdquo; test box costs $4 or $40: what happens to the invoice on the days you are not using it. It is also the question the three sites ranking for <a href="/vps-price">vps price</a> never answer &mdash; across the 30 pages we catalogued for this cycle, the words &ldquo;stopped&rdquo; and &ldquo;powered off&rdquo; appear on none of them. So we went to the billing documentation instead of the marketing pages, on <strong>2026-10-28</strong>, and pulled the clauses out verbatim.</p>
+    <p>This is the question that decides whether a &ldquo;$4 a month&rdquo; test box costs $4 or $40: what happens to the invoice on the days you are not using it. It is also the question the three sites ranking for <a href="/vps-hosting-cost">vps price</a> never answer &mdash; across the 30 pages we catalogued for this cycle, the words &ldquo;stopped&rdquo; and &ldquo;powered off&rdquo; appear on none of them. So we went to the billing documentation instead of the marketing pages, on <strong>2026-10-28</strong>, and pulled the clauses out verbatim.</p>
 
     <h2>Three States, Three Different Bills</h2>
     <p>Vendors use &ldquo;stopped&rdquo; for at least three different things, and the invoice consequence is different for each. This table is the whole article in one screen:</p>
@@ -394,7 +395,7 @@ footer a{color:var(--primary)}
     <p>DigitalOcean's Late Payments documentation describes three stages. A past due account is placed on hold, which blocks new resources while existing resources continue to run. A suspended account has its resources powered down and logins redirected to the payment page. If the balance stays unresolved, resources may be permanently deleted and cannot be recovered. The page states plainly that DigitalOcean does not publish fixed timelines for these stages, and that after paying a past-due balance you must manually turn the resources back on.</p>
 
     <h2>Bottom Line</h2>
-    <p>&ldquo;Stopped&rdquo; is not a billing state. Powering a VPS off is an operating-system action; destroying it is an account action, and only the second one reaches the meter. The three providers differ in how they measure the time &mdash; per second with a one-cent floor at DigitalOcean, whole rounded hours at Hetzner, a fixed subscription month at OVHcloud &mdash; but none of them prices a server by whether it is awake. If you are running a test box, the delete button is the only cost control that works; if you are running something you plan to keep, the 672-hour cap and the v5 no-cap rule are the two lines in the price list that will decide the invoice. For the rest of the arithmetic behind a VPS bill, see <a href="/vps-price">how a VPS price is assembled</a> and <a href="/vps-hosting-cost">what a &ldquo;from $4&rdquo; plan actually buys</a>.</p>
+    <p>&ldquo;Stopped&rdquo; is not a billing state. Powering a VPS off is an operating-system action; destroying it is an account action, and only the second one reaches the meter. The three providers differ in how they measure the time &mdash; per second with a one-cent floor at DigitalOcean, whole rounded hours at Hetzner, a fixed subscription month at OVHcloud &mdash; but none of them prices a server by whether it is awake. If you are running a test box, the delete button is the only cost control that works; if you are running something you plan to keep, the 672-hour cap and the v5 no-cap rule are the two lines in the price list that will decide the invoice. For the rest of the arithmetic behind a VPS bill, see <a href="/vps-hosting-cost">how a VPS price is assembled</a> and <a href="/vps-hosting-cost">what a &ldquo;from $4&rdquo; plan actually buys</a>.</p>
 
     <div class="author-bio">
         <div class="author-name">Marcus Reid</div>
@@ -404,7 +405,7 @@ footer a{color:var(--primary)}
 
     <div class="related">
         <h2>Related Articles</h2>
-        <a href="/vps-price">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
+        <a href="/vps-hosting-cost">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
         <a href="/vps-hosting-cost">VPS Hosting Cost: What &ldquo;From $4 a Month&rdquo; Actually Buys</a>
         <a href="/hetzner-vs-digitalocean">Hetzner vs DigitalOcean: Which One Actually Costs Less</a>
         <a href="/best-vps">Best VPS Hosting in 2026: The Real Winners by Category</a>

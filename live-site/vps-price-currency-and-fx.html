@@ -43,7 +43,7 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://serverbudget.com/"},
-        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-price"},
+        {"@type": "ListItem", "position": 2, "name": "VPS Price", "item": "https://serverbudget.com/vps-hosting-cost"},
         {"@type": "ListItem", "position": 3, "name": "VPS Price Currency and FX", "item": "https://serverbudget.com/vps-price-currency-and-fx"}
       ]
     }
@@ -256,6 +256,7 @@ footer a{color:var(--primary)}
 
     <div class="answer">
         <p class="lede"><strong>The currency you are billed in is decided by the storefront you order from, not by your address &mdash; and at two of the three providers it cannot be changed afterwards.</strong> Every figure below was read off a provider page or an official rate file on <strong>2026-10-29</strong>; every ratio is our own division with the formula printed next to it.</p>
+    <p>The storefront is one variable &mdash; <a href="/vps-hosting-cost">the monthly cost in dollars, pounds or euros</a> puts it beside the range and the add-ons.</p>
         <ul>
             <li><strong>DigitalOcean: USD only.</strong> Its tax documentation answers the question &ldquo;Can I get an invoice in another currency?&rdquo; with one sentence: USD is the only currency it accepts, all invoices are in USD, and it cannot provide invoices in other currencies. A euro card is still invoiced in dollars.</li>
             <li><strong>Hetzner: your account currency is fixed at signup.</strong> The billing FAQ states it is not possible to change the currency after an account has been created. A project is billed in the currency its owner configured.</li>
@@ -264,7 +265,7 @@ footer a{color:var(--primary)}
         </ul>
     </div>
 
-    <p>This is the last question left over from the <a href="/vps-price">vps price</a> breakdown. We had already separated the sticker price from the tax added at checkout in <a href="/vps-price-sales-tax">the sales tax piece</a>, and separated billing states in <a href="/vps-price-stopped-instance">the stopped-instance piece</a>. What none of those answered is which currency the number is even denominated in, and what happens when the answer is not your own.</p>
+    <p>This is the last question left over from the <a href="/vps-hosting-cost">vps price</a> breakdown. We had already separated the sticker price from the tax added at checkout in <a href="/vps-price-sales-tax">the sales tax piece</a>, and separated billing states in <a href="/vps-price-stopped-instance">the stopped-instance piece</a>. What none of those answered is which currency the number is even denominated in, and what happens when the answer is not your own.</p>
     <p>Across the 30 pages we catalogued for this cycle, the currency codes &ldquo;USD&rdquo;, &ldquo;EUR&rdquo; and &ldquo;GBP&rdquo; appear on zero of them, and the phrase &ldquo;exchange rate&rdquo; appears on zero. So the data here comes from four OVHcloud country storefronts captured side by side on one day, from DigitalOcean's and Hetzner's billing documentation, and from the European Central Bank's published reference rates. No provider was asked to estimate anything, and nothing below is a projection.</p>
 
     <div class="videobox">
@@ -448,7 +449,7 @@ footer a{color:var(--primary)}
         </tbody>
     </table>
     </div>
-    <p class="srcnote">DigitalOcean figure from digitalocean.com/pricing/droplets, fetched 2026-10-29 (HTTP 200), read from the rendered table row &ldquo;4 GiB / 2 vCPUs / $0.03571 per hour / $24.00 per month&rdquo;. Hetzner from hetzner.com/cloud/cost-optimized/, fetched 2026-10-29, which prints &euro;5.99 per month and &euro;0.0096 per hour, both marked excl. VAT, and does not print a VAT rate. OVHcloud from ovhcloud.com/de/vps/, fetched 2026-10-29. The euro column for DigitalOcean applies the ECB reference rate and no card fee; add your own fee to that figure. The three rows differ in what is included (OVHcloud's daily backup and unlimited traffic, Hetzner's 20 TB included traffic, DigitalOcean's 4,000 GiB transfer), so this is a currency comparison, not a specification comparison &mdash; the specification comparison is in <a href="/vps-price">the vps price breakdown</a>.</p>
+    <p class="srcnote">DigitalOcean figure from digitalocean.com/pricing/droplets, fetched 2026-10-29 (HTTP 200), read from the rendered table row &ldquo;4 GiB / 2 vCPUs / $0.03571 per hour / $24.00 per month&rdquo;. Hetzner from hetzner.com/cloud/cost-optimized/, fetched 2026-10-29, which prints &euro;5.99 per month and &euro;0.0096 per hour, both marked excl. VAT, and does not print a VAT rate. OVHcloud from ovhcloud.com/de/vps/, fetched 2026-10-29. The euro column for DigitalOcean applies the ECB reference rate and no card fee; add your own fee to that figure. The three rows differ in what is included (OVHcloud's daily backup and unlimited traffic, Hetzner's 20 TB included traffic, DigitalOcean's 4,000 GiB transfer), so this is a currency comparison, not a specification comparison &mdash; the specification comparison is in <a href="/vps-price-compare">the vps price breakdown</a>.</p>
 
     <h2>Questions This Raises</h2>
     <h3>Why is my DigitalOcean invoice in USD, and can I get one in another currency?</h3>
@@ -476,7 +477,7 @@ footer a{color:var(--primary)}
 
     <div class="related">
         <h2>Related</h2>
-        <a href="/vps-price">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
+        <a href="/vps-hosting-cost">VPS Price Explained: Hourly Rates, Monthly Caps and the Cost per GB</a>
         <a href="/vps-price-sales-tax">VPS Price Sales Tax: What the Advertised Price Actually Costs After Tax</a>
         <a href="/vps-price-stopped-instance">Does a Stopped VPS Still Cost Money? Billing by State</a>
         <p>Part of a 28-day series on what a VPS actually costs, one billing question at a time.</p>

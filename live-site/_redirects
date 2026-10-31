@@ -68,7 +68,7 @@
 /vps-price-sales-tax.html  /vps-price-sales-tax  301
 /vps-price-snapshot-billing.html  /vps-price-snapshot-billing  301
 /vps-price-stopped-instance.html  /vps-price-stopped-instance  301
-/vps-price.html  /vps-price  301
+/vps-price.html  /vps-hosting-cost  301
 /vultr-coupon-code.html  /vultr-coupon-code  301
 /windows-vps.html  /windows-vps  301
 
@@ -116,3 +116,6 @@
 /a2-hosting-turbo-20x-claim  /a2-hosting-turbo-discount-worth-it  301
 /a2-hosting-coupon-not-working.html  /a2-hosting-turbo-discount-worth-it  301
 /a2-hosting-coupon-not-working  /a2-hosting-turbo-discount-worth-it  301
+# 2026-10-31 price hub: /vps-price was merged into /vps-hosting-cost.
+# Both forms 301 straight there in one hop — the .html rule above already points at the hub.
+/vps-price  /vps-hosting-cost  301

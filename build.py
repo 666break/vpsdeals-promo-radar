@@ -14,6 +14,8 @@ from datetime import datetime, timezone
 from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 
+import claim_check
+
 # ─── GENERATED-PAGE MANIFEST ─────────────────────────────────────────────────
 # Pages build.py produces from data/offers.json and writes straight into the deploy
 # source (live-site/). verify_deploy_dir() whitelists exactly these: a page carrying
@@ -454,6 +456,10 @@ def verify_deploy_dir(site_dir, manifest_path=None):
     output: prices that matter are the ones in the directory wrangler uploads.
 
     Two things are enforced, in this order:
+      0. claims — every multiplier in prose must equal a pair of the amounts printed
+         in the same sentence (0.02 tolerance), every "there is no such thing"
+         sentence must carry a signed entry in data/absence_claims.json, and no page
+         may keep a claim that ledger has already refuted.
       0. whitelist — a page carrying an AggregateOffer must be listed in the
          generated-page manifest. Pages outside it were not built from the data, so
          nothing guarantees their price range is a server price; the deploy stops.
@@ -474,6 +480,10 @@ def verify_deploy_dir(site_dir, manifest_path=None):
         raise SystemExit(f'DEPLOY BLOCKED: {site_dir} holds no .html pages — an empty scan is '
                          f'not a pass.')
     verify_one_url_per_page(root)
+    # A conclusion printed on a page has to be checkable from that page's own table.
+    # Runs here, before wrangler is ever invoked, so a sentence that disagrees with
+    # the data below it stops the upload instead of shipping.
+    claim_check.verify_claim_consistency(root)
     allowed, manifest_file = load_generated_manifest(root, manifest_path)
     verified = []
     for page in pages:

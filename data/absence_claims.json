@@ -1,0 +1,75 @@
+{
+  "read_at": "2026-10-31",
+  "note": "Every sentence that claims something does not exist, or that a provider prints a price it may not print, is signed off here. claim_check.py fails the deploy when a page still carries an entry marked refuted, and when an absence sentence has no entry at all. Quotes below are the providers' own wording, read on the date shown; no third-party page is used as evidence.",
+  "claims": [
+    {
+      "id": "no-renewal-jump",
+      "page": "vps-hosting-cost",
+      "pattern": "no\\s+first-term[^.<]{0,90}jump|there\\s+is\\s+no\\s+[^.<]{0,60}jump",
+      "claim": "VPS has no first-term-to-renewal price jump to model.",
+      "status": "refuted",
+      "evidence": "Refuted by the page's own table and by both providers' plan cards. ScalaHosting Build #1: $22.46/mo, \"$54.95/mo when you renew\" = 2.45x. Namecheap Spark: $3.88/mo, \"Was $4.88/mo\", \"You pay $46.56 - renews at $58.56/year\" = 1.26x. The sentence was removed on 2026-10-31.",
+      "sources": [
+        "https://www.scalahosting.com/managed-vps-hosting.html",
+        "https://www.namecheap.com/hosting/vps/"
+      ]
+    },
+    {
+      "id": "ovhcloud-yearly-sticker",
+      "page": "vps-hosting-cost",
+      "pattern": "yearly\\s+sticker",
+      "claim": "OVHcloud prints a yearly sticker price equal to 12x its monthly.",
+      "status": "refuted",
+      "evidence": "OVHcloud's VPS page prints one figure, \"From $4.54 /month\", with no yearly total and no renewal price; the configurator link behind the card carries pricing=upfront12, so $4.54 is already a 12-month-prepaid monthly equivalent. $54.48 a year is our own 12x, not a sticker. The sentence was removed on 2026-10-31.",
+      "sources": [
+        "https://www.ovhcloud.com/en/vps/"
+      ]
+    },
+    {
+      "id": "bandwidth-no-overage",
+      "page": "vps-hosting-cost",
+      "pattern": "publishes an overage rate",
+      "claim": "None of the three providers publishes a bandwidth overage rate.",
+      "status": "verified",
+      "evidence": "DigitalOcean's Droplet table stops at 1,000 GiB outbound and quotes no price beyond it; OVHcloud states unlimited traffic; ScalaHosting states unmetered. No overage rate is printed on any of the three, so the line stays as 'Cannot be computed' rather than an estimate.",
+      "sources": [
+        "https://www.digitalocean.com/pricing/droplets",
+        "https://www.ovhcloud.com/en/vps/",
+        "https://www.scalahosting.com/managed-vps-hosting.html"
+      ]
+    },
+    {
+      "id": "no-public-code",
+      "page": "a2hosting-coupon-code",
+      "pattern": "No public discount code exists",
+      "claim": "hosting.com (formerly A2 Hosting) publishes no public discount code.",
+      "status": "verified",
+      "evidence": "hosting.com's plan page prints the discounted first-term price directly and applies the promo identifier WH1YAL at checkout; no alphanumeric code field appears on the order flow, and the A2-era codes are not part of hosting.com's checkout. Verified against the plan page on 2026-10-13.",
+      "sources": [
+        "https://www.hosting.com/hosting"
+      ]
+    },
+    {
+      "id": "ovhcloud-no-renewal-price",
+      "page": "vps-hosting-cost",
+      "pattern": "publishes no renewal price",
+      "claim": "OVHcloud's VPS page prints no renewal price.",
+      "status": "verified",
+      "evidence": "The page prints one figure per plan, \"From $4.54 /month\", with no renewal line, no yearly total and no term table. The configurator link behind the card carries pricing=upfront12, which is the only statement about the term on the page.",
+      "sources": [
+        "https://www.ovhcloud.com/en/vps/"
+      ]
+    },
+    {
+      "id": "digitalocean-no-term",
+      "page": "vps-hosting-cost",
+      "pattern": "sells no term",
+      "claim": "DigitalOcean sells no billing term, so there is no renewal price to jump to.",
+      "status": "verified",
+      "evidence": "DigitalOcean prices Droplets per second with a 60-second or $0.01 minimum and a monthly cap; the price table offers no 12-month or 24-month commitment, so there is no first-term price and no renewal price.",
+      "sources": [
+        "https://www.digitalocean.com/pricing/droplets"
+      ]
+    }
+  ]
+}

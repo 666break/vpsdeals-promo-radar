@@ -3,20 +3,7 @@
 # Generated from live-site/*.html — keep in sync when pages are added.
 
 /404.html  /404  301
-/a2-hosting-black-friday-vs-everyday.html  /a2-hosting-black-friday-vs-everyday  301
-/a2-hosting-coupon-after-rebrand.html  /a2-hosting-coupon-after-rebrand  301
-/a2-hosting-coupon-existing-customer.html  /a2-hosting-coupon-existing-customer  301
-/a2-hosting-coupon-expiration.html  /a2-hosting-coupon-expiration  301
-/a2-hosting-coupon-monthly-vs-annual.html  /a2-hosting-coupon-monthly-vs-annual  301
-/a2-hosting-coupon-stacking.html  /a2-hosting-coupon-stacking  301
-/a2-hosting-coupon-student-discount.html  /a2-hosting-coupon-student-discount  301
-/a2-hosting-coupon-vps-dedicated.html  /a2-hosting-coupon-vps-dedicated  301
-/a2-hosting-coupon-vs-competitor.html  /a2-hosting-coupon-vs-competitor  301
-/a2-hosting-coupon-vs-direct.html  /a2-hosting-coupon-vs-direct  301
-/a2-hosting-free-domain.html  /a2-hosting-free-domain  301
-/a2-hosting-money-back-real.html  /a2-hosting-money-back-real  301
 /a2-hosting-renewal-price-truth.html  /a2-hosting-renewal-price-truth  301
-/a2-hosting-review.html  /a2-hosting-review  301
 /a2-hosting-turbo-discount-worth-it.html  /a2-hosting-turbo-discount-worth-it  301
 /a2hosting-coupon-code.html  /a2hosting-coupon-code  301
 /about.html  /about  301
@@ -78,3 +65,48 @@
 /vps-price.html  /vps-price  301
 /vultr-coupon-code.html  /vultr-coupon-code  301
 /windows-vps.html  /windows-vps  301
+
+# 2026-10-31 A2 Hosting consolidation: 23 URLs -> 3 pages.
+# Each old address 301s straight to its main page in ONE hop: the .html form and
+# the extensionless form both point at the final URL, never at each other.
+# Exact paths only — no wildcard, so no other brand can be caught by these rules.
+/a2-hosting-black-friday-vs-everyday.html  /a2hosting-coupon-code  301
+/a2-hosting-black-friday-vs-everyday  /a2hosting-coupon-code  301
+/a2-hosting-coupon-after-rebrand.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-after-rebrand  /a2hosting-coupon-code  301
+/a2-hosting-coupon-existing-customer.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-existing-customer  /a2hosting-coupon-code  301
+/a2-hosting-coupon-expiration.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-expiration  /a2hosting-coupon-code  301
+/a2-hosting-coupon-monthly-vs-annual.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-monthly-vs-annual  /a2hosting-coupon-code  301
+/a2-hosting-coupon-stacking.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-stacking  /a2hosting-coupon-code  301
+/a2-hosting-coupon-student-discount.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-student-discount  /a2hosting-coupon-code  301
+/a2-hosting-coupon-vps-dedicated.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-vps-dedicated  /a2hosting-coupon-code  301
+/a2-hosting-coupon-vs-competitor.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-vs-competitor  /a2hosting-coupon-code  301
+/a2-hosting-coupon-vs-direct.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-vs-direct  /a2hosting-coupon-code  301
+/a2-hosting-free-domain.html  /a2hosting-coupon-code  301
+/a2-hosting-free-domain  /a2hosting-coupon-code  301
+/a2-hosting-review.html  /a2hosting-coupon-code  301
+/a2-hosting-review  /a2hosting-coupon-code  301
+/a2-hosting-coupon-decision-tree.html  /a2hosting-coupon-code  301
+/a2-hosting-coupon-decision-tree  /a2hosting-coupon-code  301
+/a2-hosting-geo-qa-library.html  /a2hosting-coupon-code  301
+/a2-hosting-geo-qa-library  /a2hosting-coupon-code  301
+/a2-hosting-money-back-real.html  /a2-hosting-renewal-price-truth  301
+/a2-hosting-money-back-real  /a2-hosting-renewal-price-truth  301
+/a2-hosting-money-back-guarantee.html  /a2-hosting-renewal-price-truth  301
+/a2-hosting-money-back-guarantee  /a2-hosting-renewal-price-truth  301
+/a2-hosting-real-checkout-savings.html  /a2-hosting-renewal-price-truth  301
+/a2-hosting-real-checkout-savings  /a2-hosting-renewal-price-truth  301
+/a2-hosting-checkout-addon-trap.html  /a2-hosting-turbo-discount-worth-it  301
+/a2-hosting-checkout-addon-trap  /a2-hosting-turbo-discount-worth-it  301
+/a2-hosting-turbo-20x-claim.html  /a2-hosting-turbo-discount-worth-it  301
+/a2-hosting-turbo-20x-claim  /a2-hosting-turbo-discount-worth-it  301
+/a2-hosting-coupon-not-working.html  /a2-hosting-turbo-discount-worth-it  301
+/a2-hosting-coupon-not-working  /a2-hosting-turbo-discount-worth-it  301

@@ -174,7 +174,7 @@ def offer_kind(offer):
         return 'plan'
     if explicit in ('addon', 'add-on', 'option'):
         return 'addon'
-    title = str(offer.get('title') or '').lower()
+    title = str(offer.get('title') or offer.get('name') or '').lower()
     if any(w in title for w in ADDON_TITLE_WORDS):
         return 'addon'
     if 'backup' in title and any(w in title for w in ADDON_BACKUP_WORDS):
@@ -188,7 +188,7 @@ def check_aggregate(agg_offer, plan_offers, provider_name):
     Raises SystemExit — so the build dies instead of shipping a page whose "from"
     price is an add-on — when lowPrice or offerCount disagrees with the plan list.
     """
-    expected_low = round(min(o['price'] for o in plan_offers), 2)
+    expected_low = round(min(float(o['price']) for o in plan_offers), 2)
     got_low = round(float(agg_offer['lowPrice']), 2)
     if got_low != expected_low:
         raise SystemExit(
@@ -200,6 +200,115 @@ def check_aggregate(agg_offer, plan_offers, provider_name):
             f'BUILD ABORTED: {provider_name} AggregateOffer.offerCount={agg_offer["offerCount"]} '
             f'but there are {len(plan_offers)} plans. Add-ons must be separate Offer entries, '
             f'not counted in the plan aggregate.')
+
+
+def _jsonld_docs(html_text):
+    """Yield every JSON object found in ld+json blocks (a block may hold several)."""
+    for block in re.findall(r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>', html_text, re.S):
+        dec = json.JSONDecoder()
+        i = 0
+        while True:
+            m = re.search(r'\{', block[i:])
+            if not m:
+                break
+            start = i + m.start()
+            try:
+                obj, end = dec.raw_decode(block[start:])
+            except ValueError:
+                i = start + 1
+                continue
+            yield obj
+            i = start + end
+
+
+def _aggregate_pairs(doc):
+    """Yield (aggregate_offer, sibling_offers) pairs from one JSON-LD document."""
+    offers = doc.get('offers')
+    if isinstance(offers, dict):
+        if offers.get('@type') == 'AggregateOffer':
+            yield offers, []
+    elif isinstance(offers, list):
+        aggs = [o for o in offers if isinstance(o, dict) and o.get('@type') == 'AggregateOffer']
+        sibs = [o for o in offers if isinstance(o, dict) and o.get('@type') == 'Offer']
+        for a in aggs:
+            yield a, sibs
+
+
+def _page_price_rows(html_text):
+    """[(price, is_addon)] from the page's own price table, in document order.
+
+    A row is an add-on row when it carries the visible add-on marker
+    (<span class="addon-tag">...), which is exactly what tells a reader it is not
+    a server. Rows without a class="price" cell are ignored.
+    """
+    rows = []
+    for row in re.findall(r'<tr[^>]*>(.*?)</tr>', html_text, re.S | re.I):
+        m = re.search(r'class="price"[^>]*>\s*\$?\s*([0-9]+(?:\.[0-9]+)?)', row)
+        if not m:
+            continue
+        rows.append((float(m.group(1)), 'addon-tag' in row))
+    return rows
+
+
+def verify_deploy_dir(site_dir):
+    """Deploy gate: no page may ship with an add-on price as its "from" price.
+
+    Scans the files that are actually about to be uploaded (live-site/), not build
+    output: the OVHcloud page is hand-maintained and copied in, never generated, so a
+    build-time check alone never sees it.
+
+    Plan evidence, in this order:
+      1. sibling Offer entries in the same JSON-LD (plans = what offer_kind() calls plan)
+      2. the page's own price table (plans = rows without the visible add-on marker)
+    Both feed the SAME check_aggregate() the generator calls — there is no second copy
+    of the rule. No evidence, or any mismatch, raises SystemExit: the deploy fails, it
+    never warns and continues.
+    """
+    root = Path(site_dir)
+    if not root.is_dir():
+        raise SystemExit(f'DEPLOY BLOCKED: {site_dir} is not a directory — refusing to deploy '
+                         f'without running the AggregateOffer check.')
+    pages = sorted(root.rglob('*.html'))
+    if not pages:
+        raise SystemExit(f'DEPLOY BLOCKED: {site_dir} holds no .html pages — an empty scan is '
+                         f'not a pass.')
+    verified = []
+    for page in pages:
+        text = page.read_text(encoding='utf-8', errors='ignore')
+        if 'AggregateOffer' not in text:
+            continue
+        rel = page.relative_to(root).as_posix()
+        rows = _page_price_rows(text)
+        table_plans = [{'price': p} for p, is_addon in rows if not is_addon]
+        table_addons = [{'price': p} for p, is_addon in rows if is_addon]
+        for doc in _jsonld_docs(text):
+            for agg, siblings in _aggregate_pairs(doc):
+                json_plans = [o for o in siblings if offer_kind(o) == 'plan' and o.get('price') is not None]
+                json_addons = [o for o in siblings if offer_kind(o) == 'addon' and o.get('price') is not None]
+                plans = json_plans or table_plans
+                addons = json_addons or table_addons
+                if not plans:
+                    raise SystemExit(
+                        f'DEPLOY BLOCKED: {rel} has an AggregateOffer but no plan prices to check '
+                        f'it against (no plan Offer entries in the JSON-LD, and no unmarked rows '
+                        f'in its price table).  [file: {rel}]')
+                try:
+                    check_aggregate(agg, plans, rel)
+                except SystemExit as e:
+                    raise SystemExit(f'{e}  [file: {rel}]')
+                low = float(agg['lowPrice'])
+                for a in addons:
+                    if abs(low - float(a['price'])) < 0.005:
+                        raise SystemExit(
+                            f'DEPLOY BLOCKED: {rel} AggregateOffer.lowPrice={low:.2f} is an '
+                            f'add-on price, not a server.  [file: {rel}]')
+                verified.append((rel, agg.get('lowPrice'), agg.get('offerCount'),
+                                 'json' if json_plans else 'table'))
+    print(f'  deploy gate: scanned {len(pages)} html page(s) under {root.name}/, '
+          f'verified {len(verified)} AggregateOffer(s)')
+    for rel, low, count, src in verified:
+        print(f'    {rel}: lowPrice={low} offerCount={count} (plans from {src})')
+    return verified
 
 
 def gen_provider_page(brand, niche, domain, provider, offers):

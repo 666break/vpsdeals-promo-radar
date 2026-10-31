@@ -131,6 +131,20 @@ if CHECK_ONLY:
     print("Token readability + wrangler present: CONFIRMED. Publish endpoint ready.")
     sys.exit(0)
 
+# ── DEPLOY GATE (2026-10-31) ─────────────────────────────────────────────────
+# No page may go up with an add-on price as its "from" price. This reads the files
+# in SITE_DIR that are about to be uploaded -- including the hand-maintained
+# provider-ovhcloud.html, which build.py never generates -- and reuses build.py's
+# offer_kind()/check_aggregate(), so there is one rule, not two.
+# It raises SystemExit, so the deploy dies here, before wrangler is invoked.
+if REPO not in sys.path:
+    sys.path.insert(0, REPO)
+import build as site_build  # noqa: E402  (repo-root module)
+
+print("=== deploy gate: AggregateOffer check on live-site/ ===", flush=True)
+site_build.verify_deploy_dir(SITE_DIR)
+print("  deploy gate: PASS", flush=True)
+
 stamp_footer()  # inject truthful timestamp at deploy moment (never handwritten)
 
 env = os.environ.copy()

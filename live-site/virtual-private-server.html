@@ -79,7 +79,7 @@
           "@type": "Question",
           "name": "Should I get a VPS with shared or dedicated CPU?",
           "acceptedAnswer": {
-            "@text": "Pick shared (burstable) vCPU for low-traffic websites, blogs, dev/test environments, and small apps — you get far more RAM per dollar and the occasional CPU burst is plenty. Pick dedicated vCPU (or step up to a larger VPS/VDS) for production databases, high-traffic applications, game servers, and anything CPU-bound, because dedicated cores guarantee consistent performance instead of borrowing idle neighbor capacity. None of the ultra-cheap entry plans above include dedicated CPU — that is a deliberate trade for the low price."
+            "@text": "Pick shared (burstable) vCPU for low-traffic websites, blogs, dev/test environments, and small apps — you get far more RAM per dollar and the occasional CPU burst is plenty. Pick dedicated vCPU (or step up to a larger VPS/VDS) for production databases, high-traffic applications, game servers, and anything CPU-bound, because dedicated cores guarantee consistent performance instead of borrowing idle neighbor capacity. None of the plans in the verified entry-price table include dedicated CPU — that is a deliberate trade for the low price."
           }
         },
         {
@@ -550,7 +550,7 @@ footer a{color:var(--primary)}
     <p>Pick <strong>DigitalOcean</strong> ($4.00/mo entry, per-second billing) or <strong>Vultr</strong> ($5.00/mo standard entry, hourly billing). You pay only for runtime, the docs are excellent, and scaling is a slider. These cost more per GB of RAM, but the operational predictability is the product.</p>
 
     <h3>You run a production database or high-traffic app</h3>
-    <p>None of the entry plans above will do — they are all shared-CPU. Step up to a <strong>dedicated-CPU</strong> tier (Vultr High Performance/Optimized, DigitalOcean CPU-Optimized or General Purpose, Hetzner General Purpose, OVHcloud higher VPS tiers, or Contabo VDS). Pay for reserved cores so performance stays constant under load.</p>
+    <p>None of the entry plans in the verified entry-price table will do — they are all shared-CPU. Step up to a <strong>dedicated-CPU</strong> tier (Vultr High Performance/Optimized, DigitalOcean CPU-Optimized or General Purpose, Hetzner General Purpose, OVHcloud higher VPS tiers, or Contabo VDS). Pay for reserved cores so performance stays constant under load.</p>
 
     <!-- Block 11: FAQ -->
     <div class="faq">
@@ -566,7 +566,7 @@ footer a{color:var(--primary)}
     <p>Verified entry prices for September 2026: RackNerd KVM VPS from $2.24/month (annual promo), DigitalOcean Basic Droplet from $4.00/month, OVHcloud VPS-1 from $4.54/month, Vultr Cloud Compute from $5.00/month, and Contabo Cloud VPS 4 at $5.28/month for the first 24 months ($6.60/month regular). These are the smallest, shared-CPU plans. A production-grade VPS with dedicated CPU or more RAM typically runs $15–$50/month and up. Always confirm the current price at checkout — most "from" figures are discounted intro rates.</p>
 
     <h3 class="question">Should I get a VPS with shared or dedicated CPU?</h3>
-    <p>Pick shared (burstable) vCPU for low-traffic websites, blogs, dev/test environments, and small apps — you get far more RAM per dollar and the occasional CPU burst is plenty. Pick dedicated vCPU (or step up to a larger VPS/VDS) for production databases, high-traffic applications, game servers, and anything CPU-bound, because dedicated cores guarantee consistent performance instead of borrowing idle neighbor capacity. None of the ultra-cheap entry plans above include dedicated CPU — that is a deliberate trade for the low price.</p>
+    <p>Pick shared (burstable) vCPU for low-traffic websites, blogs, dev/test environments, and small apps — you get far more RAM per dollar and the occasional CPU burst is plenty. Pick dedicated vCPU (or step up to a larger VPS/VDS) for production databases, high-traffic applications, game servers, and anything CPU-bound, because dedicated cores guarantee consistent performance instead of borrowing idle neighbor capacity. None of the plans in the verified entry-price table include dedicated CPU — that is a deliberate trade for the low price.</p>
 
     <h3 class="question">When should I upgrade from shared hosting to a VPS?</h3>
     <p>Move to vps hosting when you hit any of these: you need to install software your shared host forbids, you want root/SSH access and your own firewall, your traffic or CPU usage is being throttled, or you are running multiple sites and want isolation between them. A VPS also makes sense once you care about reproducibility — you can script the whole server with configuration management — which shared hosting rarely allows.</p>

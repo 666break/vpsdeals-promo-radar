@@ -682,7 +682,7 @@ def gen_ovhcloud_page(offers, domain):
             f'{NUM_WORDS.get(len(plans), str(len(plans)))} OVHcloud VPS plans, each priced per '
             'month: '
             + ', '.join(f'{o["title"]} ${float(o["price"]):.2f}' for o in plans)
-            + '. VPS add-ons are listed as separate offers below and are not part of this price range.'),
+            + '. VPS add-ons are not part of this price range and are priced separately.'),
     }
     check_aggregate(agg, plans, 'OVHcloud')
 

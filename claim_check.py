@@ -19,6 +19,19 @@ Both checks read the page's own tables: the renewal check recomputes the jump
 from the first-term and renewal prices printed in one row, and the term check
 compares a claim about a provider's yearly price against the Term cell that
 provider's row carries. Nothing is compared against a second copy of the data.
+
+A third kind runs over every page, not just the price family:
+
+  SCHEMA-DIRECTION  A JSON-LD payload is read out of document order, so "the
+             windows above" or "the offers below" has nothing to point at once
+             the payload is lifted out of the page. Any container noun (table,
+             list, chart, section, row, plan, offer, window, step, block,
+             callout) sitting immediately before a direction word is a hit.
+             A bare "below 20%" or "previous 24 hours" is a comparison or a
+             time span and is not a hit; the container noun is what decides.
+             Uses that are genuinely positional but harmless go in
+             data/schema_direction_allowlist.txt with a reason, one per line --
+             the pattern itself is not loosened.
 """
 from __future__ import annotations
 
@@ -52,6 +65,24 @@ AMOUNT = re.compile(r'(?:\$|EUR|GBP)\s?([\d,]+(?:\.\d+)?)')
 RATIO = re.compile(r'(?<![\d.$])(\d+(?:\.\d+)?)\s*(?:&times;|×|x)(?!\s*[\d.$])')
 RENEW = re.compile(r'renews?\s*(?:at\s*)?(?:\$|EUR|GBP)\s?([\d,]+(?:\.\d+)?)', re.I)
 FIRST_TERM = re.compile(r'(?:\$|EUR|GBP)\s?([\d,]+(?:\.\d+)?)')
+
+# A direction word only counts when a container noun sits immediately before it.
+# "below 20%", "previous 24 hours", "below that fee" have no container and are
+# comparisons or time spans, not positions.
+SCHEMA_CONTAINERS = (
+    'table', 'tables', 'list', 'lists', 'chart', 'charts', 'section', 'sections',
+    'diagram', 'diagrams', 'figure', 'figures', 'row', 'rows', 'plan', 'plans',
+    'offer', 'offers', 'window', 'windows', 'step', 'steps', 'block', 'blocks',
+    'callout', 'callouts',
+)
+SCHEMA_DIRECTION = re.compile(
+    r'\b(' + '|'.join(SCHEMA_CONTAINERS) + r')\s+'
+    r'(above|below|following|previous|earlier|later|further)\b',
+    re.I)
+SCHEMA_BLOCK = re.compile(
+    r'<script[^>]*type\s*=\s*["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+    re.S | re.I)
+ALLOWLIST = 'data/schema_direction_allowlist.txt'
 
 
 def visible(html: str) -> str:
@@ -168,6 +199,83 @@ def check_absence_ledger(name: str, text: str, ledger, errors: list, signed: lis
                            [entry.get('evidence', '')]))
 
 
+def _strings(obj):
+    """Every string value inside a parsed JSON-LD object, in order."""
+    if isinstance(obj, str):
+        yield obj
+    elif isinstance(obj, dict):
+        for v in obj.values():
+            yield from _strings(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _strings(v)
+
+
+def schema_payloads(html: str):
+    """Every ld+json block as a list of its prose strings, plus the unparsable ones.
+
+    Scanning the parsed string values rather than the serialised JSON keeps the
+    reported "sentence" readable: the answer text, not the braces around it.
+    A payload that does not parse is still scanned as raw text and reported --
+    a silent skip would hide exactly the block most likely to be malformed.
+    """
+    payloads, failed = [], []
+    for i, m in enumerate(SCHEMA_BLOCK.finditer(html)):
+        body = m.group(1)
+        try:
+            payloads.append((i, list(_strings(json.loads(body)))))
+        except Exception:
+            failed.append(i)
+            payloads.append((i, [body]))
+    return payloads, failed
+
+
+def load_schema_allowlist(base: Path):
+    """page | phrase that must appear in the sentence | why it is legal"""
+    path = base / ALLOWLIST
+    entries = []
+    if not path.is_file():
+        return entries
+    for line in path.read_text(encoding='utf-8').splitlines():
+        line = line.strip()
+        if not line or line.startswith('#'):
+            continue
+        parts = [p.strip() for p in line.split('|')]
+        if len(parts) < 3:
+            continue
+        entries.append((parts[0], parts[1].lower(), parts[2]))
+    return entries
+
+
+def _schema_allowed(allow, name, sentence):
+    for page, phrase, _reason in allow:
+        if page == name and phrase in sentence.lower():
+            return True
+    return False
+
+
+def check_schema_direction(name: str, html: str, errors: list, hits: list,
+                           failed_out: list, allow: list):
+    """A container noun + direction word inside a JSON-LD payload is a dead pointer."""
+    payloads, failed = schema_payloads(html)
+    failed_out.extend((name, i) for i in failed)
+    seen = set()
+    for i, strings in payloads:
+        for payload in strings:
+            for m in SCHEMA_DIRECTION.finditer(payload):
+                container, word = m.group(1).lower(), m.group(2).lower()
+                sent = sentence_at(payload, m.start())
+                if _schema_allowed(allow, name, sent):
+                    continue
+                key = (i, container, word, sent)
+                if key in seen:
+                    continue
+                seen.add(key)
+                hits.append((name, i, container, word, sent))
+                errors.append((name, 'schema-direction', 'blk%d %s+%s' % (i, container, word),
+                               sent, [container]))
+
+
 def verify_claim_consistency(site_dir, verbose=True):
     root = Path(site_dir)
     ledger = load_ledger(Path(__file__).resolve().parent)
@@ -187,11 +295,28 @@ def verify_claim_consistency(site_dir, verbose=True):
         check_provider_term(name, text, rows, errors)
         check_absence_ledger(name, text, ledger, errors, signed)
 
+    # schema-direction runs over every page in the deploy dir, not just FAMILY:
+    # a new article ships its own JSON-LD and nobody re-runs a site-wide sweep.
+    allow = load_schema_allowlist(Path(__file__).resolve().parent)
+    schema_hits, schema_failed, schema_pages = [], [], 0
+    for page in sorted(root.glob('*.html')):
+        schema_pages += 1
+        html = page.read_text(encoding='utf-8', errors='ignore')
+        check_schema_direction(page.stem, html, errors, schema_hits, schema_failed, allow)
+
     if verbose:
         print('  claim gate: %d page(s), %d ratio claim(s) resolved, %d unresolved, '
               '%d absence claim(s) signed' % (scanned,
                                               _count_ratios(scanned, root),
                                               len(unresolved), len(signed)))
+        print('  schema-direction: %d page(s), %d hit(s), %d parse failure(s), '
+              '%d allowlisted' % (schema_pages, len(schema_hits),
+                                  len(schema_failed), len(allow)))
+        for name, i in schema_failed:
+            print('    [parse-failed] %s: ld+json block %d -- scanned as raw text' % (name, i))
+        for name, i, container, word, sent in schema_hits:
+            print('    [hit] %s: block %d, %s + %s -- %s'
+                  % (name, i, container, word, _clip(sent, 120)))
         for name, tok, sent in unresolved:
             print('    [manual] %s: %sx -- no two amounts in the sentence, checked by hand: %s'
                   % (name, tok, _clip(sent)))
@@ -211,6 +336,9 @@ def verify_claim_consistency(site_dir, verbose=True):
                 lines.append('    amounts in the sentence: %s' % extra)
             elif kind == 'absence-ledger':
                 lines.append('    ledger evidence: %s' % (extra[0] if extra else ''))
+            elif kind == 'schema-direction':
+                lines.append('    container noun: %s (a JSON-LD payload has no "above"/"below")'
+                             % extra[0])
         raise SystemExit('\n'.join(lines))
     return True
 

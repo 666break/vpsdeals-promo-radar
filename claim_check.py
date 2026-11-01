@@ -299,7 +299,7 @@ def verify_claim_consistency(site_dir, verbose=True):
     # a new article ships its own JSON-LD and nobody re-runs a site-wide sweep.
     allow = load_schema_allowlist(Path(__file__).resolve().parent)
     schema_hits, schema_failed, schema_pages = [], [], 0
-    for page in sorted(root.glob('*.html')):
+    for page in sorted(root.rglob('*.html')):
         schema_pages += 1
         html = page.read_text(encoding='utf-8', errors='ignore')
         check_schema_direction(page.stem, html, errors, schema_hits, schema_failed, allow)

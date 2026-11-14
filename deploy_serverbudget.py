@@ -16,7 +16,7 @@ LOCAL_NODE = r"C:/Users/Administrator/.workbuddy-ai/binaries/node/versions/22.22
 LOCAL_WRANGLER = os.path.join(REPO, "node_modules", "wrangler", "bin", "wrangler.js")
 ACCOUNT_ID = "9df8ad2d00106264486023cda43088b6"
 PROJECT = "serverbudget-site"
-SITE_DIR = os.path.join(REPO, "live-site")
+SITE_DIR = os.path.join(REPO, "site-restored")
 
 # Token: in CI it arrives via the CLOUDFLARE_API_TOKEN secret (env). Locally we read
 # it from ~/.cloudflare/config.json at publish moment only. The value is NEVER

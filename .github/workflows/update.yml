@@ -1,9 +1,12 @@
 name: Update Deals
 
 on:
-  schedule:
-    # Every 6 hours at minute 0 (UTC)
-    - cron: '0 */6 * * *'
+  # [DISABLED 2026-11-14] schedule trigger removed. This job's
+  # 'Deploy to Cloudflare Pages' step pushed a stale 68-loc sitemap
+  # over the live 84-page site as deployment f64c176d (2026-11-14
+  # 04:49 UTC = 12:49 GMT+8, commit message 'Auto-update').
+  # Original trigger was a 6-hourly schedule. Original file:
+  # update.yml.original in the local .verify evidence folder.
   workflow_dispatch: # Manual trigger (used to verify the pipeline end-to-end)
 
 permissions:
@@ -47,6 +50,7 @@ jobs:
         run: npm install -g wrangler
 
       - name: Deploy to Cloudflare Pages
+        if: false  # [DISABLED 2026-11-14] no publish to serverbudget-site
         # deploy_serverbudget.py stamps the current UTC timestamp/date into
         # live-site/index.html and runs `wrangler pages deploy`. The Cloudflare
         # API token is supplied ONLY via this secret/env var -- it is never
